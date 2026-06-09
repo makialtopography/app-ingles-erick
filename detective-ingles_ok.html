@@ -1,0 +1,1327 @@
+<!-- ==========================================
+     MODULO 1: ESTRUCTURA HTML Y PANTALLAS
+     ========================================== -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Detective de Inglés - Erick</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#FFF8F0; --card:#FFF; --ink:#2D2A26; --muted:#9A8F83; --border:#EDE8E0;
+  --teal:#2BB5A0; --teal-lt:#E6F7F5; --teal-dk:#1E8C7B;
+  --amber:#F5A623; --amber-lt:#FFF4DC; --amber-dk:#C47E00;
+  --sky:#4A90E2; --sky-lt:#EBF3FC;
+  --green:#27AE60; --green-lt:#E9F7EF; --green-dk:#1E8449;
+  --red:#E74C3C; --red-lt:#FDEDEC;
+  --violet:#9B59B6; --violet-lt:#F5EEF8;
+  --pink:#E91E8C; --pink-lt:#FCE4F3;
+  --orange:#FF6B35; --orange-lt:#FFF0EB;
+  --indigo:#5C6BC0; --indigo-lt:#ECEEF9;
+  --rose:#E53935; --rose-lt:#FFEBEE;
+  --cyan:#00838F; --cyan-lt:#E0F7FA;
+  --lime:#689F38; --lime-lt:#F1F8E9;
+  --brown:#6D4C41; --brown-lt:#EFEBE9;
+  --slate:#455A64; --slate-lt:#ECEFF1;
+  --r:14px; --r-sm:8px;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:32px;}
+.topbar{background:var(--card);border-bottom:2px solid var(--border);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-left{display:flex;align-items:center;gap:10px;}
+.back-btn{background:var(--bg);border:2px solid var(--border);border-radius:8px;padding:5px 10px;font-size:.85rem;font-weight:800;cursor:pointer;color:var(--muted);transition:all .15s;display:none;}
+.back-btn:hover{border-color:var(--teal);color:var(--teal);}
+.topbar-title{font-size:1.1rem;font-weight:900;}
+.topbar-title span{color:var(--amber)}
+.score-pill{background:var(--sky-lt);color:var(--sky);border:2px solid var(--sky);border-radius:100px;padding:4px 14px;font-weight:800;font-size:.9rem;transition:transform 0.2s;}
+.screen{display:none}.screen.active{display:block}
+.menu-wrap{max-width:560px;margin:0 auto;padding:24px 16px 40px;}
+.menu-hero{text-align:center;margin-bottom:28px;}
+.menu-hero-emoji{font-size:3.5rem;margin-bottom:8px;display:block;}
+.menu-hero h2{font-size:1.6rem;font-weight:900;margin-bottom:6px;}
+.menu-hero p{color:var(--muted);font-size:.9rem;line-height:1.5;}
+.menu-section-title{font-size:.75rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+@media(max-width:360px){.menu-grid{grid-template-columns:1fr}}
+.menu-card{background:var(--card);border:3px solid var(--border);border-radius:var(--r);padding:20px 14px 18px;cursor:pointer;transition:all .2s;text-align:center;position:relative;overflow:hidden;}
+.menu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:4px 4px 0 0;background:var(--accent,var(--border));}
+.menu-card:active{transform:scale(.97);}
+.mc-emoji{font-size:2.4rem;margin-bottom:10px;display:block;}
+.mc-title{font-size:.95rem;font-weight:800;margin-bottom:5px;}
+.mc-desc{font-size:.75rem;color:var(--muted);line-height:1.4;}
+.mc-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:.7rem;font-weight:800;margin-top:8px;background:var(--badge-bg,var(--border));color:var(--badge-color,var(--muted));}
+.explain-wrap{max-width:520px;margin:0 auto;padding:24px 16px 40px;}
+.explain-hero{text-align:center;margin-bottom:24px;}
+.explain-emoji{font-size:3.5rem;margin-bottom:8px;display:block;}
+.explain-hero h2{font-size:1.5rem;font-weight:900;margin-bottom:6px;}
+.explain-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:24px 20px;margin-bottom:16px;}
+.explain-title{font-size:1rem;font-weight:900;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.explain-definition{font-size:.95rem;line-height:1.65;color:var(--ink);margin-bottom:14px;}
+.explain-examples{background:var(--bg);border-radius:var(--r-sm);padding:14px;border-left:4px solid var(--accent-color, var(--teal));}
+.explain-examples-title{font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.example-row{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;}
+.example-en{font-size:1rem;font-weight:800;color:var(--ink);}
+.example-es{font-size:.82rem;font-weight:600;color:var(--muted);}
+.explain-tip{background:var(--amber-lt);border:2px solid var(--amber);border-radius:var(--r-sm);padding:12px 14px;margin-top:14px;font-size:.85rem;font-weight:700;color:var(--amber-dk);display:flex;gap:8px;}
+.explain-tip-icon{font-size:1.1rem;flex-shrink:0;}
+.phase-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+.phase-card{background:var(--card);border:3px solid var(--border);border-radius:var(--r);padding:20px 14px;cursor:pointer;transition:all .2s;text-align:center;}
+.pc-emoji{font-size:2rem;margin-bottom:8px;}
+.pc-title{font-size:1rem;font-weight:800;margin-bottom:5px;}
+.pc-desc{font-size:.78rem;color:var(--muted);line-height:1.4;}
+.quiz-wrap{max-width:560px;margin:0 auto;padding:20px 16px 40px}
+.module-tag{display:inline-flex;align-items:center;gap:6px;background:var(--tag-bg,var(--teal-lt));color:var(--tag-color,var(--teal-dk));border-radius:100px;padding:4px 12px;font-size:.78rem;font-weight:800;margin-bottom:14px;}
+.progress-row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:.8rem;font-weight:700;color:var(--muted)}
+.progress-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:20px}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--teal),var(--sky));transition:width .4s ease}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;padding:24px 20px}
+.sentence-area{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-end;gap:10px 14px;margin-bottom:20px;padding-bottom:20px;border-bottom:2px dashed var(--border);}
+.word-group{display:flex;flex-direction:column;align-items:center;}
+.en-word{font-size:1.4rem;font-weight:800;color:var(--ink);text-align:center;}
+.es-word{font-size:0.82rem;font-weight:700;color:#B0A89F;margin-top:4px;text-align:center;}
+.target-word{color:var(--amber-dk);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:3px;}
+.blank-spot{display:inline-block;min-width:65px;border-bottom:3px solid var(--ink);color:var(--sky);padding:0 10px;text-align:center;}
+.section-title{font-size:.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;margin-top:20px;}
+.type-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.type-btn{display:flex;flex-direction:column;align-items:center;padding:10px 14px;border-radius:var(--r-sm);border:3px solid var(--border);background:#F7F4F0;cursor:pointer;transition:all .15s;flex-grow:1;flex-basis:30%;}
+.btn-word{font-size:1.05rem;font-weight:800;color:var(--ink);}
+.btn-hint{font-size:0.72rem;font-weight:700;color:#9A8F83;margin-top:4px;text-align:center;line-height:1.2;}
+.type-btn.selected{border-color:var(--sky);background:var(--sky-lt);}
+.type-btn.correct{border-color:var(--green);background:var(--green-lt);pointer-events:none;}
+.type-btn.wrong{border-color:var(--red);background:var(--red-lt);}
+.noun-btn{padding:10px 16px;border-radius:var(--r-sm);border:3px solid var(--border);background:#F7F4F0;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .15s;flex-grow:1;text-align:center;}
+.noun-btn.selected{border-color:var(--violet);background:var(--violet-lt);color:var(--violet)}
+.info-chip{background:var(--violet-lt);border:2px solid var(--violet);padding:12px;border-radius:var(--r-sm);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.info-chip-badge{background:var(--violet);color:white;padding:4px 8px;border-radius:100px;font-size:.75rem;font-weight:bold;}
+.info-chip-text{font-size:.83rem;font-weight:600;color:var(--violet);}
+.feedback{padding:16px;border-radius:var(--r-sm);font-size:.92rem;display:none;margin-top:20px;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.feedback.correct{background:var(--green-lt);border:2px solid var(--green);color:var(--green-dk);display:block}
+.feedback.wrong{background:var(--red-lt);border:2px solid var(--red);color:#922;display:block}
+.feedback strong{display:block;font-size:1.05rem;margin-bottom:5px}
+.action-btn{width:100%;padding:16px;border-radius:var(--r-sm);border:none;background:var(--teal);color:#fff;font-size:1.05rem;font-weight:800;cursor:pointer;margin-top:20px;transition:background .2s;}
+.action-btn:disabled{background:#C8C3BB;cursor:not-allowed}
+.action-btn.next{background:var(--green)}
+.type-input { width: 100%; padding: 14px; font-size: 1.1rem; border: 3px solid var(--border); border-radius: var(--r-sm); outline: none; text-align: center; font-family: inherit; color: var(--ink); font-weight: 700; transition: border-color 0.2s;}
+.type-input:focus { border-color: var(--sky); }
+.type-input.correct { border-color: var(--green); background: var(--green-lt); color: var(--green-dk); }
+.type-input.wrong { border-color: var(--red); background: var(--red-lt); color: var(--red); }
+.match-columns{display:flex;gap:10px;margin-top:15px;}
+.match-col{flex:1;display:flex;flex-direction:column;gap:8px;}
+.match-btn{padding:12px 8px;font-size:.88rem;border-radius:var(--r-sm);border:2px solid var(--border);background:#F7F4F0;font-weight:700;cursor:pointer;transition:all 0.2s;color:var(--ink);text-align:center;}
+.match-btn.selected{border-color:var(--sky);background:var(--sky);color:#fff;transform:scale(1.04);}
+.match-btn.correct{border-color:var(--green);background:var(--green-lt);color:var(--green-dk);pointer-events:none;}
+.match-btn.wrong{border-color:var(--red);background:var(--red-lt);color:var(--red);animation:shake 0.4s;}
+.finish-wrap{max-width:480px;margin:40px auto;padding:0 20px;text-align:center}
+.finish-card{background:var(--card);border-radius:var(--r);padding:40px 20px;box-shadow:var(--shadow)}
+.finish-score{font-size:3.5rem;font-weight:900;color:var(--teal);margin:10px 0}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+
+/* ── ESTILOS PANTALLA TABLA VERBOS (Bloque 4) ───────────────────────── */
+#screenVerbTable { background: var(--bg); }
+.vt-wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px 48px; }
+.vt-hero { background: var(--card); border-radius: var(--r); box-shadow: var(--shadow); padding: 20px 20px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.vt-verb-badge { background: var(--teal); color: #fff; border-radius: var(--r-sm); padding: 6px 16px; font-size: 1.6rem; font-weight: 900; letter-spacing: 1px; flex-shrink: 0; }
+.vt-verb-info { flex: 1; min-width: 140px; }
+.vt-verb-meaning { font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
+.vt-verb-forms { font-size: .78rem; color: var(--muted); line-height: 1.6; }
+.vt-verb-forms b { color: var(--ink); }
+.vt-verb-selector { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.vt-verb-btn { padding: 7px 14px; border-radius: 100px; border: 2px solid var(--border); background: var(--card); font-family: 'Nunito', sans-serif; font-size: .82rem; font-weight: 800; cursor: pointer; color: var(--muted); transition: all .15s; }
+.vt-verb-btn:hover { border-color: var(--teal); color: var(--teal); }
+.vt-verb-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+.vt-family-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 16px; }
+@media(max-width: 420px) { .vt-family-tabs { grid-template-columns: repeat(2, 1fr); } }
+.vt-tab { padding: 8px 4px; border-radius: var(--r-sm); border: 2px solid var(--border); background: var(--card); font-family: 'Nunito', sans-serif; font-size: .72rem; font-weight: 800; cursor: pointer; text-align: center; color: var(--muted); line-height: 1.3; transition: all .15s; }
+.vt-tab:hover { border-color: var(--sky); color: var(--sky); }
+.vt-tab.active { border-color: var(--sky); background: var(--sky-lt); color: var(--sky); }
+.vt-tab-emoji { display: block; font-size: 1.1rem; margin-bottom: 3px; }
+.vt-havegot-alert { background: #FFF3CD; border: 2px solid #F5A623; border-radius: var(--r-sm); padding: 12px 14px; margin-bottom: 14px; display: none; animation: fadeUp .3s ease; }
+.vt-havegot-alert.visible { display: flex; gap: 10px; align-items: flex-start; }
+.vt-alert-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
+.vt-alert-body { font-size: .8rem; line-height: 1.5; color: #7A5A00; }
+.vt-alert-body strong { display: block; font-size: .88rem; margin-bottom: 3px; color: #5A3F00; }
+.vt-alert-rule { margin-top: 6px; background: rgba(255,255,255,.6); border-radius: 6px; padding: 6px 10px; font-size: .78rem; }
+.vt-alert-correct { color: var(--green-dk); font-weight: 800; }
+.vt-alert-wrong   { color: var(--red);      font-weight: 800; text-decoration: line-through; }
+.vt-section-label { font-size: .72rem; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin: 16px 0 8px; }
+.vt-tense-card { background: var(--card); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 12px; }
+.vt-tense-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 2px solid var(--border); cursor: pointer; transition: background .15s; user-select: none; }
+.vt-tense-header:hover { background: var(--bg); }
+.vt-tense-name { font-size: .95rem; font-weight: 900; color: var(--ink); }
+.vt-tense-name-en { font-size: .75rem; font-weight: 700; color: var(--muted); margin-top: 2px; }
+.vt-tense-chevron { font-size: 1rem; color: var(--muted); transition: transform .2s; }
+.vt-tense-header.open .vt-tense-chevron { transform: rotate(180deg); }
+.vt-perfect-tag { font-size: .65rem; font-weight: 800; background: var(--amber-lt); color: var(--amber-dk); border: 1.5px solid var(--amber); border-radius: 100px; padding: 2px 7px; }
+.vt-tense-body { display: none; padding: 0; }
+.vt-tense-body.open { display: block; }
+.vt-subject-table { width: 100%; border-collapse: collapse; }
+.vt-subject-table thead tr { background: var(--bg); border-bottom: 2px solid var(--border); }
+.vt-subject-table th { padding: 7px 10px; font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); text-align: left; }
+.vt-subject-table th:first-child { width: 62px; }
+.vt-subject-table tbody tr { border-bottom: 1px solid var(--border); }
+.vt-subject-table tbody tr:last-child { border-bottom: none; }
+.vt-subject-table tbody tr:hover { background: var(--bg); }
+.vt-subject-table td { padding: 8px 10px; font-size: .8rem; vertical-align: top; line-height: 1.4; }
+.vt-subj-cell { font-weight: 900; color: var(--teal-dk); font-size: .82rem; white-space: nowrap; }
+.vt-aff  { color: var(--ink); }
+.vt-aff .en { font-weight: 800; font-size: .82rem; }
+.vt-aff .es { font-size: .72rem; color: var(--muted); margin-top: 2px; }
+.vt-neg  { color: var(--red); }
+.vt-neg .en { font-weight: 800; font-size: .82rem; }
+.vt-neg .es { font-size: .72rem; color: #C06060; margin-top: 2px; }
+.vt-q   { color: var(--sky); }
+.vt-q .en { font-weight: 800; font-size: .82rem; }
+.vt-q .es { font-size: .72rem; color: #5B82C8; margin-top: 2px; }
+.vt-legend { display: flex; gap: 14px; flex-wrap: wrap; margin: 14px 0 4px; padding: 10px 14px; background: var(--card); border-radius: var(--r-sm); border: 2px solid var(--border); }
+.vt-legend-item { display: flex; align-items: center; gap: 6px; font-size: .75rem; font-weight: 700; }
+.vt-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.vt-play-btn-wrap { margin-top: 20px; }
+.vt-play-btn { width: 100%; padding: 16px; border-radius: var(--r-sm); border: none; background: var(--teal); color: #fff; font-family: 'Nunito', sans-serif; font-size: 1.05rem; font-weight: 800; cursor: pointer; transition: background .2s; margin-bottom: 10px; }
+.vt-play-btn:hover { background: var(--teal-dk); }
+.vt-play-btn.secondary { background: var(--sky); margin-bottom: 0; }
+.vt-play-btn.secondary:hover { background: #2d6dbf; }
+.vt-phase-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; display: none; }
+.vt-phase-row.visible { display: grid; }
+.vt-phase-pick { padding: 12px 10px; border-radius: var(--r-sm); border: 3px solid var(--border); background: var(--card); font-family: 'Nunito', sans-serif; font-size: .82rem; font-weight: 800; cursor: pointer; text-align: center; transition: all .15s; color: var(--ink); line-height: 1.4; }
+.vt-phase-pick:hover { border-color: var(--teal); color: var(--teal); }
+.hidden{display:none!important}
+</style>
+</head>
+<!-- ==========================================
+     MODULO 2: ESTILOS CSS Y DISEÑO VISUAL
+     ========================================== -->
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <button class="back-btn" id="backBtn" onclick="goBack()">← Menú</button>
+    <div class="topbar-title">🕵️ Detective de <span>Inglés</span></div>
+  </div>
+  <div class="score-pill" id="scorePill">⭐ 0 pts</div>
+</div>
+
+<div class="screen active" id="screenMenu">
+  <div class="menu-wrap">
+    <div class="menu-hero">
+      <span class="menu-hero-emoji">🕵️</span>
+      <h2>¡Hola, Erick!</h2>
+      <p>Elige un módulo para empezar. ¡Aprenderemos gramática y frases útiles!</p>
+    </div>
+    
+    <div class="menu-section-title">Estructuras Básicas</div>
+    <div class="menu-grid">
+      <div class="menu-card" style="--accent:var(--teal);" onclick="selectModule('countable')">
+        <span class="mc-emoji">🛒</span><div class="mc-title">Contables e Incontables</div><div class="mc-desc">Some, any, much, many...</div><span class="mc-badge" style="--badge-bg:var(--teal-lt);--badge-color:var(--teal-dk);">20 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--sky);" onclick="selectModule('partsOfSpeech')">
+        <span class="mc-emoji">📚</span><div class="mc-title">Parts of Speech</div><div class="mc-desc">Sustantivos, verbos, adjetivos.</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--amber);" onclick="selectModule('svo')">
+        <span class="mc-emoji">📝</span><div class="mc-title">Estructura SVO</div><div class="mc-desc">Sujeto + Verbo + Objeto.</div><span class="mc-badge" style="--badge-bg:var(--amber-lt);--badge-color:var(--amber-dk);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--violet);" onclick="selectModule('auxiliaries')">
+        <span class="mc-emoji">⚙️</span><div class="mc-title">Auxiliares</div><div class="mc-desc">Do, Does, Did, Will…</div><span class="mc-badge" style="--badge-bg:var(--violet-lt);--badge-color:var(--violet);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--pink);" onclick="selectModule('determiners')">
+        <span class="mc-emoji">🔤</span><div class="mc-title">Determinantes</div><div class="mc-desc">A, An, The, Some, Any.</div><span class="mc-badge" style="--badge-bg:var(--pink-lt);--badge-color:var(--pink);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--orange);" onclick="selectModule('possessives')">
+        <span class="mc-emoji">✏️</span><div class="mc-title">Posesivos</div><div class="mc-desc">Apóstrofo 's y pronombres.</div><span class="mc-badge" style="--badge-bg:var(--orange-lt);--badge-color:var(--orange);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--green);" onclick="selectModule('subjects')">
+        <span class="mc-emoji">👤</span><div class="mc-title">Sujetos Oblig.</div><div class="mc-desc">I, You, He, She, It...</div><span class="mc-badge" style="--badge-bg:var(--green-lt);--badge-color:var(--green-dk);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--indigo);" onclick="selectModule('adjectives')">
+        <span class="mc-emoji">🎨</span><div class="mc-title">Adjetivos</div><div class="mc-desc">Reglas y posición.</div><span class="mc-badge" style="--badge-bg:var(--indigo-lt);--badge-color:var(--indigo);">10 pregs</span>
+      </div>
+      
+      <div class="menu-card" style="--accent:var(--rose);" onclick="openVerbTable()" style="grid-column:span 2">
+        <span class="mc-emoji">🕐</span><div class="mc-title">Tiempos Verbales</div><div class="mc-desc">Tabla de los 12 tiempos verbales por sujeto y ¡Juego Dinámico!</div><span class="mc-badge" style="--badge-bg:var(--rose-lt);--badge-color:var(--rose);">Verbos Dinámicos</span>
+      </div>
+
+      <div style="grid-column:span 2; font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">💬 Vocabulario Práctico</div>
+      <div class="menu-card" style="--accent:var(--sky);" onclick="selectModule('everydayPhrases')" style="grid-column:span 2">
+        <span class="mc-emoji">🗣️</span><div class="mc-title">Frases Cotidianas</div><div class="mc-desc">Saludos, necesidades y expresiones vitales. (Fase Difícil: ¡A escribir!)</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">20 frases</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screenExplain">
+  <div class="explain-wrap">
+    <div class="explain-hero"><span class="explain-emoji" id="explainEmoji">📚</span><h2 id="explainTitle">Módulo</h2></div>
+    <div class="explain-card" id="explainContent"></div>
+    <div class="phase-cards">
+      <div class="phase-card easy" onclick="startQuiz(1)">
+        <div class="pc-emoji">🟢</div><div class="pc-title">Fase Fácil</div><div class="pc-desc" id="easyDesc">Elige la respuesta correcta.</div>
+      </div>
+      <div class="phase-card hard" onclick="startQuiz(2)">
+        <div class="pc-emoji">🔥</div><div class="pc-title">Fase Difícil</div><div class="pc-desc" id="hardDesc">Adivina el tipo y luego responde.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screenQuiz">
+  <div class="quiz-wrap">
+    <div class="module-tag" id="moduleTag">🛒 Módulo</div>
+    <div class="progress-row"><span id="progLabel">Pregunta 1 de 10</span><span id="attemptLabel">Intento 1</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+    <div class="card">
+      <div class="sentence-area" id="sentenceText"></div>
+      <div id="phase1Help" class="info-chip hidden"><span class="info-chip-badge" id="helpBadge">Tipo</span><span class="info-chip-text" id="helpText">Explicación</span></div>
+      <div id="phase2Noun" class="hidden">
+        <div class="section-title">1. La palabra subrayada es...</div>
+        <div class="type-grid" id="nounGrid"></div>
+      </div>
+      <div class="section-title" id="qTitle">Elige la palabra que falta:</div>
+      <div class="type-grid" id="quantifierGrid"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="action-btn" id="checkBtn" disabled onclick="handleMainAction()">Comprobar ✅</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screenMatch">
+  <div class="quiz-wrap">
+    <div class="card">
+      <div style="text-align:center;">
+        <h2 style="color:var(--teal);margin-bottom:5px;">¡Reto Especial! 🧩</h2>
+        <p style="color:var(--muted);font-size:.88rem;" id="matchDesc">Conecta cada palabra con su significado.</p>
+      </div>
+      <div class="match-columns"><div class="match-col" id="matchWords"></div><div class="match-col" id="matchHints"></div></div>
+      <button class="action-btn hidden" id="btnFinishGame"></button>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screenVerbTable">
+  <div class="vt-wrap">
+    <div class="vt-verb-selector" id="vtVerbSelector"></div>
+    <div class="vt-hero">
+      <div class="vt-verb-badge" id="vtVerbBadge">eat</div>
+      <div class="vt-verb-info">
+        <div class="vt-verb-meaning" id="vtVerbMeaning">🍴 comer</div>
+        <div class="vt-verb-forms" id="vtVerbForms"></div>
+      </div>
+    </div>
+    <div class="vt-legend">
+      <div class="vt-legend-item"><div class="vt-dot" style="background:var(--ink)"></div><span style="color:var(--ink)">Afirmativa</span></div>
+      <div class="vt-legend-item"><div class="vt-dot" style="background:var(--red)"></div><span style="color:var(--red)">Negativa</span></div>
+      <div class="vt-legend-item"><div class="vt-dot" style="background:var(--sky)"></div><span style="color:var(--sky)">Interrogativa</span></div>
+    </div>
+    <div class="vt-family-tabs" id="vtFamilyTabs">
+      <button class="vt-tab active" data-family="simple" onclick="vtSetFamily('simple')"><span class="vt-tab-emoji">⚡</span>Simple</button>
+      <button class="vt-tab" data-family="continuous" onclick="vtSetFamily('continuous')"><span class="vt-tab-emoji">🔄</span>Continuo</button>
+      <button class="vt-tab" data-family="perfect" onclick="vtSetFamily('perfect')"><span class="vt-tab-emoji">✅</span>Perfecto</button>
+      <button class="vt-tab" data-family="perfectContinuous" onclick="vtSetFamily('perfectContinuous')"><span class="vt-tab-emoji">🔁</span>Perf. Cont.</button>
+    </div>
+    <div class="vt-havegot-alert" id="vtHaveGotAlert">
+      <div class="vt-alert-icon">⚠️</div>
+      <div class="vt-alert-body">
+        <strong>Regla clave: HAVE / HAS — ¡NO "have got"!</strong>
+        Los tiempos Perfect usan <b>have / has / had</b> directamente. Con verbos de acción como <b id="vtAlertVerb">eat</b>, "have got" es un <b>error gramatical</b>.
+        <div class="vt-alert-rule">
+          <span class="vt-alert-correct">✅ I have eaten</span> &nbsp;&nbsp; <span class="vt-alert-wrong">❌ I have got eaten</span><br>
+          <span style="font-size:.72rem;color:#7A5A00;margin-top:4px;display:block">"Have got" solo se usa para posesión: "I have got a dog".</span>
+        </div>
+      </div>
+    </div>
+    <div id="vtTenseCards"></div>
+    <div class="vt-play-btn-wrap">
+      <button class="vt-play-btn" onclick="vtShowPhaseRow()">🎮 Jugar con este tiempo verbal</button>
+      <div class="vt-phase-row" id="vtPhaseRow">
+        <button class="vt-phase-pick" onclick="vtStartFromTable(1)">🟢 Fase Fácil<br><span style="font-size:.72rem;font-weight:600;color:var(--muted)">Con pista del tiempo</span></button>
+        <button class="vt-phase-pick" onclick="vtStartFromTable(2)">🔥 Fase Difícil<br><span style="font-size:.72rem;font-weight:600;color:var(--muted)">Sin pista</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screenFinish">
+  <div class="finish-wrap">
+    <div class="finish-card">
+      <div style="font-size:4rem">🏆</div><h2>¡Misión Cumplida!</h2><div class="finish-score" id="finScore">0</div>
+      <p style="margin-bottom:20px;color:var(--muted)">puntos conseguidos</p>
+      <button class="action-btn" style="margin-bottom:12px;" onclick="goBackToMenu()">Elegir otro módulo 📚</button>
+      <button class="action-btn" style="background:var(--muted);" onclick="replayModule()">Repetir módulo 🔄</button>
+    </div>
+  </div>
+</div>
+<!-- ==========================================
+     MODULO 3: PREGUNTAS Y TEXTOS DEL JUEGO
+     ========================================== -->
+<script>
+/* ============================================================
+   DATOS ESTÁTICOS Y REGLAS BÁSICAS
+   ============================================================ */
+const MODULE_MATCH = {
+  countable:[{word:"some",hint:"+ Positivas / Ofrecer"},{word:"any",hint:"- Negativas / ? Preguntas"},{word:"much",hint:"Mucho (Incontables)"},{word:"many",hint:"Muchos (Contables)"},{word:"a lot of",hint:"+ Positivas (Ambos)"},{word:"a little",hint:"Un poco (Incontables)"},{word:"a few",hint:"Unos pocos (Contables)"},{word:"There is",hint:"Hay (Singular)"},{word:"There are",hint:"Hay (Plural)"},{word:"Is there",hint:"¿Hay? (Pregunta)"}],
+  partsOfSpeech:[{word:"Noun",hint:"Persona, lugar o cosa"},{word:"Verb",hint:"Acción o estado"},{word:"Adjective",hint:"Describe al sustantivo"},{word:"runs",hint:"Verbo 3ª persona +s"},{word:"teacher",hint:"Sustantivo: profesión"},{word:"happy",hint:"Adjetivo: emoción"},{word:"dog",hint:"Sustantivo: animal"},{word:"eats",hint:"She/He/It → verbo +s"}],
+  svo:[{word:"She",hint:"Pronombre sujeto femenino"},{word:"He",hint:"Pronombre sujeto masculino"},{word:"It",hint:"Sujeto clima/hora"},{word:"They",hint:"Pronombre sujeto plural"},{word:"We",hint:"Nosotros (sujeto)"},{word:"Subject",hint:"Quién hace la acción"},{word:"Verb",hint:"La acción"},{word:"Object",hint:"Recibe la acción"}],
+  auxiliaries:[{word:"Do",hint:"Pregunta I/You/We/They"},{word:"Does",hint:"Pregunta He/She/It"},{word:"Did",hint:"Pregunta pasado"},{word:"Will",hint:"Auxiliar futuro"},{word:"don't",hint:"Negación I/You/We/They"},{word:"doesn't",hint:"Negación He/She/It"},{word:"didn't",hint:"Negación pasado"},{word:"won't",hint:"Futuro negativo"}],
+  determiners:[{word:"a",hint:"Artículo: consonante"},{word:"an",hint:"Artículo: vocal"},{word:"the",hint:"El/La (específico)"},{word:"some",hint:"Algo (afirmativas)"},{word:"any",hint:"Algo (preg/negativas)"},{word:"a dog",hint:"Consonante → a"},{word:"an apple",hint:"Vocal → an"},{word:"the Eiffel",hint:"Lugar único → the"}],
+  possessives:[{word:"'s",hint:"Indica posesión"},{word:"Tom's",hint:"Pertenece a Tom"},{word:"dog's tail",hint:"Cola del perro"},{word:"my mom's",hint:"De mi mamá"},{word:"Ana's color",hint:"Color de Ana"},{word:"Erick's room",hint:"Cuarto de Erick"},{word:"cat's name",hint:"Nombre del gato"},{word:"Sam's bike",hint:"Bici de Sam"}],
+  subjects:[{word:"I",hint:"Yo (mayúscula)"},{word:"You",hint:"Tú / Ustedes"},{word:"He",hint:"Él"},{word:"She",hint:"Ella"},{word:"It",hint:"Objeto / animal"},{word:"We",hint:"Nosotros"},{word:"They",hint:"Ellos / Ellas"},{word:"It is Monday",hint:"Días → sujeto It"}],
+  adjectives:[{word:"tall",hint:"Alto (no cambia en plural)"},{word:"blue",hint:"Color: antes del sustantivo"},{word:"big",hint:"Grande (sin 's')"},{word:"hot",hint:"Caliente (adjetivo)"},{word:"good",hint:"Bueno (invariable)"},{word:"old",hint:"Viejo (sin 's')"},{word:"black shoes",hint:"Adj + sust plural"},{word:"tall trees",hint:"Solo el sustantivo lleva 's'"}],
+  everydayPhrases:[{word:"I don't know",hint:"No lo sé"},{word:"I am hungry",hint:"Tengo hambre"},{word:"Excuse me",hint:"Disculpa / Perdón"},{word:"You're welcome",hint:"De nada"},{word:"Please",hint:"Por favor"},{word:"Nice to meet you",hint:"Mucho gusto"},{word:"How do you say",hint:"¿Cómo se dice...?"},{word:"I don't understand",hint:"No entiendo"},{word:"See you later",hint:"Hasta luego"},{word:"Thank you",hint:"Gracias"}]
+};
+
+const MODULE_EXPLAIN = {
+  countable:{accentColor:"var(--teal)",intro:"Los <strong>cuantificadores</strong> indican <em>cuánto</em> hay de algo.",concepts:[{label:"🍎 Contable",text:"Se cuenta: 1 apple. Usan <strong>many</strong>, <strong>a few</strong>, <strong>some</strong>, <strong>any</strong>."},{label:"💧 Incontable",text:"No se cuenta: water. Usan <strong>much</strong>, <strong>a little</strong>."},{label:"⚖️ Ambos (Afirmativas)",text:"Para decir 'mucho' en frases positivas, usamos <strong>a lot of</strong> (sirve para ambos)."}],examples:[{en:"There are many apples.",es:"Hay muchas manzanas."},{en:"There is a lot of bread.",es:"Hay mucho pan."}],tip:"Si puedes decir '1, 2, 3…' → Contable. Si no → Incontable."},
+  partsOfSpeech:{accentColor:"var(--sky)",intro:"Las <strong>partes del discurso</strong> son los roles de las palabras.",concepts:[{label:"📦 Sustantivo",text:"Persona, lugar o cosa (dog, teacher)."},{label:"⚡ Verbo",text:"Acción (run, eat). Con He/She/It añade <strong>-s</strong>."},{label:"🎨 Adjetivo",text:"Describe. Va <strong>antes</strong> del sustantivo (big, red)."}],examples:[{en:"The fast dog runs.",es:"El perro rápido corre."}],tip:"Sustantivo = COSA. Verbo = ACCIÓN. Adjetivo = DESCRIPCIÓN."},
+  svo:{accentColor:"var(--amber)",intro:"En inglés, el orden es <strong>S-V-O</strong>: Sujeto → Verbo → Objeto.",concepts:[{label:"👤 Sujeto",text:"Siempre obligatorio, incluso con clima: <strong>It is raining</strong>."},{label:"⚡ Verbo",text:"Va después del sujeto."}],examples:[{en:"It is Monday.",es:"(Es lunes.) — No se omite 'It'."}],tip:"En español decimos 'Llueve'. En inglés SIEMPRE: 'It rains'."},
+  auxiliaries:{accentColor:"var(--violet)",intro:"Los <strong>auxiliares</strong> forman preguntas y negaciones.",concepts:[{label:"⚙️ Do / Does",text:"Presente. Do (I/You/We/They), Does (He/She/It)."},{label:"⚙️ Did",text:"Pasado. Igual para todos."},{label:"⚙️ Will / Won't",text:"Futuro."}],examples:[{en:"Do you like pizza?",es:"¿Te gusta la pizza?"}],tip:"Presente: Do/Does. Pasado: Did. Futuro: Will."},
+  determiners:{accentColor:"var(--pink)",intro:"Los <strong>determinantes</strong> van antes del sustantivo.",concepts:[{label:"📌 A / An",text:"<strong>A</strong> (consonante), <strong>An</strong> (vocal)."},{label:"📌 The",text:"Cosas <strong>específicas</strong> o únicas."},{label:"🔤 Some / Any",text:"<strong>Some</strong> (afirmativas/ofrecer), <strong>Any</strong> (preguntas/negativas)."}],examples:[{en:"I have a dog.",es:"Tengo un perro. (D = consonante)"}],tip:"¿Primera vez? → a/an. ¿Ya se sabe cuál? → the."},
+  possessives:{accentColor:"var(--orange)",intro:"Usamos el <strong>apóstrofo + s ('s)</strong> para indicar posesión.",concepts:[{label:"✏️ Nombre + 's",text:"El poseedor va primero: <strong>Tom's book</strong>."}],examples:[{en:"Erick's room is tidy.",es:"La habitación de Erick está ordenada."}],tip:"Fórmula: POSEEDOR + 's + COSA POSEÍDA."},
+  subjects:{accentColor:"var(--green)",intro:"El <strong>sujeto es obligatorio</strong>. No se puede omitir.",concepts:[{label:"👤 Pronombres",text:"I, You, He, She, It, We, They."},{label:"👤 It",text:"Para clima, hora, días y objetos."}],examples:[{en:"I study English.",es:"Yo estudio inglés. (No: 'Study English')"}],tip:"'I' (Yo) se escribe siempre en mayúscula."},
+  adjectives:{accentColor:"var(--indigo)",intro:"Los <strong>adjetivos son invariables</strong> y van antes del sustantivo.",concepts:[{label:"🎨 Invariables",text:"No tienen plural. <strong>tall boy</strong>, <strong>tall boys</strong>."},{label:"🎨 Posición",text:"Antes del sustantivo: <strong>blue sky</strong>."}],examples:[{en:"They are tall.",es:"Son altos. (No 'talls')"}],tip:"El sustantivo lleva 's' en plural, el adjetivo NUNCA."},
+  everydayPhrases:{
+    accentColor:"var(--sky)",
+    intro:"Aprender <strong>frases cotidianas</strong> te ayuda a comunicarte sin pensar regla por regla.",
+    concepts:[
+      {label:"💬 Saludos y Cortesía",text:"Hello, Good morning, Thank you, Please."},
+      {label:"💬 Necesidades",text:"I am hungry (Tengo hambre), I don't understand (No entiendo)."}
+    ],
+    examples:[
+      {en:"Nice to meet you.",es:"Mucho gusto."},
+      {en:"How do you say...?",es:"¿Cómo se dice...?"}
+    ],
+    tip:"Modo Fácil: Selecciona la traducción. Modo Difícil: ¡Te toca teclear la frase en inglés!"
+  }
+};
+
+const OPTION_HINTS = {
+  "a":"Un/Una (Consonante)","an":"Un/Una (Vocal)","some":"+ Positivas / Ofrecer","any":"- Negativas / ? Preguntas",
+  "much":"Mucho (Incontables)","many":"Muchos (Contables)","a lot of":"+ Positivas (Ambos)","a little":"Un poco (Incont)",
+  "a few":"Unos pocos (Cont)","There is":"Hay (Singular)","There are":"Hay (Plural)","Is there":"¿Hay? (Pregunta)"
+};
+
+/* Arrays from original config... */
+const Q_COUNTABLE = [{sentence:[{en:"[BLANK]",es:"Hay"},{en:"a cat",es:"un gato"},{en:"on the mat.",es:"en la alfombra."}],nounType:"C",nounLabel:"Contable",options:["There is","There are","Is there"],correct:"There is",explainNoun:"Gato es contable singular.",explainRule:"Usamos 'There is' para singular.",hint:"Habla de UN solo gato."},{sentence:[{en:"[BLANK]",es:"Hay"},{en:"apples",es:"manzanas"},{en:"in the basket.",es:"en la cesta."}],nounType:"C",nounLabel:"Contable",options:["There is","There are","Is there"],correct:"There are",explainNoun:"Manzanas son contables en plural.",explainRule:"Usamos 'There are' para plural.",hint:"Son varias manzanas."},{sentence:[{en:"There is",es:"Hay"},{en:"[BLANK]",es:"una"},{en:"apple",es:"manzana",isTarget:true},{en:"in the fridge.",es:"en la nevera."}],nounType:"C",nounLabel:"Contable",options:["a","an","some"],correct:"an",explainNoun:"Apple es singular.",explainRule:"Como 'apple' empieza por vocal, usamos 'an'.",hint:"Empieza por 'A' (vocal)."},{sentence:[{en:"There is",es:"Hay"},{en:"[BLANK]",es:"un"},{en:"lemon",es:"limón",isTarget:true},{en:"on the table.",es:"en la mesa."}],nounType:"C",nounLabel:"Contable",options:["a","an","any"],correct:"a",explainNoun:"Lemon es singular.",explainRule:"Como 'lemon' empieza por consonante, usamos 'a'.",hint:"Empieza por consonante (L)."},{sentence:[{en:"There aren't",es:"No hay"},{en:"[BLANK]",es:"(ninguna)"},{en:"carrots",es:"zanahorias",isTarget:true},{en:"in the fridge.",es:"en la nevera."}],nounType:"C",nounLabel:"Contable",options:["some","any","much"],correct:"any",explainNoun:"Zanahorias se pueden contar.",explainRule:"Usamos 'any' en negativas (aren't).",hint:"Es una oración negativa."},{sentence:[{en:"We have",es:"Tenemos"},{en:"[BLANK]",es:"algunas"},{en:"strawberries",es:"fresas",isTarget:true},{en:"for lunch.",es:"para comer."}],nounType:"C",nounLabel:"Contable",options:["any","a little","some"],correct:"some",explainNoun:"Las fresas se pueden contar.",explainRule:"Usamos 'some' en afirmativas.",hint:"Es una oración afirmativa."},{sentence:[{en:"Are there",es:"¿Hay"},{en:"[BLANK]",es:"algunas"},{en:"grapes",es:"uvas",isTarget:true},{en:"in the basket?",es:"en la cesta?"}],nounType:"C",nounLabel:"Contable",options:["some","any","much"],correct:"any",explainNoun:"Grapes es plural contable.",explainRule:"Usamos 'any' para preguntas.",hint:"Fíjate en el signo de interrogación."},{sentence:[{en:"There isn't",es:"No hay"},{en:"[BLANK]",es:"nada de"},{en:"homework",es:"tarea",isTarget:true},{en:"today.",es:"hoy."}],nounType:"U",nounLabel:"Incontable",options:["some","any","many"],correct:"any",explainNoun:"Homework es incontable.",explainRule:"Usamos 'any' en negativas.",hint:"Es una oración negativa."},{sentence:[{en:"How",es:"Cuánta"},{en:"[BLANK]",es:""},{en:"water",es:"agua",isTarget:true},{en:"do you drink?",es:"bebes?"}],nounType:"U",nounLabel:"Incontable",options:["many","much","a few"],correct:"much",explainNoun:"El agua es incontable.",explainRule:"Preguntar por incontables = 'How much'.",hint:"El agua se mide, no se cuenta."},{sentence:[{en:"There are",es:"Hay"},{en:"[BLANK]",es:"muchos"},{en:"tomatoes",es:"tomates",isTarget:true},{en:"in the salad.",es:"en la ensalada."}],nounType:"C",nounLabel:"Contable",options:["much","many","a little"],correct:"many",explainNoun:"Los tomates se pueden contar.",explainRule:"Usamos 'many' para contables.",hint:"¿Los tomates se cuentan? Sí."},{sentence:[{en:"There is",es:"Hay"},{en:"[BLANK]",es:"mucho"},{en:"bread",es:"pan",isTarget:true},{en:"on the table.",es:"en la mesa."}],nounType:"U",nounLabel:"Incontable",options:["many","much","a lot of"],correct:"a lot of",explainNoun:"El pan se considera incontable.",explainRule:"Con incontables afirmativos, usamos 'a lot of'.",hint:"En afirmativas evitamos much/many."},{sentence:[{en:"There are",es:"Hay"},{en:"[BLANK]",es:"unas pocas"},{en:"watermelons",es:"sandías",isTarget:true},{en:"here.",es:"aquí."}],nounType:"C",nounLabel:"Contable",options:["a little","a few","much"],correct:"a few",explainNoun:"Las sandías se pueden contar.",explainRule:"Usamos 'a few' (unas pocas) para contables.",hint:"Las sandías se pueden contar."},{sentence:[{en:"There is",es:"Hay"},{en:"[BLANK]",es:"un poco de"},{en:"milk",es:"leche",isTarget:true},{en:"in the fridge.",es:"en la nevera."}],nounType:"U",nounLabel:"Incontable",options:["a few","a little","many"],correct:"a little",explainNoun:"La leche es incontable.",explainRule:"Usamos 'a little' para incontables.",hint:"Los líquidos son incontables."},{sentence:[{en:"We have",es:"Tenemos"},{en:"[BLANK]",es:"unos pocos"},{en:"eggs",es:"huevos",isTarget:true},{en:"left.",es:"sobrando."}],nounType:"C",nounLabel:"Contable",options:["a few","a little","much"],correct:"a few",explainNoun:"Los huevos se pueden contar.",explainRule:"Usamos 'a few' para indicar 'unos pocos' contables.",hint:"Los huevos se cuentan."},{sentence:[{en:"I need",es:"Necesito"},{en:"[BLANK]",es:"un poco de"},{en:"sugar",es:"azúcar",isTarget:true},{en:"for my tea.",es:"para mi té."}],nounType:"U",nounLabel:"Incontable",options:["a few","a little","many"],correct:"a little",explainNoun:"El azúcar es polvo incontable.",explainRule:"Usamos 'a little' para incontables.",hint:"El azúcar es incontable."},{sentence:[{en:"I eat",es:"Yo como"},{en:"[BLANK]",es:"mucho"},{en:"rice",es:"arroz",isTarget:true},{en:"every day.",es:"todos los días."}],nounType:"U",nounLabel:"Incontable",options:["many","a lot of","a few"],correct:"a lot of",explainNoun:"El arroz es incontable.",explainRule:"Con incontables afirmativo, 'a lot of'.",hint:"El arroz es incontable."},{sentence:[{en:"There is",es:"Hay"},{en:"[BLANK]",es:"un poco de"},{en:"cheese",es:"queso",isTarget:true},{en:"on the pizza.",es:"en la pizza."}],nounType:"U",nounLabel:"Incontable",options:["a few","a little","many"],correct:"a little",explainNoun:"El queso general es incontable.",explainRule:"Al ser incontable, usamos 'a little'.",hint:"El queso es incontable."},{sentence:[{en:"Do you want",es:"¿Quieres"},{en:"[BLANK]",es:"algunas"},{en:"fries?",es:"papas fritas?",isTarget:true}],nounType:"C",nounLabel:"Contable",options:["some","any","much"],correct:"some",explainNoun:"Las papas fritas son contables.",explainRule:"Aunque es pregunta, usamos 'some' porque OFRECEMOS.",hint:"Estás invitando comida. Se usa some."},{sentence:[{en:"There isn't",es:"No hay"},{en:"[BLANK]",es:"mucha"},{en:"meat",es:"carne",isTarget:true},{en:"today.",es:"hoy."}],nounType:"U",nounLabel:"Incontable",options:["many","much","a few"],correct:"much",explainNoun:"La carne es incontable.",explainRule:"Usamos 'much' en negativas con incontables.",hint:"La carne es incontable."},{sentence:[{en:"There are",es:"Hay"},{en:"[BLANK]",es:"muchos"},{en:"cars",es:"coches",isTarget:true},{en:"in the street.",es:"en la calle."}],nounType:"C",nounLabel:"Contable",options:["much","many","a little"],correct:"many",explainNoun:"Los coches se pueden contar.",explainRule:"Usamos 'many' para contables en plural.",hint:"Puedes contar los coches."}];
+const Q_PARTS = [{sentence:[{en:"The",es:"El"},{en:"[BLANK]",es:"rápido"},{en:"car",es:"coche"},{en:"is red.",es:"es rojo."}],nounType:"Adjective",nounLabel:"Adjetivo",options:["fast","fastly","fasts"],correct:"fast",explainNoun:"Describe al sustantivo.",explainRule:"Adjetivo antes del sust.",hint:"Adjetivos antes del sust."},{sentence:[{en:"She",es:"Ella"},{en:"[BLANK]",es:"come"},{en:"an apple.",es:"una manzana."}],nounType:"Verb",nounLabel:"Verbo",options:["eat","eats","eating"],correct:"eats",explainNoun:"Verbo de acción.",explainRule:"She → eats.",hint:"She = 3ª persona → +s."},{sentence:[{en:"The",es:"El"},{en:"[BLANK]",es:"perro"},{en:"barks.",es:"ladra."}],nounType:"Noun",nounLabel:"Sustantivo",options:["dog","dogs","dogging"],correct:"dog",explainNoun:"Sustantivo singular.",explainRule:"'Dog' singular.",hint:"Animal que ladra."},{sentence:[{en:"He",es:"Él"},{en:"[BLANK]",es:"corre"},{en:"every morning.",es:"cada mañana."}],nounType:"Verb",nounLabel:"Verbo",options:["run","runs","running"],correct:"runs",explainNoun:"Verbo.",explainRule:"He → runs.",hint:"He/She/It → verbo + s."},{sentence:[{en:"The",es:"La"},{en:"[BLANK]",es:"feliz"},{en:"girl",es:"niña"},{en:"sings.",es:"canta."}],nounType:"Adjective",nounLabel:"Adjetivo",options:["happy","happily","happys"],correct:"happy",explainNoun:"Describe a la niña.",explainRule:"Adjetivos no cambian.",hint:"¿Cómo es la niña?"},{sentence:[{en:"My",es:"Mi"},{en:"[BLANK]",es:"amigo"},{en:"likes football.",es:"le gusta el fútbol."}],nounType:"Noun",nounLabel:"Sustantivo",options:["friend","friends","friended"],correct:"friend",explainNoun:"Persona.",explainRule:"'My friend' singular.",hint:"Sustantivo = persona."},{sentence:[{en:"They",es:"Ellos"},{en:"[BLANK]",es:"juegan"},{en:"soccer.",es:"fútbol."}],nounType:"Verb",nounLabel:"Verbo",options:["play","plays","playing"],correct:"play",explainNoun:"Verbo.",explainRule:"They → no lleva 's'.",hint:"They → sin 's'."},{sentence:[{en:"A",es:"Una"},{en:"[BLANK]",es:"grande"},{en:"house.",es:"casa."}],nounType:"Adjective",nounLabel:"Adjetivo",options:["big","bigs","bigging"],correct:"big",explainNoun:"Adjetivo.",explainRule:"'Big' antes del sust.",hint:"¿Cómo es la casa?"},{sentence:[{en:"The",es:"El"},{en:"[BLANK]",es:"maestro"},{en:"writes.",es:"escribe."}],nounType:"Noun",nounLabel:"Sustantivo",options:["teacher","teaches","teaching"],correct:"teacher",explainNoun:"Persona.",explainRule:"Sustantivo hace acción.",hint:"¿Quién escribe?"},{sentence:[{en:"The soup is",es:"La sopa está"},{en:"[BLANK]",es:"caliente."}],nounType:"Adjective",nounLabel:"Adjetivo",options:["hot","hotly","hots"],correct:"hot",explainNoun:"Adjetivo.",explainRule:"Describe el sust.",hint:"¿Cómo está la sopa?"}];
+const Q_SVO = [{sentence:[{en:"[BLANK]",es:"Ella"},{en:"eats",es:"come"},{en:"an apple.",es:"una manzana."}],nounType:"Subject",nounLabel:"Sujeto",options:["She","Her","Hers"],correct:"She",explainNoun:"Pronombre sujeto.",explainRule:"Sujeto OBLIGATORIO.",hint:"'Ella' = She."},{sentence:[{en:"He",es:"Él"},{en:"[BLANK]",es:"juega"},{en:"football.",es:"fútbol."}],nounType:"Verb",nounLabel:"Verbo",options:["play","plays","playing"],correct:"plays",explainNoun:"Verbo de acción.",explainRule:"He → 'plays'.",hint:"He → + s."},{sentence:[{en:"[BLANK]",es:"(Está)"},{en:"raining",es:"lloviendo"},{en:"today.",es:"hoy."}],nounType:"Subject",nounLabel:"Sujeto",options:["It","Is","Rain"],correct:"It",explainNoun:"Sujeto formal.",explainRule:"Clima usamos 'It'.",hint:"Clima → It."},{sentence:[{en:"We",es:"Nosotros"},{en:"[BLANK]",es:"vemos"},{en:"a movie.",es:"una peli."}],nounType:"Verb",nounLabel:"Verbo",options:["watch","watches","watching"],correct:"watch",explainNoun:"Verbo.",explainRule:"We → sin 's'.",hint:"We → sin 's'."},{sentence:[{en:"[BLANK]",es:"(Es)"},{en:"Monday.",es:"lunes."}],nounType:"Subject",nounLabel:"Sujeto",options:["It","Is","Today"],correct:"It",explainNoun:"Sujeto para días.",explainRule:"Días usamos 'It'.",hint:"Día → It."},{sentence:[{en:"They",es:"Ellos"},{en:"[BLANK]",es:"viven"},{en:"in Madrid.",es:"en Madrid."}],nounType:"Verb",nounLabel:"Verbo",options:["live","lives","living"],correct:"live",explainNoun:"Verbo.",explainRule:"They → sin 's'.",hint:"They → sin 's'."},{sentence:[{en:"[BLANK]",es:"(Parece)"},{en:"cold",es:"frío"},{en:"outside.",es:"afuera."}],nounType:"Subject",nounLabel:"Sujeto",options:["It","Is","There"],correct:"It",explainNoun:"Clima.",explainRule:"Clima → It.",hint:"Clima → It."},{sentence:[{en:"I",es:"Yo"},{en:"[BLANK]",es:"tengo"},{en:"a dog.",es:"un perro."}],nounType:"Verb",nounLabel:"Verbo",options:["has","have","having"],correct:"have",explainNoun:"Verbo.",explainRule:"I → 'have'.",hint:"Solo He/She/It usan 'has'."},{sentence:[{en:"[BLANK]",es:"(Son)"},{en:"eight o'clock.",es:"las ocho."}],nounType:"Subject",nounLabel:"Sujeto",options:["It","They","Is"],correct:"It",explainNoun:"Hora.",explainRule:"Hora usamos 'It'.",hint:"Hora → It."},{sentence:[{en:"She",es:"Ella"},{en:"[BLANK]",es:"estudia"},{en:"English.",es:"inglés."}],nounType:"Verb",nounLabel:"Verbo",options:["study","studies","studying"],correct:"studies",explainNoun:"Verbo.",explainRule:"She → studies.",hint:"Study → -ies."}];
+const Q_AUX = [{sentence:[{en:"[BLANK]",es:"¿Te"},{en:"you",es:"(tú)"},{en:"like",es:"gusta"},{en:"pizza?",es:"la pizza?"}],nounType:"Aux",nounLabel:"Auxiliar",options:["Do","Does","Did"],correct:"Do",explainNoun:"I/You/We/They.",explainRule:"You → 'Do'.",hint:"You → Do."},{sentence:[{en:"[BLANK]",es:"¿Le"},{en:"she",es:"ella"},{en:"speak",es:"habla"},{en:"French?",es:"francés?"}],nounType:"Aux",nounLabel:"Auxiliar",options:["Do","Does","Did"],correct:"Does",explainNoun:"He/She/It.",explainRule:"She → 'Does'.",hint:"She → Does."},{sentence:[{en:"I",es:"Yo"},{en:"[BLANK]",es:"no"},{en:"like",es:"me gusta"},{en:"coffee.",es:"el café."}],nounType:"Aux",nounLabel:"Auxiliar",options:["don't","doesn't","didn't"],correct:"don't",explainNoun:"Negación I/You/We/They.",explainRule:"I → 'don't'.",hint:"I → don't."},{sentence:[{en:"She",es:"Ella"},{en:"[BLANK]",es:"no"},{en:"eat",es:"come"},{en:"meat.",es:"carne."}],nounType:"Aux",nounLabel:"Auxiliar",options:["don't","doesn't","didn't"],correct:"doesn't",explainNoun:"Negación He/She/It.",explainRule:"She → 'doesn't'.",hint:"She → doesn't."},{sentence:[{en:"[BLANK]",es:"¿"},{en:"they",es:"ellos"},{en:"play",es:"jugaron"},{en:"yesterday?",es:"ayer?"}],nounType:"Aux",nounLabel:"Auxiliar",options:["Do","Does","Did"],correct:"Did",explainNoun:"Pasado.",explainRule:"Pasado → 'Did'.",hint:"Ayer → Did."},{sentence:[{en:"He",es:"Él"},{en:"[BLANK]",es:"no"},{en:"go",es:"fue"},{en:"to school.",es:"a la escuela."}],nounType:"Aux",nounLabel:"Auxiliar",options:["don't","doesn't","didn't"],correct:"didn't",explainNoun:"Pasado neg.",explainRule:"Pasado neg → 'didn't'.",hint:"Pasado → didn't."},{sentence:[{en:"[BLANK]",es:"(Ella)"},{en:"she",es:""},{en:"call",es:"llamará"},{en:"tomorrow?",es:"mañana?"}],nounType:"Aux",nounLabel:"Auxiliar",options:["Will","Does","Did"],correct:"Will",explainNoun:"Futuro.",explainRule:"Futuro → 'Will'.",hint:"Mañana → Will."},{sentence:[{en:"We",es:"Nosotros"},{en:"[BLANK]",es:"no"},{en:"be",es:"estaremos"},{en:"late.",es:"tarde."}],nounType:"Aux",nounLabel:"Auxiliar",options:["won't","doesn't","didn't"],correct:"won't",explainNoun:"Futuro neg.",explainRule:"Futuro neg → won't.",hint:"Will + not = won't."},{sentence:[{en:"[BLANK]",es:"¿Te"},{en:"you",es:"(tú)"},{en:"watch",es:"viste"},{en:"the game?",es:"el juego?"}],nounType:"Aux",nounLabel:"Auxiliar",options:["Do","Does","Did"],correct:"Did",explainNoun:"Pasado.",explainRule:"Pasado → 'Did'.",hint:"Pasado → Did."},{sentence:[{en:"They",es:"Ellos"},{en:"[BLANK]",es:"no"},{en:"come",es:"vinieron"},{en:"to the party.",es:"a la fiesta."}],nounType:"Aux",nounLabel:"Auxiliar",options:["don't","doesn't","didn't"],correct:"didn't",explainNoun:"Pasado neg.",explainRule:"Pasado neg → 'didn't'.",hint:"Pasado → didn't."}];
+const Q_DET = [{sentence:[{en:"I have",es:"Tengo"},{en:"[BLANK]",es:"un"},{en:"dog.",es:"perro."}],nounType:"Art",nounLabel:"Artículo",options:["a","an","the"],correct:"a",explainNoun:"Dog consonante.",explainRule:"Consonante → 'a'.",hint:"Dog → D."},{sentence:[{en:"She has",es:"Ella tiene"},{en:"[BLANK]",es:"una"},{en:"umbrella.",es:"paraguas."}],nounType:"Art",nounLabel:"Artículo",options:["a","an","the"],correct:"an",explainNoun:"Umbrella vocal.",explainRule:"Vocal → 'an'.",hint:"Umbrella → U."},{sentence:[{en:"I have",es:"Tengo"},{en:"[BLANK]",es:"algo de"},{en:"milk.",es:"leche."}],nounType:"Det",nounLabel:"Det",options:["some","any","the"],correct:"some",explainNoun:"Incontable.",explainRule:"Afirmativas → 'some'.",hint:"Afirmativa → some."},{sentence:[{en:"Do you have",es:"¿Tienes"},{en:"[BLANK]",es:"algo de"},{en:"water?",es:"agua?"}],nounType:"Det",nounLabel:"Det",options:["some","any","a"],correct:"any",explainNoun:"Pregunta.",explainRule:"Preguntas → 'any'.",hint:"Pregunta → any."},{sentence:[{en:"Please close",es:"Por favor cierra"},{en:"[BLANK]",es:"la"},{en:"door.",es:"puerta."}],nounType:"Art",nounLabel:"Artículo",options:["a","an","the"],correct:"the",explainNoun:"Específico.",explainRule:"Específico → 'the'.",hint:"Específico → the."},{sentence:[{en:"He wants",es:"Él quiere"},{en:"[BLANK]",es:"una"},{en:"orange.",es:"naranja."}],nounType:"Art",nounLabel:"Artículo",options:["a","an","the"],correct:"an",explainNoun:"Orange vocal.",explainRule:"Vocal → 'an'.",hint:"Orange → O."},{sentence:[{en:"There aren't",es:"No hay"},{en:"[BLANK]",es:"ningún"},{en:"eggs.",es:"huevo."}],nounType:"Det",nounLabel:"Det",options:["some","any","the"],correct:"any",explainNoun:"Negativa.",explainRule:"Negativas → 'any'.",hint:"Negativa → any."},{sentence:[{en:"I visited",es:"Visité"},{en:"[BLANK]",es:"el"},{en:"Eiffel Tower.",es:"Torre Eiffel."}],nounType:"Art",nounLabel:"Artículo",options:["a","an","the"],correct:"the",explainNoun:"Únicos.",explainRule:"Únicos → 'the'.",hint:"Eiffel → the."},{sentence:[{en:"Can I have",es:"¿Puedo tomar"},{en:"[BLANK]",es:"algo de"},{en:"juice?",es:"jugo?"}],nounType:"Det",nounLabel:"Det",options:["some","any","a"],correct:"some",explainNoun:"Ofrecer/pedir.",explainRule:"Pedir educadamente → 'some'.",hint:"Estás pidiendo → some."},{sentence:[{en:"It is",es:"Es"},{en:"[BLANK]",es:"una"},{en:"apple.",es:"manzana."}],nounType:"Art",nounLabel:"Artículo",options:["a","an","the"],correct:"an",explainNoun:"Apple vocal.",explainRule:"Vocal → 'an'.",hint:"Apple → A."}];
+const Q_POSS = [{sentence:[{en:"It is",es:"Es"},{en:"[BLANK]",es:"el gato de Erick."}],nounType:"Poss",nounLabel:"Posesivo",options:["Erick's cat","the cat of Erick","Erick cat"],correct:"Erick's cat",explainNoun:"Poseedor primero.",explainRule:"Erick's cat.",hint:"Nombre + 's + objeto."},{sentence:[{en:"This is",es:"Este es"},{en:"[BLANK]",es:"el libro de mi mamá."}],nounType:"Poss",nounLabel:"Posesivo",options:["my mom's book","the book of my mom","my moms book"],correct:"my mom's book",explainNoun:"Mom posee el libro.",explainRule:"mom's book.",hint:"Mom + 's + book."},{sentence:[{en:"The",es:"La"},{en:"[BLANK]",es:"cola del perro."},{en:"is wagging.",es:"se mueve."}],nounType:"Poss",nounLabel:"Posesivo",options:["dog's tail","tail of dog","dogs tail"],correct:"dog's tail",explainNoun:"Perro posee.",explainRule:"dog's tail.",hint:"Dog + 's + tail."},{sentence:[{en:"Is that",es:"¿Eso es"},{en:"[BLANK]",es:"la mochila de Tom?"}],nounType:"Poss",nounLabel:"Posesivo",options:["Tom's backpack","the backpack of Tom","Toms backpack"],correct:"Tom's backpack",explainNoun:"Tom posee.",explainRule:"Tom's backpack.",hint:"Tom + 's + backpack."},{sentence:[{en:"I love",es:"Me encanta"},{en:"[BLANK]",es:"el jardín de mi abuela."}],nounType:"Poss",nounLabel:"Posesivo",options:["my grandma's garden","the garden of my grandma","my grandmas garden"],correct:"my grandma's garden",explainNoun:"Abuela posee.",explainRule:"grandma's garden.",hint:"Abuela + 's + jardín."},{sentence:[{en:"[BLANK]",es:"El nombre del gato"},{en:"is Whiskers.",es:"es Whiskers."}],nounType:"Poss",nounLabel:"Posesivo",options:["The cat's name","The name of cat","The cats name"],correct:"The cat's name",explainNoun:"Gato posee nombre.",explainRule:"cat's name.",hint:"Cat + 's + name."},{sentence:[{en:"Did you see",es:"¿Viste"},{en:"[BLANK]",es:"la bicicleta de Sam?"}],nounType:"Poss",nounLabel:"Posesivo",options:["Sam's bike","the bike of Sam","Sams bike"],correct:"Sam's bike",explainNoun:"Sam posee.",explainRule:"Sam's bike.",hint:"Sam + 's + bike."},{sentence:[{en:"[BLANK]",es:"La habitación de Erick"},{en:"is tidy.",es:"está ordenada."}],nounType:"Poss",nounLabel:"Posesivo",options:["Erick's room","the room of Erick","Ericks room"],correct:"Erick's room",explainNoun:"Erick posee.",explainRule:"Erick's room.",hint:"Erick + 's + room."},{sentence:[{en:"I like",es:"Me gusta"},{en:"[BLANK]",es:"la voz de mi maestra."}],nounType:"Poss",nounLabel:"Posesivo",options:["my teacher's voice","the voice of my teacher","my teachers voice"],correct:"my teacher's voice",explainNoun:"Maestra posee voz.",explainRule:"teacher's voice.",hint:"Teacher + 's + voice."},{sentence:[{en:"The",es:"El"},{en:"[BLANK]",es:"color favorito de Ana"},{en:"is blue.",es:"es azul."}],nounType:"Poss",nounLabel:"Posesivo",options:["Ana's favourite color","the favourite color of Ana","Anas favourite color"],correct:"Ana's favourite color",explainNoun:"Ana posee color.",explainRule:"Ana's favourite color.",hint:"Ana + 's + colour."}];
+const Q_SUBJ = [{sentence:[{en:"[BLANK]",es:"(Ella)"},{en:"is",es:"está"},{en:"happy.",es:"feliz."}],nounType:"Pro",nounLabel:"Pron",options:["She","Her","Is"],correct:"She",explainNoun:"Sujeto Ella.",explainRule:"Sujeto OBLIGATORIO.",hint:"Ella = She."},{sentence:[{en:"[BLANK]",es:"(Ellos)"},{en:"are",es:"son"},{en:"friends.",es:"amigos."}],nounType:"Pro",nounLabel:"Pron",options:["They","Them","Their"],correct:"They",explainNoun:"Sujeto Ellos.",explainRule:"Sujeto obligatorio.",hint:"Ellos → They."},{sentence:[{en:"[BLANK]",es:"(Yo)"},{en:"study",es:"estudio"},{en:"English.",es:"inglés."}],nounType:"Pro",nounLabel:"Pron",options:["I","Me","My"],correct:"I",explainNoun:"Sujeto Yo.",explainRule:"Siempre mayúscula.",hint:"Yo → I."},{sentence:[{en:"[BLANK]",es:"(Él)"},{en:"likes",es:"le gusta"},{en:"music.",es:"la música."}],nounType:"Pro",nounLabel:"Pron",options:["He","Him","His"],correct:"He",explainNoun:"Sujeto Él.",explainRule:"Él → He.",hint:"Él → He."},{sentence:[{en:"[BLANK]",es:"(Nosotros)"},{en:"play",es:"jugamos"},{en:"football.",es:"fútbol."}],nounType:"Pro",nounLabel:"Pron",options:["We","Us","Our"],correct:"We",explainNoun:"Sujeto Nosotros.",explainRule:"Nosotros → We.",hint:"Nosotros → We."},{sentence:[{en:"[BLANK]",es:"(Tú)"},{en:"are",es:"eres"},{en:"very tall.",es:"muy alto."}],nounType:"Pro",nounLabel:"Pron",options:["You","Your","Yours"],correct:"You",explainNoun:"Sujeto Tú.",explainRule:"Tú → You.",hint:"Tú → You."},{sentence:[{en:"[BLANK]",es:"(Ello)"},{en:"is",es:"es"},{en:"a big table.",es:"una mesa grande."}],nounType:"Pro",nounLabel:"Pron",options:["It","Is","Its"],correct:"It",explainNoun:"Sujeto objeto.",explainRule:"Objetos → It.",hint:"Mesa → It."},{sentence:[{en:"[BLANK]",es:"(Ella)"},{en:"cooks",es:"cocina"},{en:"very well.",es:"muy bien."}],nounType:"Pro",nounLabel:"Pron",options:["She","Her","Hers"],correct:"She",explainNoun:"Sujeto Ella.",explainRule:"Ella → She.",hint:"Ella → She."},{sentence:[{en:"[BLANK]",es:"(Ustedes)"},{en:"speak",es:"hablan"},{en:"Spanish.",es:"español."}],nounType:"Pro",nounLabel:"Pron",options:["You","Your","They"],correct:"You",explainNoun:"Sujeto Ustedes.",explainRule:"Ustedes → You.",hint:"Ustedes → You."},{sentence:[{en:"[BLANK]",es:"(Él)"},{en:"is",es:"es"},{en:"my best friend.",es:"mi mejor amigo."}],nounType:"Pro",nounLabel:"Pron",options:["He","Him","His"],correct:"He",explainNoun:"Sujeto Él.",explainRule:"Él → He.",hint:"Él → He."}];
+const Q_ADJ = [{sentence:[{en:"They are",es:"Ellos son"},{en:"[BLANK]",es:"altos."}],nounType:"Adj",nounLabel:"Adj",options:["talls","tall","talling"],correct:"tall",explainNoun:"Adjetivo.",explainRule:"Adjetivos NO cambian.",hint:"Sin 's'."},{sentence:[{en:"The",es:"El"},{en:"[BLANK]",es:"azul"},{en:"sky",es:"cielo"},{en:"is beautiful.",es:"es hermoso."}],nounType:"Adj",nounLabel:"Adj",options:["blue","blues","bluely"],correct:"blue",explainNoun:"Antes sust.",explainRule:"Adjetivo + sust.",hint:"Antes del sust."},{sentence:[{en:"She has",es:"Ella tiene"},{en:"[BLANK]",es:"largo"},{en:"hair.",es:"cabello."}],nounType:"Adj",nounLabel:"Adj",options:["longs","longly","long"],correct:"long",explainNoun:"Adjetivo.",explainRule:"No cambia en plural.",hint:"Sin 's'."},{sentence:[{en:"I have a",es:"Tengo un"},{en:"[BLANK]",es:"rojo"},{en:"car.",es:"coche."}],nounType:"Adj",nounLabel:"Adj",options:["red","reds","reding"],correct:"red",explainNoun:"Adjetivo.",explainRule:"Red + car.",hint:"Color + sustantivo."},{sentence:[{en:"Those are",es:"Esos son"},{en:"[BLANK]",es:"niños inteligentes."}],nounType:"Adj",nounLabel:"Adj",options:["intelligents children","intelligent children","children intelligent"],correct:"intelligent children",explainNoun:"Antes sust.",explainRule:"Adj antes de sust, sin 's'.",hint:"Adjetivo + sustantivo."},{sentence:[{en:"He is a",es:"Él es un"},{en:"[BLANK]",es:"buen"},{en:"player.",es:"jugador."}],nounType:"Adj",nounLabel:"Adj",options:["goods","good","gooding"],correct:"good",explainNoun:"Adjetivo.",explainRule:"Invariable.",hint:"Sin 's'."},{sentence:[{en:"The",es:"La"},{en:"[BLANK]",es:"vieja"},{en:"house",es:"casa"},{en:"is empty.",es:"está vacía."}],nounType:"Adj",nounLabel:"Adj",options:["olds","old","oldly"],correct:"old",explainNoun:"Adjetivo.",explainRule:"Old + house.",hint:"Old house."},{sentence:[{en:"We see",es:"Vemos"},{en:"[BLANK]",es:"árboles altos."}],nounType:"Adj",nounLabel:"Adj",options:["talls trees","tall tree","tall trees"],correct:"tall trees",explainNoun:"Adjetivo no cambia.",explainRule:"Sustantivo sí plural.",hint:"Solo sust lleva 's'."},{sentence:[{en:"This is a",es:"Este es un"},{en:"[BLANK]",es:"libro difícil."}],nounType:"Adj",nounLabel:"Adj",options:["difficults book","difficult books","difficult book"],correct:"difficult book",explainNoun:"Adjetivo.",explainRule:"Invariable.",hint:"a difficult book."},{sentence:[{en:"She wears",es:"Ella lleva"},{en:"[BLANK]",es:"zapatos negros."}],nounType:"Adj",nounLabel:"Adj",options:["blacks shoes","black shoes","shoes black"],correct:"black shoes",explainNoun:"Antes sust.",explainRule:"Black (sin 's') + shoes.",hint:"Adj + sust plural."}];
+const Q_PHRASES=[{sentence:[{en:"[BLANK]",es:"No entiendo."}],nounType:"Phrase",nounLabel:"Frase",options:["I don't understand","I don't know","Excuse me"],correct:"I don't understand",explainNoun:"Frase útil.",explainRule:"'I don't understand' = No entiendo.",hint:"Understand = entender"},{sentence:[{en:"[BLANK]",es:"No lo sé."}],nounType:"Phrase",nounLabel:"Frase",options:["I don't know","I am hungry","Please"],correct:"I don't know",explainNoun:"Frase útil.",explainRule:"'I don't know' = No lo sé.",hint:"Know = saber"},{sentence:[{en:"[BLANK]",es:"Mucho gusto."}],nounType:"Phrase",nounLabel:"Frase",options:["Nice to meet you","Thank you","You're welcome"],correct:"Nice to meet you",explainNoun:"Saludo.",explainRule:"'Nice to meet you' = Mucho gusto.",hint:"meet = conocer"},{sentence:[{en:"[BLANK]",es:"Tengo hambre."}],nounType:"Phrase",nounLabel:"Frase",options:["I am hungry","I am tired","I am thirsty"],correct:"I am hungry",explainNoun:"Necesidad.",explainRule:"En inglés se usa 'I am' para sensaciones.",hint:"Hungry = hambriento"},{sentence:[{en:"[BLANK]",es:"Tengo sed."}],nounType:"Phrase",nounLabel:"Frase",options:["I am thirsty","I am hungry","I don't know"],correct:"I am thirsty",explainNoun:"Necesidad.",explainRule:"'I am thirsty' = Tengo sed.",hint:"Thirsty = sediento"},{sentence:[{en:"[BLANK]",es:"¿Cómo se dice...?"}],nounType:"Phrase",nounLabel:"Frase",options:["How do you say","Where is","Can you repeat"],correct:"How do you say",explainNoun:"Pregunta.",explainRule:"'How do you say' pregunta vocabulario.",hint:"Say = decir"},{sentence:[{en:"[BLANK]",es:"Disculpa / Perdón."}],nounType:"Phrase",nounLabel:"Frase",options:["Excuse me","Please","Thank you"],correct:"Excuse me",explainNoun:"Cortesía.",explainRule:"Para llamar la atención.",hint:"Excuse me."},{sentence:[{en:"[BLANK]",es:"De nada."}],nounType:"Phrase",nounLabel:"Frase",options:["You're welcome","Thank you","Please"],correct:"You're welcome",explainNoun:"Cortesía.",explainRule:"Respuesta a 'Thank you'.",hint:"Welcome = bienvenido"},{sentence:[{en:"[BLANK]",es:"Por favor."}],nounType:"Phrase",nounLabel:"Frase",options:["Please","Excuse me","See you later"],correct:"Please",explainNoun:"Cortesía.",explainRule:"La palabra mágica.",hint:"Please."},{sentence:[{en:"[BLANK]",es:"Gracias."}],nounType:"Phrase",nounLabel:"Frase",options:["Thank you","You're welcome","Please"],correct:"Thank you",explainNoun:"Cortesía.",explainRule:"Agradecimiento.",hint:"Thank you."},{sentence:[{en:"[BLANK]",es:"¿Puede repetir?"}],nounType:"Phrase",nounLabel:"Frase",options:["Can you repeat","How do you say","Where is"],correct:"Can you repeat",explainNoun:"Petición.",explainRule:"Pedir que digan algo de nuevo.",hint:"Repeat = repetir"},{sentence:[{en:"[BLANK]",es:"¿Dónde está el baño?"}],nounType:"Phrase",nounLabel:"Frase",options:["Where is the bathroom","What time is it","How much is it"],correct:"Where is the bathroom",explainNoun:"Pregunta.",explainRule:"'Where is' = ¿Dónde está?",hint:"Bathroom = baño"},{sentence:[{en:"[BLANK]",es:"Me llamo..."}],nounType:"Phrase",nounLabel:"Frase",options:["My name is","I am tired","Nice to meet you"],correct:"My name is",explainNoun:"Presentación.",explainRule:"Para decir tu nombre.",hint:"Name = nombre"},{sentence:[{en:"[BLANK]",es:"Hasta luego."}],nounType:"Phrase",nounLabel:"Frase",options:["See you later","Good morning","Good night"],correct:"See you later",explainNoun:"Despedida.",explainRule:"'See you' = Nos vemos.",hint:"Later = más tarde"},{sentence:[{en:"[BLANK]",es:"Buenos días."}],nounType:"Phrase",nounLabel:"Frase",options:["Good morning","Good night","See you later"],correct:"Good morning",explainNoun:"Saludo.",explainRule:"Antes del mediodía.",hint:"Morning = mañana"},{sentence:[{en:"[BLANK]",es:"Buenas noches."}],nounType:"Phrase",nounLabel:"Frase",options:["Good night","Good morning","Please"],correct:"Good night",explainNoun:"Despedida.",explainRule:"Al irse a dormir.",hint:"Night = noche"},{sentence:[{en:"[BLANK]",es:"¿Qué hora es?"}],nounType:"Phrase",nounLabel:"Frase",options:["What time is it","How much is it","Where is"],correct:"What time is it",explainNoun:"Pregunta.",explainRule:"Para preguntar la hora.",hint:"Time = tiempo"},{sentence:[{en:"[BLANK]",es:"¿Cuánto cuesta?"}],nounType:"Phrase",nounLabel:"Frase",options:["How much is it","What time is it","How do you say"],correct:"How much is it",explainNoun:"Pregunta.",explainRule:"Para preguntar el precio.",hint:"Much = cuánto"},{sentence:[{en:"[BLANK]",es:"Estoy cansado."}],nounType:"Phrase",nounLabel:"Frase",options:["I am tired","I am hungry","I am thirsty"],correct:"I am tired",explainNoun:"Sensación.",explainRule:"'I am' = Estoy.",hint:"Tired = cansado"},{sentence:[{en:"[BLANK]",es:"Hola, ¿cómo estás?"}],nounType:"Phrase",nounLabel:"Frase",options:["Hello, how are you","Nice to meet you","Good morning"],correct:"Hello, how are you",explainNoun:"Saludo.",explainRule:"Saludo universal.",hint:"How are you = cómo estás"}];
+/* ==========================================
+   MODULO 4: DICCIONARIO DE VERBOS Y REGLAS
+   ========================================== */
+/* ============================================================
+   VERB_DICTIONARY — 30 VERBOS COMPLETO
+   ============================================================
+   Estructura de cada verbo:
+   {
+     en: {
+       base, sForm, past, participle, gerund
+     },
+     es: {
+       meaning,        ← traducción principal
+       participle,     ← participio en español
+       gerund,         ← gerundio en español
+       present: { I, You, He, She, It, We, They },
+       past:    { I, You, He, She, It, We, They },
+       future:  { I, You, He, She, It, We, They }
+     },
+     irregular: true | false,   ← marca para la UI
+     spellingNote: "..."        ← nota ortográfica (opcional)
+   }
+
+   SECCIÓN 1 — Regulares originales (1–10)
+   SECCIÓN 2 — Irregulares (11–20)
+   SECCIÓN 3 — Regulares nuevos (21–30)
+   ============================================================ */
+
+const VERB_DICTIONARY = {
+
+  /* ══════════════════════════════════════════════════════════
+     SECCIÓN 1: REGULARES ORIGINALES
+     ══════════════════════════════════════════════════════════ */
+
+  // 1. PLAY
+  play: {
+    en: { base:"play", sForm:"plays", past:"played", participle:"played", gerund:"playing" },
+    es: {
+      meaning:"jugar", participle:"jugado", gerund:"jugando",
+      present: { I:"juego",   You:"juegas",   He:"juega",   She:"juega",   It:"juega",   We:"jugamos",    They:"juegan"   },
+      past:    { I:"jugué",   You:"jugaste",  He:"jugó",    She:"jugó",    It:"jugó",    We:"jugamos",    They:"jugaron"  },
+      future:  { I:"jugaré",  You:"jugarás",  He:"jugará",  She:"jugará",  It:"jugará",  We:"jugaremos",  They:"jugarán"  }
+    },
+    irregular: false
+  },
+
+  // 2. WATCH
+  watch: {
+    en: { base:"watch", sForm:"watches", past:"watched", participle:"watched", gerund:"watching" },
+    es: {
+      meaning:"ver / mirar", participle:"visto", gerund:"viendo",
+      present: { I:"veo",   You:"ves",    He:"ve",   She:"ve",   It:"ve",   We:"vemos",   They:"ven"   },
+      past:    { I:"vi",    You:"viste",  He:"vio",  She:"vio",  It:"vio",  We:"vimos",   They:"vieron" },
+      future:  { I:"veré",  You:"verás",  He:"verá", She:"verá", It:"verá", We:"veremos", They:"verán" }
+    },
+    irregular: false,
+    spellingNote: "3ª persona añade -es: watch → watches"
+  },
+
+  // 3. STUDY
+  study: {
+    en: { base:"study", sForm:"studies", past:"studied", participle:"studied", gerund:"studying" },
+    es: {
+      meaning:"estudiar", participle:"estudiado", gerund:"estudiando",
+      present: { I:"estudio",   You:"estudias",   He:"estudia",   She:"estudia",   It:"estudia",   We:"estudiamos",   They:"estudian"   },
+      past:    { I:"estudié",   You:"estudiaste", He:"estudió",   She:"estudió",   It:"estudió",   We:"estudiamos",   They:"estudiaron" },
+      future:  { I:"estudiaré", You:"estudiarás", He:"estudiará", She:"estudiará", It:"estudiará", We:"estudiaremos", They:"estudiarán" }
+    },
+    irregular: false,
+    spellingNote: "Termina en consonante + y: y → ies (studies) y y → ied (studied)"
+  },
+
+  // 4. WALK
+  walk: {
+    en: { base:"walk", sForm:"walks", past:"walked", participle:"walked", gerund:"walking" },
+    es: {
+      meaning:"caminar", participle:"caminado", gerund:"caminando",
+      present: { I:"camino",   You:"caminas",   He:"camina",   She:"camina",   It:"camina",   We:"caminamos",   They:"caminan"   },
+      past:    { I:"caminé",   You:"caminaste", He:"caminó",   She:"caminó",   It:"caminó",   We:"caminamos",   They:"caminaron" },
+      future:  { I:"caminaré", You:"caminarás", He:"caminará", She:"caminará", It:"caminará", We:"caminaremos", They:"caminarán" }
+    },
+    irregular: false
+  },
+
+  // 5. TALK
+  talk: {
+    en: { base:"talk", sForm:"talks", past:"talked", participle:"talked", gerund:"talking" },
+    es: {
+      meaning:"hablar / charlar", participle:"hablado", gerund:"hablando",
+      present: { I:"hablo",   You:"hablas",   He:"habla",   She:"habla",   It:"habla",   We:"hablamos",   They:"hablan"   },
+      past:    { I:"hablé",   You:"hablaste", He:"habló",   She:"habló",   It:"habló",   We:"hablamos",   They:"hablaron" },
+      future:  { I:"hablaré", You:"hablarás", He:"hablará", She:"hablará", It:"hablará", We:"hablaremos", They:"hablarán" }
+    },
+    irregular: false
+  },
+
+  // 6. COOK
+  cook: {
+    en: { base:"cook", sForm:"cooks", past:"cooked", participle:"cooked", gerund:"cooking" },
+    es: {
+      meaning:"cocinar", participle:"cocinado", gerund:"cocinando",
+      present: { I:"cocino",   You:"cocinas",   He:"cocina",   She:"cocina",   It:"cocina",   We:"cocinamos",   They:"cocinan"   },
+      past:    { I:"cociné",   You:"cocinaste", He:"cocinó",   She:"cocinó",   It:"cocinó",   We:"cocinamos",   They:"cocinaron" },
+      future:  { I:"cocinaré", You:"cocinarás", He:"cocinará", She:"cocinará", It:"cocinará", We:"cocinaremos", They:"cocinarán" }
+    },
+    irregular: false
+  },
+
+  // 7. CLEAN
+  clean: {
+    en: { base:"clean", sForm:"cleans", past:"cleaned", participle:"cleaned", gerund:"cleaning" },
+    es: {
+      meaning:"limpiar", participle:"limpiado", gerund:"limpiando",
+      present: { I:"limpio",   You:"limpias",   He:"limpia",   She:"limpia",   It:"limpia",   We:"limpiamos",   They:"limpian"   },
+      past:    { I:"limpié",   You:"limpiaste", He:"limpió",   She:"limpió",   It:"limpió",   We:"limpiamos",   They:"limpiaron" },
+      future:  { I:"limpiaré", You:"limpiarás", He:"limpiará", She:"limpiará", It:"limpiará", We:"limpiaremos", They:"limpiarán" }
+    },
+    irregular: false
+  },
+
+  // 8. HELP
+  help: {
+    en: { base:"help", sForm:"helps", past:"helped", participle:"helped", gerund:"helping" },
+    es: {
+      meaning:"ayudar", participle:"ayudado", gerund:"ayudando",
+      present: { I:"ayudo",   You:"ayudas",   He:"ayuda",   She:"ayuda",   It:"ayuda",   We:"ayudamos",   They:"ayudan"   },
+      past:    { I:"ayudé",   You:"ayudaste", He:"ayudó",   She:"ayudó",   It:"ayudó",   We:"ayudamos",   They:"ayudaron" },
+      future:  { I:"ayudaré", You:"ayudarás", He:"ayudará", She:"ayudará", It:"ayudará", We:"ayudaremos", They:"ayudarán" }
+    },
+    irregular: false
+  },
+
+  // 9. JUMP
+  jump: {
+    en: { base:"jump", sForm:"jumps", past:"jumped", participle:"jumped", gerund:"jumping" },
+    es: {
+      meaning:"saltar", participle:"saltado", gerund:"saltando",
+      present: { I:"salto",   You:"saltas",   He:"salta",   She:"salta",   It:"salta",   We:"saltamos",   They:"saltan"   },
+      past:    { I:"salté",   You:"saltaste", He:"saltó",   She:"saltó",   It:"saltó",   We:"saltamos",   They:"saltaron" },
+      future:  { I:"saltaré", You:"saltarás", He:"saltará", She:"saltará", It:"saltará", We:"saltaremos", They:"saltarán" }
+    },
+    irregular: false
+  },
+
+  // 10. LISTEN
+  listen: {
+    en: { base:"listen", sForm:"listens", past:"listened", participle:"listened", gerund:"listening" },
+    es: {
+      meaning:"escuchar", participle:"escuchado", gerund:"escuchando",
+      present: { I:"escucho",   You:"escuchas",   He:"escucha",   She:"escucha",   It:"escucha",   We:"escuchamos",   They:"escuchan"   },
+      past:    { I:"escuché",   You:"escuchaste", He:"escuchó",   She:"escuchó",   It:"escuchó",   We:"escuchamos",   They:"escucharon" },
+      future:  { I:"escucharé", You:"escucharás", He:"escuchará", She:"escuchará", It:"escuchará", We:"escucharemos", They:"escucharán" }
+    },
+    irregular: false
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     SECCIÓN 2: IRREGULARES
+     ══════════════════════════════════════════════════════════ */
+
+  // 11. EAT ★ irregular
+  eat: {
+    en: { base:"eat", sForm:"eats", past:"ate", participle:"eaten", gerund:"eating" },
+    es: {
+      meaning:"comer", participle:"comido", gerund:"comiendo",
+      present: { I:"como",   You:"comes",   He:"come",  She:"come",  It:"come",  We:"comemos",  They:"comen"   },
+      past:    { I:"comí",   You:"comiste", He:"comió", She:"comió", It:"comió", We:"comimos",  They:"comieron" },
+      future:  { I:"comeré", You:"comerás", He:"comerá",She:"comerá",It:"comerá",We:"comeremos",They:"comerán" }
+    },
+    irregular: true,
+    spellingNote: "eat → ate → eaten. Tres formas distintas. ¡A memorizarlo!"
+  },
+
+  // 12. GO ★ irregular
+  go: {
+    en: { base:"go", sForm:"goes", past:"went", participle:"gone", gerund:"going" },
+    es: {
+      meaning:"ir", participle:"ido", gerund:"yendo",
+      present: { I:"voy",  You:"vas",    He:"va",   She:"va",   It:"va",   We:"vamos",  They:"van"   },
+      past:    { I:"fui",  You:"fuiste", He:"fue",  She:"fue",  It:"fue",  We:"fuimos", They:"fueron" },
+      future:  { I:"iré",  You:"irás",   He:"irá",  She:"irá",  It:"irá",  We:"iremos", They:"irán"  }
+    },
+    irregular: true,
+    spellingNote: "go → went → gone. El pasado 'went' viene de un verbo diferente. ¡Muy irregular!"
+  },
+
+  // 13. RUN ★ irregular
+  run: {
+    en: { base:"run", sForm:"runs", past:"ran", participle:"run", gerund:"running" },
+    es: {
+      meaning:"correr", participle:"corrido", gerund:"corriendo",
+      present: { I:"corro",   You:"corres",   He:"corre",   She:"corre",   It:"corre",   We:"corremos",   They:"corren"   },
+      past:    { I:"corrí",   You:"corriste", He:"corrió",  She:"corrió",  It:"corrió",  We:"corrimos",   They:"corrieron" },
+      future:  { I:"correré", You:"correrás", He:"correrá", She:"correrá", It:"correrá", We:"correremos", They:"correrán" }
+    },
+    irregular: true,
+    spellingNote: "run → ran → run. El participio es igual a la base. Gerundio: doble n → running"
+  },
+
+  // 14. SEE ★ irregular
+  see: {
+    en: { base:"see", sForm:"sees", past:"saw", participle:"seen", gerund:"seeing" },
+    es: {
+      meaning:"ver", participle:"visto", gerund:"viendo",
+      present: { I:"veo",   You:"ves",   He:"ve",   She:"ve",   It:"ve",   We:"vemos",   They:"ven"   },
+      past:    { I:"vi",    You:"viste", He:"vio",  She:"vio",  It:"vio",  We:"vimos",   They:"vieron" },
+      future:  { I:"veré",  You:"verás", He:"verá", She:"verá", It:"verá", We:"veremos", They:"verán" }
+    },
+    irregular: true,
+    spellingNote: "see → saw → seen. Las tres formas son muy diferentes entre sí."
+  },
+
+  // 15. WRITE ★ irregular
+  write: {
+    en: { base:"write", sForm:"writes", past:"wrote", participle:"written", gerund:"writing" },
+    es: {
+      meaning:"escribir", participle:"escrito", gerund:"escribiendo",
+      present: { I:"escribo",   You:"escribes",   He:"escribe",   She:"escribe",   It:"escribe",   We:"escribimos",   They:"escriben"   },
+      past:    { I:"escribí",   You:"escribiste", He:"escribió",  She:"escribió",  It:"escribió",  We:"escribimos",   They:"escribieron" },
+      future:  { I:"escribiré", You:"escribirás", He:"escribirá", She:"escribirá", It:"escribirá", We:"escribiremos", They:"escribirán"  }
+    },
+    irregular: true,
+    spellingNote: "write → wrote → written. Gerundio: se pierde la -e final → writing"
+  },
+
+  // 16. READ ★ irregular (se escribe igual en pasado pero se pronuncia diferente)
+  read: {
+    en: { base:"read", sForm:"reads", past:"read", participle:"read", gerund:"reading" },
+    es: {
+      meaning:"leer", participle:"leído", gerund:"leyendo",
+      present: { I:"leo",   You:"lees",   He:"lee",   She:"lee",   It:"lee",   We:"leemos",   They:"leen"   },
+      past:    { I:"leí",   You:"leíste", He:"leyó",  She:"leyó",  It:"leyó",  We:"leímos",   They:"leyeron" },
+      future:  { I:"leeré", You:"leerás", He:"leerá", She:"leerá", It:"leerá", We:"leeremos", They:"leerán" }
+    },
+    irregular: true,
+    spellingNote: "read → read → read. ¡Se escribe igual en los tres tiempos pero se pronuncia diferente! Presente: /riːd/, Pasado: /rɛd/"
+  },
+
+  // 17. DRINK ★ irregular
+  drink: {
+    en: { base:"drink", sForm:"drinks", past:"drank", participle:"drunk", gerund:"drinking" },
+    es: {
+      meaning:"beber", participle:"bebido", gerund:"bebiendo",
+      present: { I:"bebo",   You:"bebes",   He:"bebe",   She:"bebe",   It:"bebe",   We:"bebemos",   They:"beben"   },
+      past:    { I:"bebí",   You:"bebiste", He:"bebió",  She:"bebió",  It:"bebió",  We:"bebimos",   They:"bebieron" },
+      future:  { I:"beberé", You:"beberás", He:"beberá", She:"beberá", It:"beberá", We:"beberemos", They:"beberán" }
+    },
+    irregular: true,
+    spellingNote: "drink → drank → drunk. Patrón i → a → u. Igual que swim (swim → swam → swum)."
+  },
+
+  // 18. SWIM ★ irregular
+  swim: {
+    en: { base:"swim", sForm:"swims", past:"swam", participle:"swum", gerund:"swimming" },
+    es: {
+      meaning:"nadar", participle:"nadado", gerund:"nadando",
+      present: { I:"nado",   You:"nadas",   He:"nada",   She:"nada",   It:"nada",   We:"nadamos",   They:"nadan"   },
+      past:    { I:"nadé",   You:"nadaste", He:"nadó",   She:"nadó",   It:"nadó",   We:"nadamos",   They:"nadaron" },
+      future:  { I:"nadaré", You:"nadarás", He:"nadará", She:"nadará", It:"nadará", We:"nadaremos", They:"nadarán" }
+    },
+    irregular: true,
+    spellingNote: "swim → swam → swum. Patrón i → a → u (igual que drink). Gerundio: doble m → swimming"
+  },
+
+  // 19. BUY ★ irregular
+  buy: {
+    en: { base:"buy", sForm:"buys", past:"bought", participle:"bought", gerund:"buying" },
+    es: {
+      meaning:"comprar", participle:"comprado", gerund:"comprando",
+      present: { I:"compro",   You:"compras",   He:"compra",   She:"compra",   It:"compra",   We:"compramos",   They:"compran"   },
+      past:    { I:"compré",   You:"compraste", He:"compró",   She:"compró",   It:"compró",   We:"compramos",   They:"compraron" },
+      future:  { I:"compraré", You:"comprarás", He:"comprará", She:"comprará", It:"comprará", We:"compraremos", They:"comprarán" }
+    },
+    irregular: true,
+    spellingNote: "buy → bought → bought. El pasado y participio son iguales pero muy distintos a la base."
+  },
+
+  // 20. TAKE ★ irregular
+  take: {
+    en: { base:"take", sForm:"takes", past:"took", participle:"taken", gerund:"taking" },
+    es: {
+      meaning:"tomar / coger", participle:"tomado", gerund:"tomando",
+      present: { I:"tomo",   You:"tomas",   He:"toma",   She:"toma",   It:"toma",   We:"tomamos",   They:"toman"   },
+      past:    { I:"tomé",   You:"tomaste", He:"tomó",   She:"tomó",   It:"tomó",   We:"tomamos",   They:"tomaron" },
+      future:  { I:"tomaré", You:"tomarás", He:"tomará", She:"tomará", It:"tomará", We:"tomaremos", They:"tomarán" }
+    },
+    irregular: true,
+    spellingNote: "take → took → taken. Gerundio: se pierde la -e final → taking"
+  },
+
+  /* ══════════════════════════════════════════════════════════
+     SECCIÓN 3: REGULARES NUEVOS (para niños de 10 años)
+     ══════════════════════════════════════════════════════════ */
+
+  // 21. ASK
+  ask: {
+    en: { base:"ask", sForm:"asks", past:"asked", participle:"asked", gerund:"asking" },
+    es: {
+      meaning:"preguntar", participle:"preguntado", gerund:"preguntando",
+      present: { I:"pregunto",   You:"preguntas",   He:"pregunta",   She:"pregunta",   It:"pregunta",   We:"preguntamos",   They:"preguntan"   },
+      past:    { I:"pregunté",   You:"preguntaste", He:"preguntó",   She:"preguntó",   It:"preguntó",   We:"preguntamos",   They:"preguntaron" },
+      future:  { I:"preguntaré", You:"preguntarás", He:"preguntará", She:"preguntará", It:"preguntará", We:"preguntaremos", They:"preguntarán" }
+    },
+    irregular: false
+  },
+
+  // 22. ANSWER
+  answer: {
+    en: { base:"answer", sForm:"answers", past:"answered", participle:"answered", gerund:"answering" },
+    es: {
+      meaning:"responder / contestar", participle:"respondido", gerund:"respondiendo",
+      present: { I:"respondo",   You:"respondes",   He:"responde",   She:"responde",   It:"responde",   We:"respondemos",   They:"responden"   },
+      past:    { I:"respondí",   You:"respondiste", He:"respondió",  She:"respondió",  It:"respondió",  We:"respondimos",   They:"respondieron" },
+      future:  { I:"responderé", You:"responderás", He:"responderá", She:"responderá", It:"responderá", We:"responderemos", They:"responderán"  }
+    },
+    irregular: false
+  },
+
+  // 23. OPEN
+  open: {
+    en: { base:"open", sForm:"opens", past:"opened", participle:"opened", gerund:"opening" },
+    es: {
+      meaning:"abrir", participle:"abierto", gerund:"abriendo",
+      present: { I:"abro",   You:"abres",   He:"abre",   She:"abre",   It:"abre",   We:"abrimos",   They:"abren"   },
+      past:    { I:"abrí",   You:"abriste", He:"abrió",  She:"abrió",  It:"abrió",  We:"abrimos",   They:"abrieron" },
+      future:  { I:"abriré", You:"abrirás", He:"abrirá", She:"abrirá", It:"abrirá", We:"abriremos", They:"abrirán"  }
+    },
+    irregular: false
+  },
+
+  // 24. CLOSE
+  close: {
+    en: { base:"close", sForm:"closes", past:"closed", participle:"closed", gerund:"closing" },
+    es: {
+      meaning:"cerrar", participle:"cerrado", gerund:"cerrando",
+      present: { I:"cierro",   You:"cierras",   He:"cierra",   She:"cierra",   It:"cierra",   We:"cerramos",   They:"cierran"   },
+      past:    { I:"cerré",    You:"cerraste",  He:"cerró",    She:"cerró",    It:"cerró",    We:"cerramos",   They:"cerraron"  },
+      future:  { I:"cerraré",  You:"cerrarás",  He:"cerrará",  She:"cerrará",  It:"cerrará",  We:"cerraremos", They:"cerrarán"  }
+    },
+    irregular: false,
+    spellingNote: "Gerundio: se pierde la -e final → closing"
+  },
+
+  // 25. FINISH
+  finish: {
+    en: { base:"finish", sForm:"finishes", past:"finished", participle:"finished", gerund:"finishing" },
+    es: {
+      meaning:"terminar / acabar", participle:"terminado", gerund:"terminando",
+      present: { I:"termino",   You:"terminas",   He:"termina",   She:"termina",   It:"termina",   We:"terminamos",   They:"terminan"   },
+      past:    { I:"terminé",   You:"terminaste", He:"terminó",   She:"terminó",   It:"terminó",   We:"terminamos",   They:"terminaron" },
+      future:  { I:"terminaré", You:"terminarás", He:"terminará", She:"terminará", It:"terminará", We:"terminaremos", They:"terminarán" }
+    },
+    irregular: false,
+    spellingNote: "3ª persona añade -es: finish → finishes"
+  },
+
+  // 26. START
+  start: {
+    en: { base:"start", sForm:"starts", past:"started", participle:"started", gerund:"starting" },
+    es: {
+      meaning:"empezar / comenzar", participle:"empezado", gerund:"empezando",
+      present: { I:"empiezo",   You:"empiezas",   He:"empieza",   She:"empieza",   It:"empieza",   We:"empezamos",   They:"empiezan"   },
+      past:    { I:"empecé",    You:"empezaste",  He:"empezó",    She:"empezó",    It:"empezó",    We:"empezamos",   They:"empezaron"  },
+      future:  { I:"empezaré",  You:"empezarás",  He:"empezará",  She:"empezará",  It:"empezará",  We:"empezaremos", They:"empezarán"  }
+    },
+    irregular: false
+  },
+
+  // 27. LIKE
+  like: {
+    en: { base:"like", sForm:"likes", past:"liked", participle:"liked", gerund:"liking" },
+    es: {
+      meaning:"gustar / querer", participle:"gustado", gerund:"gustando",
+      present: { I:"me gusta",    You:"te gusta",    He:"le gusta",   She:"le gusta",   It:"gusta",      We:"nos gusta",    They:"les gusta"   },
+      past:    { I:"me gustó",    You:"te gustó",    He:"le gustó",   She:"le gustó",   It:"gustó",      We:"nos gustó",    They:"les gustó"   },
+      future:  { I:"me gustará",  You:"te gustará",  He:"le gustará", She:"le gustará", It:"gustará",    We:"nos gustará",  They:"les gustará" }
+    },
+    irregular: false,
+    spellingNote: "Gerundio: se pierde la -e final → liking. ⚠️ En español 'like' funciona al revés: I like pizza = A mí me gusta la pizza."
+  },
+
+  // 28. LOVE
+  love: {
+    en: { base:"love", sForm:"loves", past:"loved", participle:"loved", gerund:"loving" },
+    es: {
+      meaning:"amar / encantar", participle:"amado", gerund:"amando",
+      present: { I:"amo",   You:"amas",   He:"ama",   She:"ama",   It:"encanta",  We:"amamos",   They:"aman"   },
+      past:    { I:"amé",   You:"amaste", He:"amó",   She:"amó",   It:"encantó",  We:"amamos",   They:"amaron" },
+      future:  { I:"amaré", You:"amarás", He:"amará", She:"amará", It:"encantará",We:"amaremos", They:"amarán" }
+    },
+    irregular: false,
+    spellingNote: "Gerundio: se pierde la -e final → loving"
+  },
+
+  // 29. NEED
+  need: {
+    en: { base:"need", sForm:"needs", past:"needed", participle:"needed", gerund:"needing" },
+    es: {
+      meaning:"necesitar", participle:"necesitado", gerund:"necesitando",
+      present: { I:"necesito",   You:"necesitas",   He:"necesita",   She:"necesita",   It:"necesita",   We:"necesitamos",   They:"necesitan"   },
+      past:    { I:"necesité",   You:"necesitaste", He:"necesitó",   She:"necesitó",   It:"necesitó",   We:"necesitamos",   They:"necesitaron" },
+      future:  { I:"necesitaré", You:"necesitarás", He:"necesitará", She:"necesitará", It:"necesitará", We:"necesitaremos", They:"necesitarán" }
+    },
+    irregular: false
+  },
+
+  // 30. WANT
+  want: {
+    en: { base:"want", sForm:"wants", past:"wanted", participle:"wanted", gerund:"wanting" },
+    es: {
+      meaning:"querer / desear", participle:"querido", gerund:"queriendo",
+      present: { I:"quiero",   You:"quieres",   He:"quiere",   She:"quiere",   It:"quiere",   We:"queremos",   They:"quieren"   },
+      past:    { I:"quise",    You:"quisiste",  He:"quiso",    She:"quiso",    It:"quiso",    We:"quisimos",   They:"quisieron" },
+      future:  { I:"querré",   You:"querrás",   He:"querrá",   She:"querrá",   It:"querrá",   We:"querremos",  They:"querrán"   }
+    },
+    irregular: false
+  }
+
+}; // ── fin VERB_DICTIONARY ──────────────────────────────────────
+
+/* ============================================================
+   HELPERS DE CONSULTA
+   ============================================================
+   Uso desde el resto de la app:
+
+   // Obtener todos los verbos irregulares
+   const irregulares = Object.entries(VERB_DICTIONARY)
+     .filter(([k, v]) => v.irregular)
+     .map(([k]) => k);
+   // → ["eat","go","run","see","write","read","drink","swim","buy","take"]
+
+   // Obtener la nota ortográfica de un verbo (si existe)
+   const nota = VERB_DICTIONARY["study"].spellingNote;
+   // → "Termina en consonante + y: y → ies (studies) y y → ied (studied)"
+
+   // Badge para la UI — usar en la tabla de referencia:
+   //   v.irregular
+   //     ? '<span class="irreg-badge">★ Irregular</span>'
+   //     : '<span class="reg-badge">✔ Regular</span>'
+   ============================================================ */
+/* ==========================================
+   MODULO 5: LÓGICA PRINCIPAL Y MOTORES
+   ========================================== */
+// ── HELPERS PARA CONJUGACIÓN ──────────────────────────────────
+const _S3 = ["He","She","It"];
+const isSForm = s => _S3.includes(s);
+const bePresent = s => s==="I" ? "am" : _S3.includes(s) ? "is" : "are";
+const bePast = s => _S3.includes(s) || s==="I" ? "was" : "were";
+const havePresent = s => _S3.includes(s) ? "has" : "have";
+
+const AUX = {
+  simplePast:        { neg:()=>"didn't",          q:()=>"Did"  },
+  simplePresent:     { neg:s=>isSForm(s)?"doesn't":"don't", q:s=>isSForm(s)?"Does":"Do" },
+  simpleFuture:      { neg:()=>"won't",            q:()=>"Will" },
+  contPast:          { neg:s=>bePast(s)+" not",    q:s=>bePast(s) },
+  contPresent:       { neg:s=>bePresent(s)+" not", q:s=>bePresent(s) },
+  contFuture:        { neg:()=>"won't be",         q:()=>"Will" },
+  perfPast:          { neg:()=>"had not",          q:()=>"Had"  },
+  perfPresent:       { neg:s=>havePresent(s)+" not", q:s=>havePresent(s).charAt(0).toUpperCase()+havePresent(s).slice(1) },
+  perfFuture:        { neg:()=>"won't have",       q:()=>"Will" },
+  perfContPast:      { neg:()=>"had not been",     q:()=>"Had"  },
+  perfContPresent:   { neg:s=>havePresent(s)+" not been", q:s=>havePresent(s).charAt(0).toUpperCase()+havePresent(s).slice(1) },
+  perfContFuture:    { neg:()=>"won't have been",  q:()=>"Will" }
+};
+
+const BE_ES = {
+  past:    { I:"estaba",  You:"estabas",  He:"estaba",  She:"estaba",  It:"estaba",  We:"estábamos", They:"estaban"  },
+  present: { I:"estoy",   You:"estás",    He:"está",    She:"está",    It:"está",    We:"estamos",   They:"están"    },
+  future:  { I:"estaré",  You:"estarás",  He:"estará",  She:"estará",  It:"estará",  We:"estaremos", They:"estarán"  }
+};
+
+const TENSE_RULES = {
+  past_simple: {
+    label:"Pasado Simple", labelEn:"Past Simple", family:"simple", tense:"past", isPerfect:false,
+    build:{
+      affirmative:(s,v)=>`${s} ${v.en.past}`,
+      negative:   (s,v)=>`${s} ${AUX.simplePast.neg()} ${v.en.base}`,
+      question:   (s,v)=>`${AUX.simplePast.q()} ${s} ${v.en.base}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} ${v.es.past[s]}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no ${v.es.past[s]}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} ${v.es.past[s]}?`
+    }
+  },
+  present_simple: {
+    label:"Presente Simple", labelEn:"Present Simple", family:"simple", tense:"present", isPerfect:false,
+    build:{
+      affirmative:(s,v)=>`${s} ${isSForm(s)?v.en.sForm:v.en.base}`,
+      negative:   (s,v)=>`${s} ${AUX.simplePresent.neg(s)} ${v.en.base}`,
+      question:   (s,v)=>`${AUX.simplePresent.q(s)} ${s} ${v.en.base}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} ${v.es.present[s]}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no ${v.es.present[s]}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} ${v.es.present[s]}?`
+    }
+  },
+  future_simple: {
+    label:"Futuro Simple", labelEn:"Future Simple", family:"simple", tense:"future", isPerfect:false,
+    build:{
+      affirmative:(s,v)=>`${s} will ${v.en.base}`,
+      negative:   (s,v)=>`${s} ${AUX.simpleFuture.neg()} ${v.en.base}`,
+      question:   (s,v)=>`${AUX.simpleFuture.q()} ${s} ${v.en.base}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} ${v.es.future[s]}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no ${v.es.future[s]}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} ${v.es.future[s]}?`
+    }
+  },
+  past_continuous: {
+    label:"Pasado Continuo", labelEn:"Past Continuous", family:"continuous", tense:"past", isPerfect:false,
+    build:{
+      affirmative:(s,v)=>`${s} ${bePast(s)} ${v.en.gerund}`,
+      negative:   (s,v)=>`${s} ${AUX.contPast.neg(s)} ${v.en.gerund}`,
+      question:   (s,v)=>`${AUX.contPast.q(s)} ${s} ${v.en.gerund}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} ${BE_ES.past[s]} ${v.es.gerund}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no ${BE_ES.past[s]} ${v.es.gerund}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} ${BE_ES.past[s]} ${v.es.gerund}?`
+    }
+  },
+  present_continuous: {
+    label:"Presente Continuo", labelEn:"Present Continuous", family:"continuous", tense:"present", isPerfect:false,
+    build:{
+      affirmative:(s,v)=>`${s} ${bePresent(s)} ${v.en.gerund}`,
+      negative:   (s,v)=>`${s} ${AUX.contPresent.neg(s)} ${v.en.gerund}`,
+      question:   (s,v)=>`${AUX.contPresent.q(s)} ${s} ${v.en.gerund}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} ${BE_ES.present[s]} ${v.es.gerund}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no ${BE_ES.present[s]} ${v.es.gerund}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} ${BE_ES.present[s]} ${v.es.gerund}?`
+    }
+  },
+  future_continuous: {
+    label:"Futuro Continuo", labelEn:"Future Continuous", family:"continuous", tense:"future", isPerfect:false,
+    build:{
+      affirmative:(s,v)=>`${s} will be ${v.en.gerund}`,
+      negative:   (s,v)=>`${s} ${AUX.contFuture.neg()} ${v.en.gerund}`,
+      question:   (s,v)=>`${AUX.contFuture.q()} ${s} be ${v.en.gerund}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} ${BE_ES.future[s]} ${v.es.gerund}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no ${BE_ES.future[s]} ${v.es.gerund}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} ${BE_ES.future[s]} ${v.es.gerund}?`
+    }
+  },
+  past_perfect: {
+    label:"Pasado Perfecto", labelEn:"Past Perfect", family:"perfect", tense:"past", isPerfect:true,
+    build:{
+      affirmative:(s,v)=>`${s} had ${v.en.participle}`,
+      negative:   (s,v)=>`${s} ${AUX.perfPast.neg()} ${v.en.participle}`,
+      question:   (s,v)=>`${AUX.perfPast.q()} ${s} ${v.en.participle}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} había ${v.es.participle}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no había ${v.es.participle}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} había ${v.es.participle}?`
+    }
+  },
+  present_perfect: {
+    label:"Presente Perfecto", labelEn:"Present Perfect", family:"perfect", tense:"present", isPerfect:true,
+    build:{
+      affirmative:(s,v)=>`${s} ${havePresent(s)} ${v.en.participle}`,
+      negative:   (s,v)=>`${s} ${AUX.perfPresent.neg(s)} ${v.en.participle}`,
+      question:   (s,v)=>`${AUX.perfPresent.q(s)} ${s} ${v.en.participle}?`
+    },
+    translate:{
+      affirmative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${s==="I"?"Yo":s} ${h[s]} ${v.es.participle}`; },
+      negative:   (s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${s==="I"?"Yo":s} no ${h[s]} ${v.es.participle}`; },
+      question:   (s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `¿${s==="I"?"Yo":s} ${h[s]} ${v.es.participle}?`; }
+    }
+  },
+  future_perfect: {
+    label:"Futuro Perfecto", labelEn:"Future Perfect", family:"perfect", tense:"future", isPerfect:true,
+    build:{
+      affirmative:(s,v)=>`${s} will have ${v.en.participle}`,
+      negative:   (s,v)=>`${s} ${AUX.perfFuture.neg()} ${v.en.participle}`,
+      question:   (s,v)=>`${AUX.perfFuture.q()} ${s} have ${v.en.participle}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} habré ${v.es.participle}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no habré ${v.es.participle}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} habré ${v.es.participle}?`
+    }
+  },
+  past_perfect_continuous: {
+    label:"Pasado Perf. Continuo", labelEn:"Past Perfect Cont.", family:"perfectContinuous", tense:"past", isPerfect:true,
+    build:{
+      affirmative:(s,v)=>`${s} had been ${v.en.gerund}`,
+      negative:   (s,v)=>`${s} ${AUX.perfContPast.neg()} ${v.en.gerund}`,
+      question:   (s,v)=>`${AUX.perfContPast.q()} ${s} been ${v.en.gerund}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} había estado ${v.es.gerund}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no había estado ${v.es.gerund}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} había estado ${v.es.gerund}?`
+    }
+  },
+  present_perfect_continuous: {
+    label:"Presente Perf. Continuo", labelEn:"Present Perfect Cont.", family:"perfectContinuous", tense:"present", isPerfect:true,
+    build:{
+      affirmative:(s,v)=>`${s} ${havePresent(s)} been ${v.en.gerund}`,
+      negative:   (s,v)=>`${s} ${AUX.perfContPresent.neg(s)} ${v.en.gerund}`,
+      question:   (s,v)=>`${AUX.perfContPresent.q(s)} ${s} been ${v.en.gerund}?`
+    },
+    translate:{
+      affirmative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${s==="I"?"Yo":s} ${h[s]} estado ${v.es.gerund}`; },
+      negative:   (s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${s==="I"?"Yo":s} no ${h[s]} estado ${v.es.gerund}`; },
+      question:   (s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `¿${s==="I"?"Yo":s} ${h[s]} estado ${v.es.gerund}?`; }
+    }
+  },
+  future_perfect_continuous: {
+    label:"Futuro Perf. Continuo", labelEn:"Future Perfect Cont.", family:"perfectContinuous", tense:"future", isPerfect:true,
+    build:{
+      affirmative:(s,v)=>`${s} will have been ${v.en.gerund}`,
+      negative:   (s,v)=>`${s} ${AUX.perfContFuture.neg()} ${v.en.gerund}`,
+      question:   (s,v)=>`${AUX.perfContFuture.q()} ${s} have been ${v.en.gerund}?`
+    },
+    translate:{
+      affirmative:(s,v)=>`${s==="I"?"Yo":s} habré estado ${v.es.gerund}`,
+      negative:   (s,v)=>`${s==="I"?"Yo":s} no habré estado ${v.es.gerund}`,
+      question:   (s,v)=>`¿${s==="I"?"Yo":s} habré estado ${v.es.gerund}?`
+    }
+  }
+};
+// ── FIN TENSE_RULES ───────────────────────────────────────────
+const MODULE_CONFIG = {
+  countable:     { label:"Contables e Incontables", emoji:"🛒", questions:Q_COUNTABLE, tag:"teal",   hasRounds:true,  nounOptions:[{val:"C",label:"🍎 Contable"},{val:"U",label:"💧 Incontable"}] },
+  partsOfSpeech: { label:"Parts of Speech",         emoji:"📚", questions:Q_PARTS,     tag:"sky",    hasRounds:false, nounOptions:[{val:"Noun",label:"📦 Sustantivo"},{val:"Verb",label:"⚡ Verbo"},{val:"Adjective",label:"🎨 Adjetivo"}] },
+  svo:           { label:"Estructura SVO",          emoji:"📝", questions:Q_SVO,       tag:"amber",  hasRounds:false, nounOptions:[{val:"Subject",label:"👤 Sujeto"},{val:"Verb",label:"⚡ Verbo"}] },
+  auxiliaries:   { label:"Auxiliares",              emoji:"⚙️", questions:Q_AUX,       tag:"violet", hasRounds:false, nounOptions:[{val:"Auxiliary",label:"⚙️ Auxiliar"}] },
+  determiners:   { label:"Determinantes",           emoji:"🔤", questions:Q_DET,       tag:"pink",   hasRounds:false, nounOptions:[{val:"Article",label:"📌 Artículo"},{val:"Determiner",label:"🔤 Determinante"}] },
+  possessives:   { label:"Posesivos",               emoji:"✏️", questions:Q_POSS,      tag:"orange", hasRounds:false, nounOptions:[{val:"Possessive",label:"✏️ Posesivo"}] },
+  subjects:      { label:"Sujetos Obligatorios",    emoji:"👤", questions:Q_SUBJ,      tag:"green",  hasRounds:false, nounOptions:[{val:"Pronoun",label:"👤 Pronombre"}] },
+  adjectives:    { label:"Adjetivos",               emoji:"🎨", questions:Q_ADJ,       tag:"indigo", hasRounds:false, nounOptions:[{val:"Adjective",label:"🎨 Adjetivo"}] },
+  everydayPhrases: { label:"Frases Cotidianas",     emoji:"🗣️", questions:Q_PHRASES,   tag:"sky",    hasRounds:true,  nounOptions:[{val:"Phrase",label:"💬 Frase"}] }
+};
+
+const TAG_COLORS = { teal:{bg:"var(--teal-lt)",color:"var(--teal-dk)"}, sky:{bg:"var(--sky-lt)",color:"var(--sky)"}, amber:{bg:"var(--amber-lt)",color:"var(--amber-dk)"}, violet:{bg:"var(--violet-lt)",color:"var(--violet)"}, pink:{bg:"var(--pink-lt)",color:"var(--pink)"}, orange:{bg:"var(--orange-lt)",color:"var(--orange)"}, green:{bg:"var(--green-lt)",color:"var(--green-dk)"}, indigo:{bg:"var(--indigo-lt)",color:"var(--indigo)"}, rose:{bg:"var(--rose-lt)",color:"var(--rose)"}, cyan:{bg:"var(--cyan-lt)",color:"var(--cyan)"}, brown:{bg:"var(--brown-lt)",color:"var(--brown)"}, lime:{bg:"var(--lime-lt)",color:"var(--lime)"}, slate:{bg:"var(--slate-lt)",color:"var(--slate)"} };
+
+let activeModule = null, questions = [], currentPhase = 1;
+let currentQ = 0, score = 0, attempts = 0, currentRound = 1;
+let selectedNoun = null, selectedQuantifier = null, isAnswered = false;
+let matchWordSel = null, matchHintSel = null, matchCount = 0;
+const totalMatches = 5;
+
+/* ESTADO VERBOS DINAMICOS */
+let _vtVerb = "eat", _vtFamily = "simple";
+const TENSE_FAMILY_MAP = { past_simple:"simple", present_simple:"simple", future_simple:"simple", past_continuous:"continuous", present_continuous:"continuous", future_continuous:"continuous", past_perfect:"perfect", present_perfect:"perfect", future_perfect:"perfect", past_perfect_continuous:"perfectContinuous", present_perfect_continuous:"perfectContinuous", future_perfect_continuous:"perfectContinuous" };
+const VT_SUBJ_ES = { I:"Yo", You:"Tú", He:"Él", She:"Ella", It:"Eso", We:"Nosotros", They:"Ellos" };
+const VT_SUBJECTS = ["I","You","He","She","We","They"];
+
+function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); document.getElementById('backBtn').style.display = (id === 'screenMenu') ? 'none' : 'block'; }
+function goBack() { const id = document.querySelector('.screen.active')?.id; if (id === 'screenExplain' || id === 'screenVerbTable') showScreen('screenMenu'); else if (id === 'screenQuiz' && activeModule==='_dynamic_verb') showScreen('screenVerbTable'); else if (id === 'screenQuiz') showScreen('screenExplain'); else showScreen('screenMenu'); }
+function goBackToMenu() { score = 0; currentQ = 0; currentRound = 1; activeModule = null; document.getElementById('scorePill').innerText = '⭐ 0 pts'; showScreen('screenMenu'); }
+function replayModule() { score = 0; currentQ = 0; currentRound = 1; document.getElementById('scorePill').innerText = '⭐ 0 pts'; if(activeModule==='_dynamic_verb') { showScreen('screenVerbTable'); } else { startQuiz(currentPhase); } }
+
+function selectModule(moduleKey) {
+  activeModule = moduleKey; const cfg = MODULE_CONFIG[moduleKey]; const exp = MODULE_EXPLAIN[moduleKey];
+  document.getElementById('explainEmoji').innerText = cfg.emoji; document.getElementById('explainTitle').innerText = cfg.label;
+  let html = `<p class="explain-definition">${exp.intro}</p>`;
+  if (exp.concepts && exp.concepts.length) { html += `<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">`; exp.concepts.forEach(c => { html += `<div style="background:var(--bg);border-radius:var(--r-sm);padding:10px 12px;border-left:4px solid ${exp.accentColor};"><div style="font-size:.8rem;font-weight:800;color:var(--muted);margin-bottom:4px;">${c.label}</div><div style="font-size:.88rem;line-height:1.5;">${c.text}</div></div>`; }); html += `</div>`; }
+  html += `<div class="explain-examples" style="--accent-color:${exp.accentColor}"><div class="explain-examples-title">Ejemplos</div>`;
+  exp.examples.forEach(ex => { html += `<div class="example-row"><span class="example-en">${ex.en}</span><span class="example-es">— ${ex.es}</span></div>`; });
+  html += `</div>`; if (exp.tip) html += `<div class="explain-tip"><span class="explain-tip-icon">💡</span><span>${exp.tip}</span></div>`;
+  document.getElementById('explainContent').innerHTML = html;
+  
+  if(activeModule === 'everydayPhrases') { document.getElementById('easyDesc').innerText = "Elige la traducción correcta."; document.getElementById('hardDesc').innerText = "¡Te toca escribir la frase en inglés!"; } 
+  else { document.getElementById('easyDesc').innerText = "Te diré si es contable. ¡Solo responde!"; document.getElementById('hardDesc').innerText = "Adivina el tipo y luego responde."; }
+  showScreen('screenExplain');
+}
+
+function shuffle(array) { let a = [...array], i = a.length, r; while (i) { r = Math.floor(Math.random() * i--); [a[i], a[r]] = [a[r], a[i]]; } return a; }
+
+function startQuiz(phase) {
+  currentPhase = phase; currentQ = 0; score = 0; currentRound = 1;
+  const cfg = MODULE_CONFIG[activeModule]; questions = shuffle([...cfg.questions]);
+  document.getElementById('scorePill').innerText = '⭐ 0 pts';
+  const tc = TAG_COLORS[cfg.tag]; const tag = document.getElementById('moduleTag');
+  tag.innerText = cfg.emoji + ' ' + cfg.label; tag.style.background = tc.bg; tag.style.color = tc.color;
+  showScreen('screenQuiz'); loadQuestion();
+}
+
+function loadQuestion() {
+  const cfg = MODULE_CONFIG[activeModule]; const q = questions[currentQ];
+  attempts = 0; isAnswered = false; selectedNoun = null; selectedQuantifier = null;
+  const qInRound = cfg.hasRounds ? (currentQ % 10) + 1 : currentQ + 1;
+  const roundLabel = cfg.hasRounds ? ` (Ronda ${currentRound})` : '';
+  document.getElementById('progLabel').innerText = `Pregunta ${qInRound} de 10${roundLabel}`;
+  document.getElementById('attemptLabel').innerText = 'Intento 1';
+  document.getElementById('progFill').style.width = `${((qInRound - 1) / 10) * 100}%`;
+
+  let html = '';
+  q.sentence.forEach(block => {
+    let en = block.en;
+    if (en === '[BLANK]') en = `<span class="blank-spot" id="blankSpot">___</span>`;
+    else if (block.isTarget) en = `<span class="target-word">${en}</span>`;
+    html += `<div class="word-group"><span class="en-word">${en}</span><span class="es-word">${block.es}</span></div>`;
+  });
+  document.getElementById('sentenceText').innerHTML = html;
+
+  if (currentPhase === 1) {
+    document.getElementById('phase1Help').classList.remove('hidden'); document.getElementById('phase2Noun').classList.add('hidden');
+    document.getElementById('qTitle').innerText = 'Elige la respuesta correcta:';
+    document.getElementById('helpBadge').innerText = q.nounLabel || q.nounType || (q._meta ? q._meta.type : "");
+    document.getElementById('helpBadge').style.background = "var(--teal)"; document.getElementById('helpText').innerText = q.explainNoun || (q._meta ? q._meta.esTranslation : "");
+    selectedNoun = q.nounType || (q._meta ? q._meta.type : "");
+  } else {
+    document.getElementById('phase1Help').classList.add('hidden'); document.getElementById('phase2Noun').classList.remove('hidden');
+    document.getElementById('qTitle').innerText = '2. Elige la respuesta correcta:';
+    const grid = document.getElementById('nounGrid'); grid.innerHTML = '';
+    if (cfg.nounOptions.length <= 1) {
+      selectedNoun = cfg.nounOptions[0].val; document.getElementById('phase2Noun').classList.add('hidden');
+      if(activeModule !== 'everydayPhrases') document.getElementById('qTitle').innerText = 'Elige la respuesta correcta:';
+    } else {
+      cfg.nounOptions.forEach(opt => {
+        const btn = document.createElement('button'); btn.className = 'noun-btn'; btn.setAttribute('data-val', opt.val); btn.innerText = opt.label;
+        btn.onclick = () => { if (isAnswered) return; document.querySelectorAll('.noun-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); selectedNoun = opt.val; checkEnableButton(); };
+        grid.appendChild(btn);
+      });
+    }
+  }
+
+  let isTypingMode = (activeModule === 'everydayPhrases' && currentPhase === 2);
+  if(isTypingMode) {
+    document.getElementById('qTitle').innerText = 'Escribe la frase en inglés:';
+    document.getElementById('quantifierGrid').innerHTML = `<input type="text" id="typeInput" class="type-input" placeholder="Escribe aquí..." autocomplete="off" oninput="checkEnableTyping()">`;
+  } else {
+    const shuffledOpts = shuffle(q.options); let optHtml = '';
+    shuffledOpts.forEach(opt => { let hintText = OPTION_HINTS[opt] || ""; let hintSpan = hintText ? `<span class="btn-hint">${hintText}</span>` : ""; optHtml += `<button class="type-btn" data-val="${opt}" onclick="selectQuantifier(this)"><span class="btn-word">${opt}</span>${hintSpan}</button>`; });
+    document.getElementById('quantifierGrid').innerHTML = optHtml;
+  }
+  resetUI();
+}
+
+window.selectQuantifier = function(btn) { if (isAnswered) return; document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); selectedQuantifier = btn.getAttribute('data-val'); const spot = document.getElementById('blankSpot'); if (spot) { spot.innerText = selectedQuantifier; spot.style.color = 'var(--sky)'; } checkEnableButton(); };
+window.checkEnableTyping = function() { if (isAnswered) return; const val = document.getElementById('typeInput').value.trim(); document.getElementById('checkBtn').disabled = val.length === 0; };
+function checkEnableButton() { const cfg = MODULE_CONFIG[activeModule]; const needsNoun = currentPhase === 2 && cfg.nounOptions.length > 1; document.getElementById('checkBtn').disabled = needsNoun ? !(selectedNoun && selectedQuantifier) : !selectedQuantifier; }
+function resetUI() { const btn = document.getElementById('checkBtn'); btn.innerText = 'Comprobar ✅'; btn.className = 'action-btn'; btn.disabled = true; document.getElementById('feedback').style.display = 'none'; }
+function handleMainAction() { if (isAnswered) nextQuestion(); else checkAnswer(); }
+
+function checkAnswer() {
+  const cfg = MODULE_CONFIG[activeModule]; const q = questions[currentQ]; attempts++;
+  document.getElementById('attemptLabel').innerText = `Intento ${attempts}`;
+  let isTypingMode = (activeModule === 'everydayPhrases' && currentPhase === 2);
+  let nounCorrect = true; let quantCorrect = false;
+
+  if (isTypingMode) {
+    let userVal = document.getElementById('typeInput').value.trim().toLowerCase().replace(/[^a-z0-9\s]/g, "");
+    let corrVal = q.correct.toLowerCase().replace(/[^a-z0-9\s]/g, "");
+    quantCorrect = (userVal === corrVal); selectedQuantifier = document.getElementById('typeInput').value.trim();
+    let inp = document.getElementById('typeInput'); inp.disabled = true; if(quantCorrect) inp.classList.add('correct'); else inp.classList.add('wrong');
+  } else {
+    nounCorrect = currentPhase === 1 || (cfg && cfg.nounOptions && cfg.nounOptions.length <= 1) || (selectedNoun === q.nounType) || (q._meta && selectedNoun === q._meta.type);
+    quantCorrect = selectedQuantifier === q.correct;
+  }
+
+  const fb = document.getElementById('feedback');
+  if (nounCorrect && quantCorrect) {
+    isAnswered = true; score += attempts === 1 ? 10 : 5; const sp = document.getElementById('scorePill'); sp.innerText = `⭐ ${score} pts`; sp.style.transform = 'scale(1.2)'; setTimeout(() => sp.style.transform = 'scale(1)', 300);
+    if(!isTypingMode) document.querySelectorAll('.selected').forEach(b => b.classList.add('correct'));
+    fb.className = 'feedback correct'; fb.innerHTML = `<strong>¡Perfecto! 🌟</strong> ${q.explainRule}`;
+    const btn = document.getElementById('checkBtn'); const isLastInRound = cfg.hasRounds && (currentQ === 9 || currentQ === 19); const isLastQ = !cfg.hasRounds && currentQ === Math.min(questions.length, 10) - 1;
+    btn.innerText = (isLastInRound || isLastQ) ? 'Siguiente Reto 🧩' : 'Siguiente ➔'; btn.className = 'action-btn next';
+  } else {
+    fb.className = 'feedback wrong';
+    if (currentPhase === 2 && !nounCorrect && !isTypingMode) { fb.innerHTML = `<strong>¡Ojo con el tipo de palabra! 👀</strong> ${q.explainNoun || "Recuerda la regla"}`; document.querySelectorAll('.noun-btn.selected').forEach(b => b.classList.add('wrong')); } 
+    else if (isTypingMode) { fb.innerHTML = `<strong>¡Casi! Revisa tu ortografía 💪</strong><br><span style="font-size:.85em">Pista: la respuesta es <i>${q.correct}</i></span>`; } 
+    else { fb.innerHTML = `<strong>¡Casi! Piensa un poco más 💪</strong><br><span style="font-size:.85em">${q.hint}</span>`; document.querySelectorAll('.type-btn.selected').forEach(b => b.classList.add('wrong')); }
+    setTimeout(() => { document.querySelectorAll('.wrong').forEach(b => b.classList.remove('selected','wrong')); if (!quantCorrect) { selectedQuantifier = null; if(isTypingMode) { let inp = document.getElementById('typeInput'); inp.classList.remove('wrong'); inp.disabled = false; inp.value = ''; } else { const spot = document.getElementById('blankSpot'); if (spot) { spot.innerText = '___'; } } } if (!nounCorrect) selectedNoun = null; if(isTypingMode) checkEnableTyping(); else checkEnableButton(); }, 2500);
+  }
+}
+
+function nextQuestion() {
+  const cfg = MODULE_CONFIG[activeModule]; currentQ++;
+  if (cfg.hasRounds) { if (currentQ === 10 || currentQ === 20) startMatchGame(); else loadQuestion(); } 
+  else { if (currentQ >= Math.min(questions.length, 10)) startMatchGame(); else loadQuestion(); }
+}
+
+function startMatchGame() {
+  showScreen('screenMatch'); const allPairs = MODULE_MATCH[activeModule] || []; const picked = shuffle([...allPairs]).slice(0, totalMatches);
+  const words = shuffle(picked.map(p => p.word)); const hints = shuffle(picked.map(p => p.hint));
+  document.getElementById('matchWords').innerHTML = words.map(w => `<button class="match-btn word-btn" data-id="${w}" onclick="clickMatchWord(this)">${w}</button>`).join('');
+  document.getElementById('matchHints').innerHTML = hints.map(h => { const wordKey = picked.find(p => p.hint === h)?.word || h; return `<button class="match-btn hint-btn" data-id="${wordKey}" onclick="clickMatchHint(this)">${h}</button>`; }).join('');
+  document.getElementById('matchDesc').innerText = `Conecta cada palabra con su significado — ${MODULE_CONFIG[activeModule].label}`;
+  matchCount = 0; matchWordSel = null; matchHintSel = null; const btnFinish = document.getElementById('btnFinishGame'); btnFinish.classList.add('hidden');
+  const cfg = MODULE_CONFIG[activeModule]; btnFinish.innerText = (cfg.hasRounds && currentRound === 1) ? 'Continuar a la Ronda 2 ➔' : 'Ver resultados finales 🎉'; btnFinish.onclick = finishMatchGame;
+}
+
+function clickMatchWord(btn) { if (btn.classList.contains('correct')) return; document.querySelectorAll('.word-btn:not(.correct)').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); matchWordSel = btn; checkMatchPair(); }
+function clickMatchHint(btn) { if (btn.classList.contains('correct')) return; document.querySelectorAll('.hint-btn:not(.correct)').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); matchHintSel = btn; checkMatchPair(); }
+
+function checkMatchPair() {
+  if (!matchWordSel || !matchHintSel) return;
+  const wId = matchWordSel.getAttribute('data-id'); const hId = matchHintSel.getAttribute('data-id');
+  if (wId === hId) {
+    matchWordSel.classList.remove('selected'); matchWordSel.classList.add('correct'); matchHintSel.classList.remove('selected'); matchHintSel.classList.add('correct');
+    matchCount++; score += 10; const sp = document.getElementById('scorePill'); sp.innerText = `⭐ ${score} pts`; sp.style.transform = 'scale(1.2)'; setTimeout(() => sp.style.transform = 'scale(1)', 300);
+    matchWordSel = null; matchHintSel = null; if (matchCount === totalMatches) document.getElementById('btnFinishGame').classList.remove('hidden');
+  } else {
+    matchWordSel.classList.add('wrong'); matchHintSel.classList.add('wrong'); const tw = matchWordSel, th = matchHintSel;
+    setTimeout(() => { tw.classList.remove('wrong','selected'); th.classList.remove('wrong','selected'); }, 700); matchWordSel = null; matchHintSel = null;
+  }
+}
+
+function finishMatchGame() {
+  const cfg = MODULE_CONFIG[activeModule];
+  if (cfg.hasRounds && currentRound === 1) { currentRound = 2; showScreen('screenQuiz'); loadQuestion(); } 
+  else { showScreen('screenFinish'); document.getElementById('finScore').innerText = score; }
+}
+
+/* ============================================================
+   LÓGICA DEL MÓDULO DINÁMICO DE VERBOS
+   ============================================================ */
+function openVerbTable(verbKey) {
+  _vtVerb = verbKey || Object.keys(VERB_DICTIONARY)[0]; _vtFamily = "simple";
+  _renderVerbSelector(); _renderHero(); _renderFamilyTabs(); _renderTenseCards(); _updateHaveGotAlert();
+  document.getElementById('vtPhaseRow').classList.remove('visible'); showScreen('screenVerbTable');
+}
+
+function _renderVerbSelector() {
+  document.getElementById('vtVerbSelector').innerHTML = Object.keys(VERB_DICTIONARY).map(k => `<button class="vt-verb-btn ${k === _vtVerb ? 'active' : ''}" onclick="vtSetVerb('${k}')">${VERB_DICTIONARY[k].en.base}</button>`).join('');
+}
+
+function _renderHero() {
+  const v = VERB_DICTIONARY[_vtVerb]; 
+  document.getElementById('vtVerbBadge').innerText = v.en.base; 
+  document.getElementById('vtAlertVerb').innerText = v.en.base;
+  
+  const irregBadge = v.irregular ? '<span style="background:var(--amber);color:#fff;padding:2px 6px;border-radius:4px;font-size:0.7rem;margin-left:8px;vertical-align:middle;">★ Irregular</span>' : '<span style="background:var(--teal);color:#fff;padding:2px 6px;border-radius:4px;font-size:0.7rem;margin-left:8px;vertical-align:middle;">✔ Regular</span>';
+  document.getElementById('vtVerbMeaning').innerHTML = `✏️ ${v.es.meaning} ${irregBadge}`;
+  
+  const noteHtml = v.spellingNote ? `<div style="margin-top:8px;font-size:0.78rem;color:#005A8F;background:#E0F0FA;padding:8px;border-radius:6px;border-left:4px solid #00838F;">💡 <b>Nota:</b> ${v.spellingNote}</div>` : '';
+  
+  document.getElementById('vtVerbForms').innerHTML = `<b>Base:</b> ${v.en.base} &nbsp;|&nbsp; <b>3ª p.:</b> ${v.en.sForm} &nbsp;|&nbsp; <b>Pasado:</b> ${v.en.past}<br><b>Participio:</b> ${v.en.participle} &nbsp;|&nbsp; <b>Gerundio:</b> ${v.en.gerund} ${noteHtml}`;
+}
+
+function vtSetFamily(family) { _vtFamily = family; _renderFamilyTabs(); _renderTenseCards(); _updateHaveGotAlert(); document.getElementById('vtPhaseRow').classList.remove('visible'); }
+function vtSetVerb(verbKey) { _vtVerb = verbKey; _renderVerbSelector(); _renderHero(); _renderTenseCards(); _updateHaveGotAlert(); }
+function _renderFamilyTabs() { document.querySelectorAll('.vt-tab').forEach(tab => { tab.classList.toggle('active', tab.getAttribute('data-family') === _vtFamily); }); }
+function _updateHaveGotAlert() { document.getElementById('vtHaveGotAlert').classList.toggle('visible', _vtFamily === "perfect" || _vtFamily === "perfectContinuous"); }
+
+function _renderTenseCards() {
+  const container = document.getElementById('vtTenseCards'); const verb = VERB_DICTIONARY[_vtVerb]; const order = ["past","present","future"];
+  const tenseKeys = Object.keys(TENSE_RULES).filter(k => TENSE_FAMILY_MAP[k] === _vtFamily).sort((a,b) => order.indexOf(TENSE_RULES[a].tense) - order.indexOf(TENSE_RULES[b].tense));
+  container.innerHTML = tenseKeys.map(tenseKey => {
+    const rule = TENSE_RULES[tenseKey];
+    const rows = VT_SUBJECTS.map(subj => {
+      return `<tr><td class="vt-subj-cell">${subj}<br><span style="font-size:.65rem;color:var(--muted);font-weight:600">${VT_SUBJ_ES[subj]}</span></td><td class="vt-aff"><div class="en">${rule.build.affirmative(subj, verb)}</div><div class="es">${rule.translate.affirmative(subj, verb)}</div></td><td class="vt-neg"><div class="en">${rule.build.negative(subj, verb)}</div><div class="es">${rule.translate.negative(subj, verb)}</div></td><td class="vt-q"><div class="en">${rule.build.question(subj, verb)}</div><div class="es">${rule.translate.question(subj, verb)}</div></td></tr>`;
+    }).join('');
+    return `<div class="vt-tense-card" data-tense="${tenseKey}"><div class="vt-tense-header" onclick="_vtToggleCard(this)"><div><div class="vt-tense-name">${rule.label} ${rule.isPerfect ? `<span class="vt-perfect-tag">⚠️ No "have got"</span>` : ''}</div><div class="vt-tense-name-en">${rule.labelEn}</div></div><span class="vt-tense-chevron">▼</span></div><div class="vt-tense-body"><table class="vt-subject-table"><thead><tr><th>Sujeto</th><th style="color:var(--ink)">+ Afirmativa</th><th style="color:var(--red)">− Negativa</th><th style="color:var(--sky)">? Pregunta</th></tr></thead><tbody>${rows}</tbody></table><div style="padding:10px 16px 14px;border-top:2px solid var(--border);margin-top:0;"><button class="vt-play-btn secondary" onclick="vtSelectTenseAndPlay('${tenseKey}')">🎯 Practicar este tiempo →</button></div></div></div>`;
+  }).join('');
+  const firstHeader = container.querySelector('.vt-tense-header'); if (firstHeader) { firstHeader.classList.add('open'); firstHeader.nextElementSibling.classList.add('open'); }
+}
+function _vtToggleCard(headerEl) { const isOpen = headerEl.classList.contains('open'); document.querySelectorAll('#vtTenseCards .vt-tense-header').forEach(h => { h.classList.remove('open'); h.nextElementSibling.classList.remove('open'); }); if (!isOpen) { headerEl.classList.add('open'); headerEl.nextElementSibling.classList.add('open'); } }
+function vtSelectTenseAndPlay(tenseKey) { window._vtSelectedTense = tenseKey; document.querySelectorAll('.vt-tense-card').forEach(c => { c.style.outline = c.getAttribute('data-tense') === tenseKey ? '3px solid var(--teal)' : 'none'; }); document.getElementById('vtPhaseRow').classList.add('visible'); document.getElementById('vtPhaseRow').scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+function vtShowPhaseRow() { if (!window._vtSelectedTense) { const order = ["past","present","future"]; const keys = Object.keys(TENSE_RULES).filter(k => TENSE_FAMILY_MAP[k] === _vtFamily).sort((a,b) => order.indexOf(TENSE_RULES[a].tense) - order.indexOf(TENSE_RULES[b].tense)); window._vtSelectedTense = keys[0]; } document.getElementById('vtPhaseRow').classList.add('visible'); document.getElementById('vtPhaseRow').scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+
+function generateDynamicQuestions(tenseKey, verbKey) {
+  const rule = TENSE_RULES[tenseKey]; const verb = VERB_DICTIONARY[verbKey]; const SENT_TYPES = ["affirmative", "negative", "question"];
+  function getDistractors(type, subject, correctAnswer) {
+    const allForms = [verb.en.base, verb.en.sForm, verb.en.past, verb.en.participle, verb.en.gerund, `don't ${verb.en.base}`, `doesn't ${verb.en.base}`, `didn't ${verb.en.base}`, `won't ${verb.en.base}`, `isn't ${verb.en.gerund}`, `wasn't ${verb.en.gerund}`, `have ${verb.en.participle}`, `has ${verb.en.participle}`, `had ${verb.en.participle}`];
+    const qForms = [`Do ${subject} ${verb.en.base}?`, `Does ${subject} ${verb.en.base}?`, `Did ${subject} ${verb.en.base}?`, `Will ${subject} ${verb.en.base}?`, `Is ${subject} ${verb.en.gerund}?`, `Was ${subject} ${verb.en.gerund}?`, `Have ${subject} ${verb.en.participle}?`, `Had ${subject} ${verb.en.participle}?`];
+    const pool = type === "question" ? [...qForms, ...allForms] : allForms;
+    return shuffle([...new Set(pool)].filter(f => f !== correctAnswer)).slice(0, 2);
+  }
+  function buildHintAndRule(type, subject) {
+    const sNote = (["He","She","It"].includes(subject)) ? `${subject}/He/She/It` : subject;
+    const HINTS = { past_simple: { affirmative: `${sNote} → pasado (${verb.en.past})`, negative: `${sNote} → didn't + base`, question: `Did + ${sNote} + base?` }, present_simple: { affirmative: ["He","She","It"].includes(subject) ? `${sNote} → + s/es` : `${sNote} → base`, negative: ["He","She","It"].includes(subject) ? `${sNote} → doesn't + base` : `${sNote} → don't + base`, question: ["He","She","It"].includes(subject) ? `Does + ${sNote} + base?` : `Do + ${sNote} + base?` }, future_simple: { affirmative: `${sNote} + will + base`, negative: `${sNote} + won't + base`, question: `Will + ${sNote} + base?` }, past_continuous: { affirmative: `${sNote} + was/were + -ing`, negative: `${sNote} + wasn't/weren't + -ing`, question: `Was/Were + ${sNote} + -ing?` }, present_continuous: { affirmative: `${sNote} + am/is/are + -ing`, negative: `${sNote} + am not/isn't/aren't + -ing`, question: `Am/Is/Are + ${sNote} + -ing?` }, future_continuous: { affirmative: `${sNote} + will be + -ing`, negative: `${sNote} + won't be + -ing`, question: `Will + ${sNote} + be + -ing?` }, past_perfect: { affirmative: `${sNote} + had + participio`, negative: `${sNote} + had not + participio`, question: `Had + ${sNote} + participio?` }, present_perfect: { affirmative: `${sNote} + have/has + participio`, negative: `${sNote} + haven't/hasn't + participio`, question: `Have/Has + ${sNote} + participio?` }, future_perfect: { affirmative: `${sNote} + will have + participio`, negative: `${sNote} + won't have + participio`, question: `Will + ${sNote} + have + participio?` }, past_perfect_continuous: { affirmative: `${sNote} + had been + -ing`, negative: `${sNote} + had not been + -ing`, question: `Had + ${sNote} + been + -ing?` }, present_perfect_continuous: { affirmative: `${sNote} + have/has been + -ing`, negative: `${sNote} + haven't/hasn't been + -ing`, question: `Have/Has + ${sNote} + been + -ing?` }, future_perfect_continuous: { affirmative: `${sNote} + will have been + -ing`, negative: `${sNote} + won't have been + -ing`, question: `Will + ${sNote} + have been + -ing?` } };
+    const RULES = { past_simple: { affirmative: `Sujeto + verbo en pasado.`, negative: `Sujeto + didn't + base.`, question: `Did + sujeto + base.` }, present_simple: { affirmative: ["He","She","It"].includes(subject) ? `Con He/She/It el verbo lleva -s/es.` : `Con I/You/We/They el verbo va en forma base.`, negative: ["He","She","It"].includes(subject) ? `Sujeto + doesn't + base.` : `Sujeto + don't + base.`, question: ["He","She","It"].includes(subject) ? `Does + sujeto + base?` : `Do + sujeto + base?` }, future_simple: { affirmative: `Sujeto + will + base.`, negative: `Sujeto + won't + base.`, question: `Will + sujeto + base?` }, past_continuous: { affirmative: `was/were + -ing.`, negative: `was not / were not + -ing.`, question: `Was/Were + sujeto + -ing?` }, present_continuous: { affirmative: `am/is/are + -ing.`, negative: `am not / isn't / aren't + -ing.`, question: `Am/Is/Are + sujeto + -ing?` }, future_continuous: { affirmative: `will be + -ing.`, negative: `won't be + -ing.`, question: `Will + sujeto + be + -ing?` }, past_perfect: { affirmative: `had + participio.`, negative: `had not + participio.`, question: `Had + sujeto + participio?` }, present_perfect: { affirmative: `have/has + participio. ⚠️ SIN "got".`, negative: `haven't / hasn't + participio.`, question: `Have/Has + sujeto + participio?` }, future_perfect: { affirmative: `will have + participio.`, negative: `won't have + participio.`, question: `Will + sujeto + have + participio?` }, past_perfect_continuous: { affirmative: `had been + -ing.`, negative: `had not been + -ing.`, question: `Had + sujeto + been + -ing?` }, present_perfect_continuous: { affirmative: `have/has been + -ing.`, negative: `haven't/hasn't been + -ing.`, question: `Have/Has + sujeto + been + -ing?` }, future_perfect_continuous: { affirmative: `will have been + -ing.`, negative: `won't have been + -ing.`, question: `Will + sujeto + have been + -ing?` } };
+    return { hint: (HINTS[tenseKey] && HINTS[tenseKey][type]) || `Regla de ${rule.label}`, explainRule: (RULES[tenseKey] && RULES[tenseKey][type]) || `Usa ${rule.labelEn}.` };
+  }
+  function buildSentence(type, subject, correctAnswer) {
+    const esSubject = { I:"Yo", You:"Tú", He:"Él", She:"Ella", It:"Eso", We:"Nosotros", They:"Ellos" }[subject];
+    if (type === "affirmative") return [ { en: subject, es: esSubject }, { en: "[BLANK]", es: `(${rule.label})` }, { en: `in English.`, es: `en inglés.` } ];
+    if (type === "negative") return [ { en: subject, es: esSubject }, { en: "[BLANK]", es: `(negación)` }, { en: `in English.`, es: `en inglés.` } ];
+    return [ { en: "[BLANK]", es: `(pregunta)` }, { en: subject, es: esSubject }, { en: `${verb.en.base}?`, es: `${verb.es.meaning}?` } ];
+  }
+  
+  const qList = []; const usedCombinations = new Set();
+  const typeDistribution = ["affirmative","affirmative","affirmative","negative","negative","negative","question","question","question",SENT_TYPES[Math.floor(Math.random()*3)]];
+  shuffle(typeDistribution);
+
+  for (let i = 0; i < 10; i++) {
+    const type = typeDistribution[i]; let subject; let comboKey; let safetyBreak = 0;
+    do { subject = VT_SUBJECTS[Math.floor(Math.random() * VT_SUBJECTS.length)]; comboKey = `${subject}_${type}`; safetyBreak++; } while (usedCombinations.has(comboKey) && safetyBreak < 20);
+    usedCombinations.add(comboKey);
+    const correctAnswer = rule.build[type](subject, verb);
+    const distractors = getDistractors(type, subject, correctAnswer);
+    const options = shuffle([correctAnswer, ...distractors]);
+    const { hint, explainRule } = buildHintAndRule(type, subject);
+    const esTranslation = rule.translate[type](subject, verb);
+    qList.push({ sentence: buildSentence(type, subject, correctAnswer), options, correct: correctAnswer, hint, explainRule, _meta: { tense: tenseKey, verb: verbKey, type, esTranslation } });
+  }
+  return qList;
+}
+
+function vtStartFromTable(phase) {
+  const tenseKey = window._vtSelectedTense; const verbKey = _vtVerb;
+  if (!tenseKey || !verbKey) { alert("Por favor selecciona un tiempo y un verbo primero."); return; }
+  questions = generateDynamicQuestions(tenseKey, verbKey); currentQ = 0; currentRound = 1; score = 0; currentPhase = phase; activeModule = "_dynamic_verb";
+  const rule = TENSE_RULES[tenseKey]; const verb = VERB_DICTIONARY[verbKey];
+  MODULE_CONFIG["_dynamic_verb"] = { label: `${rule.label} — ${verb.en.base}`, emoji: "⏱️", questions: questions, tag: "teal", hasRounds: false, nounOptions: [{ val: "affirmative", label: "✅ Afirmativa" }, { val: "negative", label: "❌ Negativa" }, { val: "question", label: "❓ Pregunta" }] };
+  document.getElementById('scorePill').innerText = '⭐ 0 pts'; const tag = document.getElementById('moduleTag'); tag.innerText = `⏱️ ${rule.label} · ${verb.en.base}`; tag.style.background = "var(--teal-lt)"; tag.style.color = "var(--teal-dk)";
+  showScreen('screenQuiz'); loadQuestion();
+}
+</script>
+</body>
+</html>
