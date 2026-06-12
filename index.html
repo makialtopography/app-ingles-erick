@@ -320,37 +320,43 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     </div>
     <div class="menu-section-title">Estructuras Básicas</div>
     <div class="menu-grid">
-      <div class="menu-card" style="--accent:var(--teal);" onclick="selectModule('countable')">
-        <span class="mc-emoji">🛒</span><div class="mc-title">Contables e Incontables</div><div class="mc-desc">Some, any, much, many...</div><span class="mc-badge" style="--badge-bg:var(--teal-lt);--badge-color:var(--teal-dk);">20 pregs</span>
-      </div>
       <div class="menu-card" style="--accent:var(--sky);" onclick="selectModule('partsOfSpeech')">
         <span class="mc-emoji">📚</span><div class="mc-title">Parts of Speech</div><div class="mc-desc">Sustantivos, verbos, adjetivos.</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">10 pregs</span>
       </div>
+      <div class="menu-card" style="--accent:var(--green);" onclick="selectModule('subjects')">
+        <span class="mc-emoji">👤</span><div class="mc-title">Sujetos Oblig.</div><div class="mc-desc">I, You, He, She, It...</div><span class="mc-badge" style="--badge-bg:var(--green-lt);--badge-color:var(--green-dk);">10 pregs</span>
+      </div>
+
+      <div class="menu-card" style="--accent:var(--indigo);" onclick="selectModule('adjectives')">
+        <span class="mc-emoji">🎨</span><div class="mc-title">Adjetivos</div><div class="mc-desc">Reglas y posición.</div><span class="mc-badge" style="--badge-bg:var(--indigo-lt);--badge-color:var(--indigo);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--pink);" onclick="selectModule('determiners')">
+        <span class="mc-emoji">🔤</span><div class="mc-title">Determinantes</div><div class="mc-desc">A, An, The, Some, Any.</div><span class="mc-badge" style="--badge-bg:var(--pink-lt);--badge-color:var(--pink);">10 pregs</span>
+      </div>
+
+      <div class="menu-card" style="--accent:var(--teal);" onclick="selectModule('countable')">
+        <span class="mc-emoji">🛒</span><div class="mc-title">Contables e Incontables</div><div class="mc-desc">Some, any, much, many...</div><span class="mc-badge" style="--badge-bg:var(--teal-lt);--badge-color:var(--teal-dk);">20 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--orange);" onclick="selectModule('possessives')">
+        <span class="mc-emoji">✏️</span><div class="mc-title">Posesivos</div><div class="mc-desc">Apóstrofo 's y pronombres.</div><span class="mc-badge" style="--badge-bg:var(--orange-lt);--badge-color:var(--orange);">10 pregs</span>
+      </div>
+
       <div class="menu-card" style="--accent:var(--amber);" onclick="selectModule('svo')">
         <span class="mc-emoji">📝</span><div class="mc-title">Estructura SVO</div><div class="mc-desc">Sujeto + Verbo + Objeto.</div><span class="mc-badge" style="--badge-bg:var(--amber-lt);--badge-color:var(--amber-dk);">10 pregs</span>
       </div>
       <div class="menu-card" style="--accent:var(--violet);" onclick="selectModule('auxiliaries')">
         <span class="mc-emoji">⚙️</span><div class="mc-title">Auxiliares</div><div class="mc-desc">Do, Does, Did, Will…</div><span class="mc-badge" style="--badge-bg:var(--violet-lt);--badge-color:var(--violet);">10 pregs</span>
       </div>
-      <div class="menu-card" style="--accent:var(--pink);" onclick="selectModule('determiners')">
-        <span class="mc-emoji">🔤</span><div class="mc-title">Determinantes</div><div class="mc-desc">A, An, The, Some, Any.</div><span class="mc-badge" style="--badge-bg:var(--pink-lt);--badge-color:var(--pink);">10 pregs</span>
-      </div>
-      <div class="menu-card" style="--accent:var(--orange);" onclick="selectModule('possessives')">
-        <span class="mc-emoji">✏️</span><div class="mc-title">Posesivos</div><div class="mc-desc">Apóstrofo 's y pronombres.</div><span class="mc-badge" style="--badge-bg:var(--orange-lt);--badge-color:var(--orange);">10 pregs</span>
-      </div>
-      <div class="menu-card" style="--accent:var(--green);" onclick="selectModule('subjects')">
-        <span class="mc-emoji">👤</span><div class="mc-title">Sujetos Oblig.</div><div class="mc-desc">I, You, He, She, It...</div><span class="mc-badge" style="--badge-bg:var(--green-lt);--badge-color:var(--green-dk);">10 pregs</span>
-      </div>
-      <div class="menu-card" style="--accent:var(--indigo);" onclick="selectModule('adjectives')">
-        <span class="mc-emoji">🎨</span><div class="mc-title">Adjetivos</div><div class="mc-desc">Reglas y posición.</div><span class="mc-badge" style="--badge-bg:var(--indigo-lt);--badge-color:var(--indigo);">10 pregs</span>
-      </div>
       
-      <div class="menu-card" style="--accent:var(--rose);" onclick="openVerbTable()" style="grid-column:span 2">
-        <span class="mc-emoji">🕐</span><div class="mc-title">Tiempos Verbales</div><div class="mc-desc">Tabla de los 12 tiempos verbales por sujeto y ¡Juego Dinámico!</div><span class="mc-badge" style="--badge-bg:var(--rose-lt);--badge-color:var(--rose);">Verbos Dinámicos</span>
+      <div style="grid-column:span 2; font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">🕐 La Prueba Final</div>
+      
+      <div class="menu-card" style="--accent:var(--rose); grid-column:span 2;" onclick="openVerbTable()">
+        <span class="mc-emoji">⏱️</span><div class="mc-title">Tiempos Verbales</div><div class="mc-desc">Tabla de los 12 tiempos verbales por sujeto y ¡Juego Dinámico!</div><span class="mc-badge" style="--badge-bg:var(--rose-lt);--badge-color:var(--rose);">Verbos Dinámicos</span>
       </div>
 
       <div style="grid-column:span 2; font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">💬 Vocabulario Práctico</div>
-      <div class="menu-card" style="--accent:var(--sky);" onclick="selectModule('everydayPhrases')" style="grid-column:span 2">
+      
+      <div class="menu-card" style="--accent:var(--sky); grid-column:span 2;" onclick="selectModule('everydayPhrases')">
         <span class="mc-emoji">🗣️</span><div class="mc-title">Frases Cotidianas</div><div class="mc-desc">Saludos, necesidades y expresiones vitales. (Fase Difícil: ¡A escribir!)</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">20 frases</span>
       </div>
     </div>
