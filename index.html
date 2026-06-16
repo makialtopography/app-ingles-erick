@@ -38,18 +38,18 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .screen{display:none}.screen.active{display:block}
 
 /* ===== MODE SELECT ===== */
-.mode-wrap{max-width:560px;margin:0 auto;padding:40px 16px;text-align:center;}
-.mode-hero{font-size:3.5rem;margin-bottom:10px;}
-.mode-title{font-size:1.8rem;font-weight:900;margin-bottom:6px;}
-.mode-sub{color:var(--muted);font-size:.95rem;margin-bottom:28px;}
-.mode-grid{display:grid;grid-template-columns:1fr;gap:14px;max-width:400px;margin:0 auto 24px;}
-.mode-card{background:var(--card);border:3px solid var(--border);border-radius:var(--r);padding:24px 18px;cursor:pointer;transition:all .2s;text-align:center;position:relative;overflow:hidden;}
+.mode-wrap{max-width:560px;margin:0 auto;padding:24px 16px;text-align:center;}
+.mode-hero{font-size:3.5rem;margin-bottom:6px;}
+.mode-title{font-size:1.8rem;font-weight:900;margin-bottom:4px;}
+.mode-sub{color:var(--muted);font-size:.95rem;margin-bottom:20px;}
+.mode-grid{display:grid;grid-template-columns:1fr;gap:10px;max-width:400px;margin:0 auto 24px;}
+.mode-card{background:var(--card);border:3px solid var(--border);border-radius:var(--r);padding:14px 18px;cursor:pointer;transition:all .2s;text-align:center;position:relative;overflow:hidden;}
 .mode-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:4px 4px 0 0;background:var(--accent,var(--border));}
 .mode-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
 .mode-card:active{transform:scale(.97);}
-.mode-emoji{font-size:2.6rem;margin-bottom:10px;display:block;}
-.mode-name{font-size:1.1rem;font-weight:800;margin-bottom:5px;}
-.mode-desc{font-size:.8rem;color:var(--muted);line-height:1.4;}
+.mode-emoji{font-size:2.6rem;margin-bottom:4px;display:block;}
+.mode-name{font-size:1.1rem;font-weight:800;margin-bottom:2px;}
+.mode-desc{font-size:.8rem;color:var(--muted);line-height:1.3;}
 
 /* ===== PLAYERS SETUP ===== */
 .players-wrap{max-width:480px;margin:0 auto;padding:24px 16px 40px;}
@@ -260,6 +260,17 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     <div class="mode-hero">🕵️</div>
     <div class="mode-title">Detective de Inglés</div>
     <div class="mode-sub">Elige cómo quieres jugar hoy</div>
+
+    <div style="margin: 0 auto 16px; max-width: 320px; text-align: left; background: var(--card); padding: 12px 16px; border-radius: var(--r); border: 2px solid var(--border);">
+      <label style="font-size:.85rem; font-weight:800; color:var(--ink); display:block; margin-bottom:6px;">⏱️ Tiempo por pregunta:</label>
+      <select id="timeSelect" onchange="MAX_TIME = parseInt(this.value)" style="width:100%; padding:8px; border-radius:var(--r-sm); border:2px solid var(--border); font-family:inherit; font-size:.95rem; font-weight:700; outline:none; background:var(--bg); color:var(--ink); cursor:pointer;">
+        <option value="10">10 Segundos (Modo Relámpago)</option>
+        <option value="15" selected>15 Segundos (Normal)</option>
+        <option value="20">20 Segundos (Relajado)</option>
+        <option value="30">30 Segundos (Sin prisas)</option>
+      </select>
+    </div>
+
     <div class="mode-grid">
       <div class="mode-card" style="--accent:var(--green);" onclick="selectMode(1)">
         <span class="mode-emoji">🎮</span>
@@ -277,18 +288,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
         <div class="mode-desc">¡Próximamente con Firebase!</div>
       </div>
     </div>
-
-    <div style="margin: 24px auto 0; max-width: 320px; text-align: left; background: var(--card); padding: 16px; border-radius: var(--r); border: 2px solid var(--border);">
-      <label style="font-size:.9rem; font-weight:800; color:var(--ink); display:block; margin-bottom:8px;">⏱️ Tiempo por pregunta:</label>
-      <select id="timeSelect" onchange="MAX_TIME = parseInt(this.value)" style="width:100%; padding:10px; border-radius:var(--r-sm); border:2px solid var(--border); font-family:inherit; font-size:1rem; font-weight:700; outline:none; background:var(--bg); color:var(--ink); cursor:pointer;">
-        <option value="10">10 Segundos (Modo Rapido)</option>
-        <option value="15">15 Segundos (Normal)</option>
-        <option value="20">20 Segundos (Relajado)</option>
-        <option value="30">30 Segundos (Sin prisas)</option>
-      </select>
-    </div>
-
-  </div> </div>
+  </div>
+</div>
 
 <div class="screen" id="screenPlayers">
   <div class="players-wrap">
@@ -316,46 +317,78 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     <div class="menu-hero">
       <span class="menu-hero-emoji">🕵️</span>
       <h2 id="menuGreeting">¡Hola, Erick!</h2>
-      <p>Elige un módulo para empezar. ¡Aprenderemos gramática y frases útiles!</p>
+      <p>Aprenderemos paso a paso. Construye tu inglés como si fueran piezas de Lego.</p>
     </div>
-    <div class="menu-section-title">Estructuras Básicas</div>
+    
+    <div class="menu-section-title">🧩 1: LOS BLOQUES DE CONSTRUCCIÓN</div>
+    <p style="font-size:.85rem; color:var(--muted); margin-bottom:10px; line-height:1.4;">Aprende las piezas básicas. Una oración simple necesita saber de quién hablamos, qué hace y cómo es.</p>
+    <div style="background:var(--bg); border:2px dashed var(--teal); border-radius:var(--r-sm); padding:12px; margin-bottom:16px;">
+      <div style="font-size:.8rem; font-weight:800; color:var(--teal-dk); margin-bottom:4px;">💡 Fórmula: [Pronombre/Sustantivo] + [Verbo] + [Adjetivo]</div>
+      <div style="font-size:.85rem; color:var(--ink);">Ejemplo: <b>Dogs are happy.</b> (Los perros son felices).</div>
+    </div>
+    
     <div class="menu-grid">
-      <div class="menu-card" style="--accent:var(--sky);" onclick="selectModule('partsOfSpeech')">
-        <span class="mc-emoji">📚</span><div class="mc-title">Parts of Speech</div><div class="mc-desc">Sustantivos, verbos, adjetivos.</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">10 pregs</span>
-      </div>
       <div class="menu-card" style="--accent:var(--green);" onclick="selectModule('subjects')">
-        <span class="mc-emoji">👤</span><div class="mc-title">Sujetos Oblig.</div><div class="mc-desc">I, You, He, She, It...</div><span class="mc-badge" style="--badge-bg:var(--green-lt);--badge-color:var(--green-dk);">10 pregs</span>
+        <span class="mc-emoji">👤</span><div class="mc-title">1. Pronombres (Sujetos)</div><div class="mc-desc">I, You, He, She, It...</div><span class="mc-badge" style="--badge-bg:var(--green-lt);--badge-color:var(--green-dk);">10 pregs</span>
       </div>
-
+      <div class="menu-card" style="--accent:var(--orange);" onclick="selectModule('generalNouns')">
+        <span class="mc-emoji">🌍</span><div class="mc-title">2. Sustantivos Generales</div><div class="mc-desc">Personas, lugares, animales y cosas.</div><span class="mc-badge" style="--badge-bg:var(--orange-lt);--badge-color:var(--orange);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--teal);" onclick="selectModule('countable')">
+        <span class="mc-emoji">🛒</span><div class="mc-title">3. Sustantivos Contables e Incontables</div><div class="mc-desc">Some, any, much, many...</div><span class="mc-badge" style="--badge-bg:var(--teal-lt);--badge-color:var(--teal-dk);">20 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--rose);" onclick="selectModule('verbsVocab')">
+        <span class="mc-emoji">🏃</span><div class="mc-title">4. Verbos de Acción</div><div class="mc-desc">Memoriza acciones con emojis.</div><span class="mc-badge" style="--badge-bg:var(--rose-lt);--badge-color:var(--rose);">10 pregs</span>
+      </div>
       <div class="menu-card" style="--accent:var(--indigo);" onclick="selectModule('adjectives')">
-        <span class="mc-emoji">🎨</span><div class="mc-title">Adjetivos</div><div class="mc-desc">Reglas y posición.</div><span class="mc-badge" style="--badge-bg:var(--indigo-lt);--badge-color:var(--indigo);">10 pregs</span>
+        <span class="mc-emoji">🎨</span><div class="mc-title">5. Adjetivos</div><div class="mc-desc">Reglas y posición.</div><span class="mc-badge" style="--badge-bg:var(--indigo-lt);--badge-color:var(--indigo);">10 pregs</span>
       </div>
+      <div class="menu-card" style="--accent:var(--sky);" onclick="selectModule('partsOfSpeech')">
+        <span class="mc-emoji">🎓</span><div class="mc-title">6. Partes de la Oración</div><div class="mc-desc">Examen: Identifica quién es quién.</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">10 pregs</span>
+      </div>
+    </div>
+
+    <div class="menu-section-title">🧲 2: LOS ACOMPAÑANTES DEL SUSTANTIVO</div>
+    <p style="font-size:.85rem; color:var(--muted); margin-bottom:10px; line-height:1.4;">Hagamos la oración más precisa. Agreguemos palabritas que nos dicen de <b>quién</b> es el sustantivo o <b>cuántos</b> hay.</p>
+    <div style="background:var(--bg); border:2px dashed var(--sky); border-radius:var(--r-sm); padding:12px; margin-bottom:16px;">
+      <div style="font-size:.8rem; font-weight:800; color:var(--sky); margin-bottom:4px;">💡 Fórmula: [Determinante/Posesivo] + Sustantivo</div>
+      <div style="font-size:.85rem; color:var(--ink);">Ejemplo: <b><span style="color:var(--sky)">My</span> dogs are happy.</b> (Mis perros son felices).</div>
+    </div>
+
+    <div class="menu-grid">
       <div class="menu-card" style="--accent:var(--pink);" onclick="selectModule('determiners')">
         <span class="mc-emoji">🔤</span><div class="mc-title">Determinantes</div><div class="mc-desc">A, An, The, Some, Any.</div><span class="mc-badge" style="--badge-bg:var(--pink-lt);--badge-color:var(--pink);">10 pregs</span>
-      </div>
-
-      <div class="menu-card" style="--accent:var(--teal);" onclick="selectModule('countable')">
-        <span class="mc-emoji">🛒</span><div class="mc-title">Contables e Incontables</div><div class="mc-desc">Some, any, much, many...</div><span class="mc-badge" style="--badge-bg:var(--teal-lt);--badge-color:var(--teal-dk);">20 pregs</span>
       </div>
       <div class="menu-card" style="--accent:var(--orange);" onclick="selectModule('possessives')">
         <span class="mc-emoji">✏️</span><div class="mc-title">Posesivos</div><div class="mc-desc">Apóstrofo 's y pronombres.</div><span class="mc-badge" style="--badge-bg:var(--orange-lt);--badge-color:var(--orange);">10 pregs</span>
       </div>
+    </div>
 
+    <div class="menu-section-title">⚙️ 3: ARMANDO LA ORACIÓN (SVO)</div>
+    <p style="font-size:.85rem; color:var(--muted); margin-bottom:10px; line-height:1.4;">¡La maquinaria completa! Usemos el orden estricto y agreguemos Auxiliares para poder preguntar o negar.</p>
+    <div style="background:var(--bg); border:2px dashed var(--amber); border-radius:var(--r-sm); padding:12px; margin-bottom:16px;">
+      <div style="font-size:.8rem; font-weight:800; color:var(--amber-dk); margin-bottom:4px;">💡 Fórmula: [Auxiliar] + Sujeto + Verbo + Objeto</div>
+      <div style="font-size:.85rem; color:var(--ink);">Ejemplo: <b><span style="color:var(--amber-dk)">Do</span> my dogs play?</b> (¿Juegan mis perros?)</div>
+    </div>
+
+    <div class="menu-grid">
       <div class="menu-card" style="--accent:var(--amber);" onclick="selectModule('svo')">
         <span class="mc-emoji">📝</span><div class="mc-title">Estructura SVO</div><div class="mc-desc">Sujeto + Verbo + Objeto.</div><span class="mc-badge" style="--badge-bg:var(--amber-lt);--badge-color:var(--amber-dk);">10 pregs</span>
       </div>
       <div class="menu-card" style="--accent:var(--violet);" onclick="selectModule('auxiliaries')">
         <span class="mc-emoji">⚙️</span><div class="mc-title">Auxiliares</div><div class="mc-desc">Do, Does, Did, Will…</div><span class="mc-badge" style="--badge-bg:var(--violet-lt);--badge-color:var(--violet);">10 pregs</span>
       </div>
-      
-      <div style="grid-column:span 2; font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">🕐 La Prueba Final</div>
-      
+    </div>
+
+    <div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">🏆 4: LA PRUEBA FINAL</div>
+    <div class="menu-grid" style="margin-bottom: 24px;">
       <div class="menu-card" style="--accent:var(--rose); grid-column:span 2;" onclick="openVerbTable()">
         <span class="mc-emoji">⏱️</span><div class="mc-title">Tiempos Verbales</div><div class="mc-desc">Tabla de los 12 tiempos verbales por sujeto y ¡Juego Dinámico!</div><span class="mc-badge" style="--badge-bg:var(--rose-lt);--badge-color:var(--rose);">Verbos Dinámicos</span>
       </div>
+    </div>
 
-      <div style="grid-column:span 2; font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">💬 Vocabulario Práctico</div>
-      
+    <div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">💬 5: VOCABULARIO PRÁCTICO</div>
+    <div class="menu-grid">
       <div class="menu-card" style="--accent:var(--sky); grid-column:span 2;" onclick="selectModule('everydayPhrases')">
         <span class="mc-emoji">🗣️</span><div class="mc-title">Frases Cotidianas</div><div class="mc-desc">Saludos, necesidades y expresiones vitales. (Fase Difícil: ¡A escribir!)</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">20 frases</span>
       </div>
@@ -501,28 +534,67 @@ const MODULE_MATCH = {
   everydayPhrases:[{word:"I don't know",hint:"No lo sé"},{word:"I am hungry",hint:"Tengo hambre"},{word:"Excuse me",hint:"Disculpa / Perdón"},{word:"You're welcome",hint:"De nada"},{word:"Please",hint:"Por favor"},{word:"Nice to meet you",hint:"Mucho gusto"},{word:"How do you say",hint:"¿Cómo se dice...?"},{word:"I don't understand",hint:"No entiendo"},{word:"See you later",hint:"Hasta luego"},{word:"Thank you",hint:"Gracias"}]
 };
 
+/* ===== DICCIONARIOS DINÁMICOS (30 Palabras c/u) ===== */
+const NOUN_POOL = [
+  { w: "dog", e: "🐶", es: "perro", s: "The ___ barks loudly." }, { w: "cat", e: "🐱", es: "gato", s: "The ___ sleeps on the sofa." }, { w: "bird", e: "🐦", es: "pájaro", s: "The ___ sings in the morning." },
+  { w: "teacher", e: "👩‍🏫", es: "profesor(a)", s: "The ___ writes on the board." }, { w: "doctor", e: "👨‍⚕️", es: "doctor", s: "The ___ works at the hospital." }, { w: "friend", e: "🤝", es: "amigo", s: "My ___ plays video games with me." },
+  { w: "boy", e: "👦", es: "niño", s: "The ___ kicks the ball." }, { w: "girl", e: "👧", es: "niña", s: "The ___ reads a comic book." }, { w: "park", e: "🌳", es: "parque", s: "We run and play in the ___." },
+  { w: "city", e: "🏙️", es: "ciudad", s: "New York is a big ___." }, { w: "hospital", e: "🏥", es: "hospital", s: "The nurse works in the ___." }, { w: "school", e: "🏫", es: "escuela", s: "Students learn math in the ___." },
+  { w: "house", e: "🏠", es: "casa", s: "I watch TV in my ___." }, { w: "book", e: "📖", es: "libro", s: "I read a ___ before bed." }, { w: "car", e: "🚗", es: "carro", s: "My dad drives a red ___." },
+  { w: "table", e: "🪑", es: "mesa", s: "Put the plates on the ___." }, { w: "apple", e: "🍎", es: "manzana", s: "I eat an ___ for a snack." }, { w: "water", e: "💧", es: "agua", s: "Drink ___ every day." },
+  { w: "pencil", e: "✏️", es: "lápiz", s: "Write the answer with a ___." }, { w: "phone", e: "📱", es: "teléfono", s: "I call my mom on the ___." }, { w: "computer", e: "💻", es: "computadora", s: "I send emails on my ___." },
+  { w: "money", e: "💵", es: "dinero", s: "I need ___ to buy candy." }, { w: "door", e: "🚪", es: "puerta", s: "Please, close the ___." }, { w: "window", e: "🪟", es: "ventana", s: "Open the ___ for fresh air." },
+{ w: "London", e: "🕰️", es: "Londres", s: "Big Ben is in ___." }, { w: "Paris", e: "🗼", es: "París", s: "The Eiffel Tower is in ___." }, { w: "Juan", e: "🧑", es: "Juan", s: "___ is my best friend." },
+  { w: "elephant", e: "🐘", es: "elefante", s: "The ___ is very heavy." }, { w: "fish", e: "🐟", es: "pez", s: "The ___ swims in the river." }, { w: "time", e: "⌚", es: "tiempo", s: "I don't have ___ to play." }
+];
+
+const VERB_POOL = [
+  { w: "run", e: "🏃", es: "correr", s: "I ___ in the marathon." }, { w: "eat", e: "🍔", es: "comer", s: "They ___ pizza on Fridays." }, { w: "sleep", e: "😴", es: "dormir", s: "We ___ 8 hours a night." },
+  { w: "read", e: "📖", es: "leer", s: "She likes to ___ books." }, { w: "play", e: "🎮", es: "jugar", s: "Let's ___ video games!" }, { w: "write", e: "✍️", es: "escribir", s: "I ___ a letter to you." },
+  { w: "walk", e: "🚶", es: "caminar", s: "We ___ to school." }, { w: "work", e: "💼", es: "trabajar", s: "He goes to ___ at 9 AM." }, { w: "study", e: "📚", es: "estudiar", s: "They ___ for the English exam." },
+  { w: "jump", e: "🦘", es: "saltar", s: "The kangaroo can ___ high." }, { w: "cook", e: "🍳", es: "cocinar", s: "My mom loves to ___ pasta." }, { w: "drink", e: "🥤", es: "beber", s: "I ___ water every day." },
+  { w: "listen", e: "🎧", es: "escuchar", s: "I ___ to rock music." }, { w: "speak", e: "🗣️", es: "hablar", s: "Can you ___ Spanish?" }, { w: "buy", e: "🛍️", es: "comprar", s: "I want to ___ a new shirt." },
+  { w: "drive", e: "🚗", es: "conducir", s: "My dad can ___ a truck." }, { w: "fly", e: "✈️", es: "volar", s: "Birds can ___ in the sky." }, { w: "swim", e: "🏊", es: "nadar", s: "Fish ___ in the ocean." },
+  { w: "sing", e: "🎤", es: "cantar", s: "She likes to ___ in the shower." }, { w: "dance", e: "💃", es: "bailar", s: "We ___ at the party." }, { w: "watch", e: "📺", es: "mirar/ver", s: "They ___ TV at night." },
+  { w: "clean", e: "🧹", es: "limpiar", s: "Please ___ your room." }, { w: "wash", e: "🧼", es: "lavar", s: "I ___ my hands before dinner." }, { w: "open", e: "🔓", es: "abrir", s: "Can you ___ the door?" },
+  { w: "close", e: "🔒", es: "cerrar", s: "Don't forget to ___ the window." }, { w: "think", e: "🤔", es: "pensar", s: "I need time to ___." }, { w: "smile", e: "😊", es: "sonreír", s: "Say cheese and ___!" },
+  { w: "cry", e: "😢", es: "llorar", s: "Babies ___ when they are hungry." }, { w: "wait", e: "⏳", es: "esperar", s: "Please ___ for me here." }, { w: "sell", e: "💰", es: "vender", s: "They ___ fresh fruit in the market." }
+];
+
 const MODULE_EXPLAIN = {
-  countable:{accentColor:"var(--teal)",intro:"Los <strong>cuantificadores</strong> indican <em>cuánto</em> hay de algo.",concepts:[{label:"🍎 Contable",text:"Se cuenta: 1 apple. Usan <strong>many</strong>, <strong>a few</strong>, <strong>some</strong>, <strong>any</strong>."},{label:"💧 Incontable",text:"No se cuenta: water. Usan <strong>much</strong>, <strong>a little</strong>."},{label:"⚖️ Ambos (Afirmativas)",text:"Para decir 'mucho' en frases positivas, usamos <strong>a lot of</strong> (sirve para ambos)."}],examples:[{en:"There are many apples.",es:"Hay muchas manzanas."},{en:"There is a lot of bread.",es:"Hay mucho pan."}],tip:"Si puedes decir '1, 2, 3…' → Contable. Si no → Incontable."},
-  partsOfSpeech:{accentColor:"var(--sky)",intro:"Las <strong>partes del discurso</strong> son los roles de las palabras.",concepts:[{label:"📦 Sustantivo",text:"Persona, lugar o cosa (dog, teacher)."},{label:"⚡ Verbo",text:"Acción (run, eat). Con He/She/It añade <strong>-s</strong>."},{label:"🎨 Adjetivo",text:"Describe. Va <strong>antes</strong> del sustantivo (big, red)."}],examples:[{en:"The fast dog runs.",es:"El perro rápido corre."}],tip:"Sustantivo = COSA. Verbo = ACCIÓN. Adjetivo = DESCRIPCIÓN."},
-  svo:{accentColor:"var(--amber)",intro:"En inglés, el orden es <strong>S-V-O</strong>: Sujeto → Verbo → Objeto.",concepts:[{label:"👤 Sujeto",text:"Siempre obligatorio, incluso con clima: <strong>It is raining</strong>."},{label:"⚡ Verbo",text:"Va después del sujeto."}],examples:[{en:"It is Monday.",es:"(Es lunes.) — No se omite 'It'."}],tip:"En español decimos 'Llueve'. En inglés SIEMPRE: 'It rains'."},
-  auxiliaries:{accentColor:"var(--violet)",intro:"Los <strong>auxiliares</strong> forman preguntas y negaciones.",concepts:[{label:"⚙️ Do / Does",text:"Presente. Do (I/You/We/They), Does (He/She/It)."},{label:"⚙️ Did",text:"Pasado. Igual para todos."},{label:"⚙️ Will / Won't",text:"Futuro."}],examples:[{en:"Do you like pizza?",es:"¿Te gusta la pizza?"}],tip:"Presente: Do/Does. Pasado: Did. Futuro: Will."},
-  determiners:{accentColor:"var(--pink)",intro:"Los <strong>determinantes</strong> van antes del sustantivo.",concepts:[{label:"📌 A / An",text:"<strong>A</strong> (consonante), <strong>An</strong> (vocal)."},{label:"📌 The",text:"Cosas <strong>específicas</strong> o únicas."},{label:"🔤 Some / Any",text:"<strong>Some</strong> (afirmativas/ofrecer), <strong>Any</strong> (preguntas/negativas)."}],examples:[{en:"I have a dog.",es:"Tengo un perro. (D = consonante)"}],tip:"¿Primera vez? → a/an. ¿Ya se sabe cuál? → the."},
-  possessives:{accentColor:"var(--orange)",intro:"Usamos el <strong>apóstrofo + s ('s)</strong> para indicar posesión.",concepts:[{label:"✏️ Nombre + 's",text:"El poseedor va primero: <strong>Tom's book</strong>."}],examples:[{en:"Erick's room is tidy.",es:"La habitación de Erick está ordenada."}],tip:"Fórmula: POSEEDOR + 's + COSA POSEÍDA."},
-  subjects:{accentColor:"var(--green)",intro:"El <strong>sujeto es obligatorio</strong>. No se puede omitir.",concepts:[{label:"👤 Pronombres",text:"I, You, He, She, It, We, They."},{label:"👤 It",text:"Para clima, hora, días y objetos."}],examples:[{en:"I study English.",es:"Yo estudio inglés. (No: 'Study English')"}],tip:"'I' (Yo) se escribe siempre en mayúscula."},
-  adjectives:{accentColor:"var(--indigo)",intro:"Los <strong>adjetivos son invariables</strong> y van antes del sustantivo.",concepts:[{label:"🎨 Invariables",text:"No tienen plural. <strong>tall boy</strong>, <strong>tall boys</strong>."},{label:"🎨 Posición",text:"Antes del sustantivo: <strong>blue sky</strong>."}],examples:[{en:"They are tall.",es:"Son altos. (No 'talls')"}],tip:"El sustantivo lleva 's' en plural, el adjetivo NUNCA."},
-  everydayPhrases:{
-    accentColor:"var(--sky)",
-    intro:"Aprender <strong>frases cotidianas</strong> te ayuda a comunicarte sin pensar regla por regla.",
-    concepts:[
-      {label:"💬 Saludos y Cortesía",text:"Hello, Good morning, Thank you, Please."},
-      {label:"💬 Necesidades",text:"I am hungry (Tengo hambre), I don't understand (No entiendo)."}
+  generalNouns: {
+    accentColor: "var(--orange)",
+    intro: "Los <strong>sustantivos</strong> son las palabras que usamos para nombrar todo lo que existe.",
+    concepts: [
+      { label: "🌍 Comunes", text: "Cosas, lugares, animales o profesiones (dog, city, teacher)." },
+      { label: "👤 Propios", text: "Nombres específicos de personas o lugares. <strong>¡Siempre van en mayúscula!</strong> (Juan, Paris, London)." }
     ],
-    examples:[
-      {en:"Nice to meet you.",es:"Mucho gusto."},
-      {en:"How do you say...?",es:"¿Cómo se dice...?"}
+    examples: [
+      { en: "Juan is in the park.", es: "Juan está en el parque." }
     ],
-    tip:"Modo Fácil: Selecciona la traducción. Modo Difícil: ¡Te toca teclear la frase en inglés!"
-  }
+    tip: "Fase 1: Asocia la palabra. Fase 2: Úsala en contexto."
+  },
+  verbsVocab: {
+    accentColor: "var(--rose)",
+    intro: "Los <strong>verbos</strong> son la chispa de la oración. ¡Son la acción!",
+    concepts: [
+      { label: "⚡ Acción pura", text: "Nos dicen qué hace el sujeto (run, eat, sleep)." },
+      { label: "🧠 Memoria visual", text: "Asociar un verbo a un emoji te ayuda a pensar directo en inglés, sin traducir en tu cabeza." }
+    ],
+    examples: [
+      { en: "I sleep 8 hours.", es: "Yo duermo 8 horas." }
+    ],
+    tip: "¡Imagina que estás haciendo la acción cuando elijas la respuesta!"
+  },
+  countable:{accentColor:"var(--teal)",intro:"Los <strong>sustantivos</strong> son las cosas de las que hablamos. A veces se pueden contar y a veces no. Los <strong>cuantificadores</strong> nos dicen <em>cuánto</em> hay de ese sustantivo.",concepts:[{label:"🍎 Contable",text:"Se cuenta: 1 apple. Usan <strong>many</strong>, <strong>a few</strong>, <strong>some</strong>, <strong>any</strong>."},{label:"💧 Incontable",text:"No se cuenta: water. Usan <strong>much</strong>, <strong>a little</strong>."},{label:"⚖️ Ambos (Afirmativas)",text:"Para decir 'mucho' en frases positivas, usamos <strong>a lot of</strong> (sirve para ambos)."}],examples:[{en:"There are many apples.",es:"Hay muchas manzanas."},{en:"There is a lot of bread.",es:"Hay mucho pan."}],tip:"Si puedes decir '1, 2, 3…' → Contable. Si es polvo, líquido o idea → Incontable."},
+  partsOfSpeech:{accentColor:"var(--sky)",intro:"Las <strong>Partes de la Oración</strong> definen qué función cumple cada palabra. Son los bloques básicos del inglés.",concepts:[{label:"📦 Sustantivo (Noun)",text:"Persona, lugar, cosa o animal (teacher, park, car, dog)."},{label:"⚡ Verbo (Verb)",text:"La acción (run, eat). Con He/She/It en presente añade <strong>-s</strong>."},{label:"🎨 Adjetivo (Adjective)",text:"Describe al sustantivo. Va <strong>antes</strong> de él (big, red)."}],examples:[{en:"The fast dog runs.",es:"El perro rápido corre."}],tip:"Sustantivo = COSA. Verbo = ACCIÓN. Adjetivo = DESCRIPCIÓN."},
+  svo:{accentColor:"var(--amber)",intro:"En inglés, el orden es <strong>S-V-O</strong>: Sujeto → Verbo → Objeto.",concepts:[{label:"👤 Sujeto (Quien hace la acción)",text:"Siempre obligatorio, incluso con clima: <strong>It is raining</strong>."},{label:"⚡ Verbo (La acción)",text:"Va después del sujeto."},{label:"📦 Objeto (Quien recibe la acción)",text:"Suele ir al final de la oración."}],examples:[{en:"It is Monday.",es:"(Es lunes.) — No se omite 'It'."}],tip:"En español decimos 'Llueve'. En inglés SIEMPRE se necesita un sujeto: 'It rains'."},
+  auxiliaries:{accentColor:"var(--violet)",intro:"Los <strong>auxiliares</strong> son los 'ayudantes del verbo'. Sirven para formar preguntas y negaciones.",concepts:[{label:"⚙️ Do / Does",text:"Presente. Do (I/You/We/They), Does (He/She/It)."},{label:"⚙️ Did",text:"Pasado. Igual para todos."},{label:"⚙️ Will / Won't",text:"Futuro."}],examples:[{en:"Do you like pizza?",es:"¿Te gusta la pizza?"}],tip:"Presente: Do/Does. Pasado: Did. Futuro: Will."},
+  determiners:{accentColor:"var(--pink)",intro:"Los <strong>determinantes</strong> son los escuderos del sustantivo. Van justo antes de la cosa para darnos contexto.",concepts:[{label:"📌 A / An",text:"<strong>A</strong> (consonante), <strong>An</strong> (vocal). Significan 'un/una'."},{label:"📌 The",text:"Cosas <strong>específicas</strong> o únicas (El/La)."},{label:"🔤 Some / Any",text:"<strong>Some</strong> (afirmativas/ofrecer), <strong>Any</strong> (preguntas/negativas)."}],examples:[{en:"I have a dog.",es:"Tengo un perro. (D = consonante)"}],tip:"¿Primera vez que lo mencionas? → a/an. ¿Ya sabes de cuál hablamos? → the."},
+  possessives:{accentColor:"var(--orange)",intro:"Los <strong>posesivos</strong> también acompañan al sustantivo, indicando a quién le pertenece.",concepts:[{label:"✏️ Nombre + 's",text:"El poseedor va primero: <strong>Tom's book</strong> (El libro de Tom)."}],examples:[{en:"Erick's room is tidy.",es:"La habitación de Erick está ordenada."}],tip:"Fórmula: POSEEDOR + 's + COSA POSEÍDA."},
+  subjects:{accentColor:"var(--green)",intro:"Los <strong>Pronombres</strong> reemplazan al sustantivo. Cuando hacen la acción, se llaman <strong>Sujetos</strong> y son obligatorios.",concepts:[{label:"👤 Pronombres Sujetos",text:"I, You, He, She, It, We, They."},{label:"👤 It",text:"Se usa para clima, hora, días, un objeto o un animal."}],examples:[{en:"I study English.",es:"Yo estudio inglés. (No se puede decir solo 'Study English')"}],tip:"'I' (Yo) se escribe siempre en mayúscula, no importa dónde esté."},
+  adjectives:{accentColor:"var(--indigo)",intro:"Los <strong>adjetivos</strong> decoran al sustantivo diciéndonos cómo es.",concepts:[{label:"🎨 Invariables",text:"No tienen plural. Se dice <strong>tall boy</strong> y <strong>tall boys</strong> (nunca talls)."},{label:"🎨 Posición",text:"Siempre van <strong>antes</strong> del sustantivo: <strong>blue sky</strong>."}],examples:[{en:"They are tall.",es:"Son altos. (No 'talls')"}],tip:"El sustantivo lleva 's' en plural, el adjetivo NUNCA."},
+  everydayPhrases:{accentColor:"var(--sky)",intro:"Aprender <strong>frases cotidianas</strong> te ayuda a comunicarte sin pensar regla por regla.",concepts:[{label:"💬 Saludos y Cortesía",text:"Hello, Good morning, Thank you, Please."},{label:"💬 Necesidades",text:"I am hungry (Tengo hambre), I don't understand (No entiendo)."}],examples:[{en:"Nice to meet you.",es:"Mucho gusto."},{en:"How do you say...?",es:"¿Cómo se dice...?"}],tip:"Modo Fácil: Selecciona la traducción. Modo Difícil: ¡Te toca teclear la frase en inglés!"}
 };
 
 const OPTION_HINTS = {
@@ -723,14 +795,16 @@ const TENSE_RULES = {
 
 // ── CONFIGURACIÓN DE MÓDULOS ─────────────────────────────────
 const MODULE_CONFIG = {
-  countable:     { label:"Contables e Incontables", emoji:"🛒", questions:Q_COUNTABLE, tag:"teal",   hasRounds:true,  nounOptions:[{val:"C",label:"🍎 Contable"},{val:"U",label:"💧 Incontable"}] },
-  partsOfSpeech: { label:"Parts of Speech",         emoji:"📚", questions:Q_PARTS,     tag:"sky",    hasRounds:false, nounOptions:[{val:"Noun",label:"📦 Sustantivo"},{val:"Verb",label:"⚡ Verbo"},{val:"Adjective",label:"🎨 Adjetivo"}] },
-  svo:           { label:"Estructura SVO",          emoji:"📝", questions:Q_SVO,       tag:"amber",  hasRounds:false, nounOptions:[{val:"Subject",label:"👤 Sujeto"},{val:"Verb",label:"⚡ Verbo"}] },
-  auxiliaries:   { label:"Auxiliares",              emoji:"⚙️", questions:Q_AUX,       tag:"violet", hasRounds:false, nounOptions:[{val:"Auxiliary",label:"⚙️ Auxiliar"}] },
+  generalNouns:    { label:"Sustantivos Generales",   emoji:"🌍", questions:[], tag:"orange", hasRounds:true, nounOptions:[{val:"Noun",label:"📦 Sustantivo"}] },
+  verbsVocab:      { label:"Verbos de Acción",        emoji:"🏃", questions:[], tag:"rose",   hasRounds:true, nounOptions:[{val:"Verb",label:"⚡ Verbo"}] },
+  partsOfSpeech: { label:"Partes de la Oración",    emoji:"📚", questions:Q_PARTS,     tag:"sky",    hasRounds:false, nounOptions:[{val:"Noun",label:"📦 Sustantivo"},{val:"Verb",label:"⚡ Verbo"},{val:"Adjective",label:"🎨 Adjetivo"}] },
+  subjects:      { label:"Pronombres (Sujetos)",    emoji:"👤", questions:Q_SUBJ,      tag:"green",  hasRounds:false, nounOptions:[{val:"Pronoun",label:"👤 Pronombre"}] },
+  countable:     { label:"Sustantivos (Cont/Inc)",  emoji:"🛒", questions:Q_COUNTABLE, tag:"teal",   hasRounds:true,  nounOptions:[{val:"C",label:"🍎 Contable"},{val:"U",label:"💧 Incontable"}] },
+  adjectives:    { label:"Adjetivos",               emoji:"🎨", questions:Q_ADJ,       tag:"indigo", hasRounds:false, nounOptions:[{val:"Adjective",label:"🎨 Adjetivo"}] },
   determiners:   { label:"Determinantes",           emoji:"🔤", questions:Q_DET,       tag:"pink",   hasRounds:false, nounOptions:[{val:"Article",label:"📌 Artículo"},{val:"Determiner",label:"🔤 Determinante"}] },
   possessives:   { label:"Posesivos",               emoji:"✏️", questions:Q_POSS,      tag:"orange", hasRounds:false, nounOptions:[{val:"Possessive",label:"✏️ Posesivo"}] },
-  subjects:      { label:"Sujetos Obligatorios",    emoji:"👤", questions:Q_SUBJ,      tag:"green",  hasRounds:false, nounOptions:[{val:"Pronoun",label:"👤 Pronombre"}] },
-  adjectives:    { label:"Adjetivos",               emoji:"🎨", questions:Q_ADJ,       tag:"indigo", hasRounds:false, nounOptions:[{val:"Adjective",label:"🎨 Adjetivo"}] },
+  svo:           { label:"Estructura SVO",          emoji:"📝", questions:Q_SVO,       tag:"amber",  hasRounds:false, nounOptions:[{val:"Subject",label:"👤 Sujeto"},{val:"Verb",label:"⚡ Verbo"}] },
+  auxiliaries:   { label:"Auxiliares",              emoji:"⚙️", questions:Q_AUX,       tag:"violet", hasRounds:false, nounOptions:[{val:"Auxiliary",label:"⚙️ Auxiliar"}] },
   everydayPhrases: { label:"Frases Cotidianas",     emoji:"🗣️", questions:Q_PHRASES,   tag:"sky",    hasRounds:true,  nounOptions:[{val:"Phrase",label:"💬 Frase"}] }
 };
 
@@ -783,10 +857,16 @@ function goBack() {
 }
 
 function goBackToMenu() {
-  score = 0; currentQ = 0; currentRound = 1; activeModule = null; players = []; currentPlayerIndex = 0;
+  // Reseteamos puntajes y ronda, pero NO borramos a los jugadores ni el modo de juego
+  score = 0; currentQ = 0; currentRound = 1; activeModule = null; currentPlayerIndex = 0;
+  if (gameMode > 1 && players.length > 0) {
+    players.forEach(p => p.score = 0); // Resetea puntajes para el nuevo módulo
+  }
   document.getElementById('scorePill').innerText = '⭐ 0 pts';
   stopTimer();
-  showScreen('screenMode');
+  
+  // Ahora nos lleva directo a la selección de módulos
+  showScreen('screenMenu');
 }
 
 function replayModule() {
@@ -873,10 +953,56 @@ function joinOnlineRoom() {
   showScreen('screenMenu');
 }
 
+function buildDynamicQuestions(moduleId, phase) {
+  let pool = moduleId === 'generalNouns' ? NOUN_POOL : VERB_POOL;
+  // Tomamos 20 palabras al azar para llenar las 2 Rondas (10 por ronda)
+  let shuffled = shuffle([...pool]).slice(0, 20); 
+  let questions = [];
+  let matchPairs = [];
+
+  shuffled.forEach(item => {
+    let distractors = shuffle([...pool].filter(x => x.w !== item.w)).slice(0, 2);
+    let sentenceBlocks = [];
+
+    if (phase === 1) {
+      // MODO FÁCIL: Estructura pura de Emojis
+      sentenceBlocks = [
+        { en: item.e, es: "Emoji", isTarget: true },
+        { en: "[BLANK]", es: item.es }
+      ];
+    } else {
+      // MODO DIFÍCIL: Estructura pura de Oraciones (con emoji al inicio)
+      let parts = item.s.split("___");
+      let firstPartText = parts[0] ? `${item.e} ${parts[0].trim()}` : item.e;
+      sentenceBlocks.push({ en: firstPartText, es: "" });
+      sentenceBlocks.push({ en: "[BLANK]", es: item.es });
+      if (parts[1]) sentenceBlocks.push({ en: parts[1].trim(), es: "" });
+    }
+
+    questions.push({
+      sentence: sentenceBlocks,
+      hint: phase === 1 ? `Pista: Significa "${item.es}"` : `Pista: Traduce al inglés "${item.es}"`,
+      explainRule: `¡Exacto! ${item.w} = ${item.e} (${item.es})`,
+      options: shuffle([item.w, distractors[0].w, distractors[1].w]),
+      correct: item.w,
+      nounType: moduleId === 'generalNouns' ? 'Noun' : 'Verb'
+    });
+
+    // Guardamos la pareja para el reto final
+    matchPairs.push({ word: item.w, hint: `${item.e} ${item.es}` });
+  });
+
+  MODULE_CONFIG[moduleId].questions = questions;
+  if (typeof MODULE_MATCH !== 'undefined') {
+    MODULE_MATCH[moduleId] = matchPairs;
+  }
+}
+
 function selectModule(moduleKey) {
   activeModule = moduleKey;
   const cfg = MODULE_CONFIG[moduleKey];
   const exp = MODULE_EXPLAIN[moduleKey];
+  
   document.getElementById('explainEmoji').innerText = cfg.emoji;
   document.getElementById('explainTitle').innerText = cfg.label;
 
@@ -900,13 +1026,21 @@ function selectModule(moduleKey) {
   if (exp.tip) html += `<div class="explain-tip"><span class="explain-tip-icon">💡</span><span>${exp.tip}</span></div>`;
   document.getElementById('explainContent').innerHTML = html;
 
+  // 🔥 ARREGLAMOS LOS TEXTOS DE LOS MODOS FÁCIL Y DIFÍCIL
   if(activeModule === 'everydayPhrases') {
     document.getElementById('easyDesc').innerText = "Elige la traducción correcta.";
     document.getElementById('hardDesc').innerText = "¡Te toca escribir la frase en inglés!";
+  } else if (activeModule === 'generalNouns' || activeModule === 'verbsVocab') {
+    document.getElementById('easyDesc').innerText = "20 preguntas: Asocia el Emoji a la palabra.";
+    document.getElementById('hardDesc').innerText = "20 preguntas: Completa las oraciones.";
+  } else if (activeModule === 'countable' || activeModule === 'partsOfSpeech' || activeModule === 'svo') {
+    document.getElementById('easyDesc').innerText = "Elige la palabra que falta.";
+    document.getElementById('hardDesc').innerText = "Adivina la función y luego responde.";
   } else {
-    document.getElementById('easyDesc').innerText = "Te diré si es contable. ¡Solo responde!";
-    document.getElementById('hardDesc').innerText = "Adivina el tipo y luego responde.";
+    document.getElementById('easyDesc').innerText = "Practica seleccionando la respuesta.";
+    document.getElementById('hardDesc').innerText = "Ponte a prueba sin ayudas visuales.";
   }
+  
   showScreen('screenExplain');
 }
 
@@ -918,8 +1052,16 @@ function shuffle(array) {
 
 function startQuiz(phase) {
   currentPhase = phase; currentQ = 0; score = 0; currentRound = 1;
+  
+  // 🔥 AQUÍ ESTÁ LA MAGIA: Construimos el nivel dependiendo de si eligió Fácil(1) o Difícil(2)
+  if (activeModule === 'generalNouns' || activeModule === 'verbsVocab') {
+    buildDynamicQuestions(activeModule, phase);
+  }
+
   const cfg = MODULE_CONFIG[activeModule];
+  // Mezclamos las preguntas generadas (garantizando el orden aleatorio que pediste)
   questions = shuffle([...cfg.questions]);
+  
   document.getElementById('scorePill').innerText = '⭐ 0 pts';
   const tc = TAG_COLORS[cfg.tag];
   const tag = document.getElementById('moduleTag');
@@ -1285,17 +1427,58 @@ function startMatchGame() {
 
 function startMatchTimer() {
   stopTimer();
-  timeLeft = MAX_TIME; // Usa el mismo tiempo que configuraste al inicio
+  timeLeft = MAX_TIME; // Reloj táctico por cada intento/pareja
   updateMatchTimerUI();
   timerInterval = setInterval(() => {
     timeLeft -= 0.1;
     if (timeLeft <= 0) {
       timeLeft = 0;
-      stopTimer();
-      handleMatchTimeUp();
+      handleMatchMistake(); // Si se acaba el tiempo, se toma como error
     }
     updateMatchTimerUI();
   }, 100);
+}
+
+// NUEVA FUNCIÓN: Se ejecuta cuando se acaba el tiempo o cuando eligen mal
+function handleMatchMistake() {
+  stopTimer();
+  
+  // Buscar una pareja válida de arriba a abajo y descartarla
+  let availableWords = Array.from(document.querySelectorAll('.word-btn:not(.correct):not(.discarded)'));
+  if (availableWords.length > 0) {
+    let sacrificeWord = availableWords[0];
+    let wId = sacrificeWord.getAttribute('data-id');
+    let sacrificeHint = document.querySelector(`.hint-btn[data-id="${wId}"]`);
+    
+    sacrificeWord.classList.add('wrong', 'discarded');
+    sacrificeHint.classList.add('wrong', 'discarded');
+    matchCount++; // Contamos la pareja descartada para poder avanzar
+    
+    // Limpiar selección actual si la había
+    if(matchWordSel) matchWordSel.classList.remove('selected', 'wrong');
+    if(matchHintSel) matchHintSel.classList.remove('selected', 'wrong');
+    matchWordSel = null; matchHintSel = null;
+  }
+
+  // Castigo: Si es Multijugador, ¡Pierde el turno de inmediato!
+  if (gameMode > 1 && matchPlayerTurn < players.length - 1) {
+    const btnFinish = document.getElementById('btnFinishGame');
+    btnFinish.classList.remove('hidden');
+    btnFinish.innerText = '¡Error/Tiempo! Siguiente Jugador ➔';
+    btnFinish.className = 'action-btn';
+    btnFinish.onclick = () => { matchPlayerTurn++; startMatchGame(); };
+  } else if (matchCount >= totalMatches) {
+    // Si ya no quedan parejas, pasamos de pantalla
+    const cfg = MODULE_CONFIG[activeModule];
+    const btnFinish = document.getElementById('btnFinishGame');
+    btnFinish.classList.remove('hidden');
+    btnFinish.innerText = (cfg && cfg.hasRounds && currentRound === 1) ? 'Continuar a la Ronda 2 ➔' : 'Ver resultados finales 🎉';
+    btnFinish.className = 'action-btn next';
+    btnFinish.onclick = finishMatchGame;
+  } else {
+    // Si es un jugador y aún hay parejas, reseteamos el reloj
+    startMatchTimer();
+  }
 }
 
 function updateMatchTimerUI() {
@@ -1311,24 +1494,8 @@ function updateMatchTimerUI() {
 }
 
 function handleMatchTimeUp() {
-  // Cuando se acaba el tiempo, bloqueamos los botones y mostramos el botón de avanzar
-  document.querySelectorAll('.match-btn').forEach(b => b.classList.add('wrong')); 
-  const btnFinish = document.getElementById('btnFinishGame');
-  btnFinish.classList.remove('hidden');
-  
-  if (gameMode > 1 && matchPlayerTurn < players.length - 1) {
-    btnFinish.innerText = '¡Tiempo! Siguiente Jugador ➔';
-    btnFinish.className = 'action-btn';
-    btnFinish.onclick = () => {
-      matchPlayerTurn++;
-      startMatchGame();
-    };
-  } else {
-    const cfg = MODULE_CONFIG[activeModule];
-    btnFinish.innerText = (cfg.hasRounds && currentRound === 1) ? 'Continuar a la Ronda 2 ➔' : 'Ver resultados finales 🎉';
-    btnFinish.className = 'action-btn next';
-    btnFinish.onclick = finishMatchGame;
-  }
+  // Esta función original ya no hace falta, handleMatchMistake hace el trabajo. 
+  // La dejo vacía para que no tire error si algo la llama.
 }
 
 function clickMatchWord(btn) { if (btn.classList.contains('correct') || timeLeft <= 0) return; document.querySelectorAll('.word-btn:not(.correct)').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); matchWordSel = btn; checkMatchPair(); }
@@ -1337,45 +1504,44 @@ function clickMatchHint(btn) { if (btn.classList.contains('correct') || timeLeft
 function checkMatchPair() {
   if (!matchWordSel || !matchHintSel) return;
   const wId = matchWordSel.getAttribute('data-id'); const hId = matchHintSel.getAttribute('data-id');
+  
   if (wId === hId) {
+    // ¡ACIERTO!
     matchWordSel.classList.remove('selected'); matchWordSel.classList.add('correct'); matchHintSel.classList.remove('selected'); matchHintSel.classList.add('correct');
-    
     matchCount++; 
-    let pts = 100; // Puntos por cada parejita conectada
-    score += pts; 
+    let pts = 100; score += pts; 
     if (gameMode > 1) players[currentPlayerIndex].score += pts;
     
-    // Actualizar el puntaje en vivo en la pantalla
     const sp = document.getElementById('scorePill'); 
     sp.innerText = `⭐ ${gameMode > 1 ? players[currentPlayerIndex].score : score} pts`; 
     sp.style.transform = 'scale(1.2)'; setTimeout(() => sp.style.transform = 'scale(1)', 300);
     
     matchWordSel = null; matchHintSel = null; 
     
-    // Si conectó todas las 5 parejas antes de tiempo:
-    if (matchCount === totalMatches) {
+    if (matchCount >= totalMatches) {
       stopTimer();
       const btnFinish = document.getElementById('btnFinishGame');
       btnFinish.classList.remove('hidden');
-      
       if (gameMode > 1 && matchPlayerTurn < players.length - 1) {
         btnFinish.innerText = '¡Logrado! Siguiente Jugador ➔';
         btnFinish.className = 'action-btn next';
-        btnFinish.onclick = () => {
-          matchPlayerTurn++;
-          startMatchGame();
-        };
+        btnFinish.onclick = () => { matchPlayerTurn++; startMatchGame(); };
       } else {
         const cfg = MODULE_CONFIG[activeModule]; 
-        btnFinish.innerText = (cfg.hasRounds && currentRound === 1) ? 'Continuar a la Ronda 2 ➔' : 'Ver resultados finales 🎉'; 
+        btnFinish.innerText = (cfg && cfg.hasRounds && currentRound === 1) ? 'Continuar a la Ronda 2 ➔' : 'Ver resultados finales 🎉'; 
         btnFinish.className = 'action-btn next';
         btnFinish.onclick = finishMatchGame;
       }
+    } else {
+      // Si acierta, el reloj táctico vuelve a empezar desde MAX_TIME para la siguiente pareja
+      startMatchTimer();
     }
   } else {
-    // Si se equivoca, los botones tiemblan en rojo por un segundo
-    matchWordSel.classList.add('wrong'); matchHintSel.classList.add('wrong'); const tw = matchWordSel, th = matchHintSel;
-    setTimeout(() => { tw.classList.remove('wrong','selected'); th.classList.remove('wrong','selected'); }, 700); matchWordSel = null; matchHintSel = null;
+    // ¡ERROR! Botones tiemblan y aplicamos la penalidad
+    matchWordSel.classList.add('wrong'); matchHintSel.classList.add('wrong'); 
+    setTimeout(() => {
+      handleMatchMistake(); // Llama a la penalidad (descarta 1 y/o pasa turno)
+    }, 500); 
   }
 }
 
