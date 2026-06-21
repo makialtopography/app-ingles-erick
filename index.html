@@ -355,6 +355,14 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
       <div style="font-size:.85rem; color:var(--ink);">Ejemplo: <b><span style="color:var(--sky)">My</span> dogs are happy.</b> (Mis perros son felices).</div>
     </div>
 
+<div class="menu-grid" style="margin-bottom: 14px;">
+      <div class="menu-card" style="--accent:var(--teal); grid-column:span 2;" onclick="openPluralsMenu()">
+        <span class="mc-emoji">🔠</span><div class="mc-title">Sustantivos Plurales</div>
+        <div class="mc-desc">Reglas de la -s, -es, -ies y Excepciones.</div>
+        <span class="mc-badge" style="--badge-bg:var(--teal-lt);--badge-color:var(--teal-dk);">Centro de Entrenamiento</span>
+      </div>
+    </div>
+
     <div class="menu-grid">
       <div class="menu-card" style="--accent:var(--pink);" onclick="selectModule('determiners')">
         <span class="mc-emoji">🔤</span><div class="mc-title">Determinantes</div><div class="mc-desc">A, An, The, Some, Any.</div><span class="mc-badge" style="--badge-bg:var(--pink-lt);--badge-color:var(--pink);">10 pregs</span>
@@ -393,6 +401,37 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
         <span class="mc-emoji">🗣️</span><div class="mc-title">Frases Cotidianas</div><div class="mc-desc">Saludos, necesidades y expresiones vitales. (Fase Difícil: ¡A escribir!)</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">20 frases</span>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="screen" id="screenPlurals">
+  <div class="menu-wrap">
+    <div class="menu-hero">
+      <span class="menu-hero-emoji">🔠</span>
+      <h2>Sustantivos Plurales</h2>
+      <p style="color:var(--muted);font-size:.9rem;">Selecciona la regla que deseas practicar. ¡El Nivel 6 es el examen final!</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card" style="--accent:var(--teal);" onclick="selectPluralLevel(1)">
+        <span class="mc-emoji">🚗</span><div class="mc-title">Nivel 1: Regulares</div><div class="mc-desc">Solo añade +s.</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--amber);" onclick="selectPluralLevel(2)">
+        <span class="mc-emoji">🚌</span><div class="mc-title">Nivel 2: Los Siseos</div><div class="mc-desc">Terminan en sh, ch, x, s. Añade +es.</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--sky);" onclick="selectPluralLevel(3)">
+        <span class="mc-emoji">👦</span><div class="mc-title">Nivel 3: Vocal + Y</div><div class="mc-desc">Sigue normal. Añade +s.</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--pink);" onclick="selectPluralLevel(4)">
+        <span class="mc-emoji">👶</span><div class="mc-title">Nivel 4: Consonante + Y</div><div class="mc-desc">La 'Y' cambia a +ies.</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--orange);" onclick="selectPluralLevel(5)">
+        <span class="mc-emoji">👨</span><div class="mc-title">Nivel 5: Irregulares</div><div class="mc-desc">Mutan o no cambian. ¡Memoria!</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--violet);" onclick="selectPluralLevel(6)">
+        <span class="mc-emoji">🏆</span><div class="mc-title">Nivel 6: Prueba Final</div><div class="mc-desc">20 preguntas mezcladas.</div>
+      </div>
+    </div>
+    <button class="action-btn" style="background:var(--card);color:var(--muted);border:2px solid var(--border);" onclick="goBack()">Volver al Menú</button>
   </div>
 </div>
 
@@ -496,7 +535,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     </div>
     <div id="vtTenseCards"></div>
     <div class="vt-play-btn-wrap">
-      <button class="vt-play-btn" onclick="vtShowPhaseRow()">🎮 Jugar con este tiempo verbal</button>
       <div class="vt-phase-row" id="vtPhaseRow">
         <button class="vt-phase-pick" onclick="vtStartFromTable(1)">🟢 Fase Fácil<br><span style="font-size:.72rem;font-weight:600;color:var(--muted)">Con pista del tiempo</span></button>
         <button class="vt-phase-pick" onclick="vtStartFromTable(2)">🔥 Fase Difícil<br><span style="font-size:.72rem;font-weight:600;color:var(--muted)">Sin pista</span></button>
@@ -690,6 +728,22 @@ const VERB_DICTIONARY = {
   need: { en: { base:"need", sForm:"needs", past:"needed", participle:"needed", gerund:"needing" }, es: { meaning:"necesitar 📌", participle:"necesitado", gerund:"necesitando", present: { I:"necesito", You:"necesitas", He:"necesita", She:"necesita", It:"necesita", We:"necesitamos", They:"necesitan" }, past: { I:"necesité", You:"necesitaste", He:"necesitó", She:"necesitó", It:"necesitó", We:"necesitamos", They:"necesitaron" }, future: { I:"necesitaré", You:"necesitarás", He:"necesitará", She:"necesitará", It:"necesitará", We:"necesitaremos", They:"necesitarán" } }, irregular: false },
   want: { en: { base:"want", sForm:"wants", past:"wanted", participle:"wanted", gerund:"wanting" }, es: { meaning:"querer 🌟", participle:"querido", gerund:"queriendo", present: { I:"quiero", You:"quieres", He:"quiere", She:"quiere", It:"quiere", We:"queremos", They:"quieren" }, past: { I:"quise", You:"quisiste", He:"quiso", She:"quiso", It:"quiso", We:"quisimos", They:"quisieron" }, future: { I:"querré", You:"querrás", He:"querrá", She:"querrá", It:"querrá", We:"querremos", They:"querrán" } }, irregular: false }
 };
+/* DICCIONARIOS DE PLURALES (20 palabras por regla) */
+const PLURAL_POOL_1 = [ // Regulares (+s)
+  { s: "car", p: "cars", es: "auto(s)" }, { s: "cup", p: "cups", es: "copa(s)" }, { s: "job", p: "jobs", es: "trabajo(s)" }, { s: "dog", p: "dogs", es: "perro(s)" }, { s: "book", p: "books", es: "libro(s)" }, { s: "pen", p: "pens", es: "bolígrafo(s)" }, { s: "apple", p: "apples", es: "manzana(s)" }, { s: "table", p: "tables", es: "mesa(s)" }, { s: "chair", p: "chairs", es: "silla(s)" }, { s: "phone", p: "phones", es: "teléfono(s)" }, { s: "computer", p: "computers", es: "computadora(s)" }, { s: "window", p: "windows", es: "ventana(s)" }, { s: "door", p: "doors", es: "puerta(s)" }, { s: "shirt", p: "shirts", es: "camisa(s)" }, { s: "shoe", p: "shoes", es: "zapato(s)" }, { s: "tree", p: "trees", es: "árbol(es)" }, { s: "plant", p: "plants", es: "planta(s)" }, { s: "cat", p: "cats", es: "gato(s)" }, { s: "bird", p: "birds", es: "pájaro(s)" }, { s: "friend", p: "friends", es: "amigo(s)" }
+];
+const PLURAL_POOL_2 = [ // Siseos (+es)
+  { s: "box", p: "boxes", es: "caja(s)" }, { s: "bus", p: "buses", es: "bus(es)" }, { s: "kiss", p: "kisses", es: "beso(s)" }, { s: "watch", p: "watches", es: "reloj(es)" }, { s: "brush", p: "brushes", es: "cepillo(s)" }, { s: "glass", p: "glasses", es: "vaso(s)" }, { s: "class", p: "classes", es: "clase(s)" }, { s: "fox", p: "foxes", es: "zorro(s)" }, { s: "match", p: "matches", es: "partido(s)" }, { s: "dish", p: "dishes", es: "plato(s)" }, { s: "bench", p: "benches", es: "banco(s)" }, { s: "tax", p: "taxes", es: "impuesto(s)" }, { s: "wish", p: "wishes", es: "deseo(s)" }, { s: "boss", p: "bosses", es: "jefe(s)" }, { s: "flash", p: "flashes", es: "destello(s)" }, { s: "peach", p: "peaches", es: "durazno(s)" }, { s: "witch", p: "witches", es: "bruja(s)" }, { s: "beach", p: "beaches", es: "playa(s)" }, { s: "branch", p: "branches", es: "rama(s)" }, { s: "bush", p: "bushes", es: "arbusto(s)" }
+];
+const PLURAL_POOL_3 = [ // Vocal + Y (+s)
+  { s: "boy", p: "boys", es: "niño(s)" }, { s: "day", p: "days", es: "día(s)" }, { s: "toy", p: "toys", es: "juguete(s)" }, { s: "monkey", p: "monkeys", es: "mono(s)" }, { s: "key", p: "keys", es: "llave(s)" }, { s: "guy", p: "guys", es: "chico(s)" }, { s: "play", p: "plays", es: "obra(s) de teatro" }, { s: "tray", p: "trays", es: "bandeja(s)" }, { s: "turkey", p: "turkeys", es: "pavo(s)" }, { s: "valley", p: "valleys", es: "valle(s)" }, { s: "donkey", p: "donkeys", es: "burro(s)" }, { s: "joy", p: "joys", es: "alegría(s)" }, { s: "highway", p: "highways", es: "autopista(s)" }, { s: "holiday", p: "holidays", es: "festivo(s)" }, { s: "cowboy", p: "cowboys", es: "vaquero(s)" }, { s: "relay", p: "relays", es: "relevo(s)" }, { s: "bay", p: "bays", es: "bahía(s)" }, { s: "ray", p: "rays", es: "rayo(s)" }, { s: "way", p: "ways", es: "camino(s)" }, { s: "essay", p: "essays", es: "ensayo(s)" }
+];
+const PLURAL_POOL_4 = [ // Consonante + Y (ies)
+  { s: "baby", p: "babies", es: "bebé(s)" }, { s: "city", p: "cities", es: "ciudad(es)" }, { s: "lady", p: "ladies", es: "dama(s)" }, { s: "story", p: "stories", es: "historia(s)" }, { s: "party", p: "parties", es: "fiesta(s)" }, { s: "family", p: "families", es: "familia(s)" }, { s: "country", p: "countries", es: "país(es)" }, { s: "cherry", p: "cherries", es: "cereza(s)" }, { s: "berry", p: "berries", es: "baya(s)" }, { s: "puppy", p: "puppies", es: "cachorro(s)" }, { s: "penny", p: "pennies", es: "centavo(s)" }, { s: "library", p: "libraries", es: "biblioteca(s)" }, { s: "duty", p: "duties", es: "deber(es)" }, { s: "army", p: "armies", es: "ejército(s)" }, { s: "copy", p: "copies", es: "copia(s)" }, { s: "enemy", p: "enemies", es: "enemigo(s)" }, { s: "spy", p: "spies", es: "espía(s)" }, { s: "fly", p: "flies", es: "mosca(s)" }, { s: "sky", p: "skies", es: "cielo(s)" }, { s: "battery", p: "batteries", es: "batería(s)" }
+];
+const PLURAL_POOL_5 = [ // Invariables y Excepciones
+  { s: "man", p: "men", es: "hombre(s)" }, { s: "woman", p: "women", es: "mujer(es)" }, { s: "child", p: "children", es: "niño(s)" }, { s: "person", p: "people", es: "persona(s)" }, { s: "tooth", p: "teeth", es: "diente(s)" }, { s: "foot", p: "feet", es: "pie(s)" }, { s: "mouse", p: "mice", es: "ratón/ratones" }, { s: "goose", p: "geese", es: "ganso(s)" }, { s: "fish", p: "fish", es: "pez/peces" }, { s: "sheep", p: "sheep", es: "oveja(s)" }, { s: "deer", p: "deer", es: "ciervo(s)" }, { s: "furniture", p: "furniture", es: "mueble(s)" }, { s: "goodness", p: "goodness", es: "bondad(es)" }, { s: "series", p: "series", es: "serie(s)" }, { s: "species", p: "species", es: "especie(s)" }, { s: "aircraft", p: "aircraft", es: "avión/aviones" }, { s: "salmon", p: "salmon", es: "salmón(es)" }, { s: "trout", p: "trout", es: "trucha(s)" }, { s: "moose", p: "moose", es: "alce(s)" }, { s: "offspring", p: "offspring", es: "cría(s)" }
+];
 /* ============================================================
    MODULO 3: MOTOR GRAMATICAL Y ESTADOS DEL JUEGO
    ============================================================ */
@@ -726,70 +780,86 @@ const TENSE_RULES = {
   past_simple: {
     label:"Pasado Simple", labelEn:"Past Simple", family:"simple", tense:"past", isPerfect:false,
     build:{ affirmative:(s,v)=>`${s} ${v.en.past}`, negative:(s,v)=>`${s} ${AUX.simplePast.neg()} ${v.en.base}`, question:(s,v)=>`${AUX.simplePast.q()} ${s} ${v.en.base}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} ${v.es.past[s]}`, negative:(s,v)=>`${s==="I"?"Yo":s} no ${v.es.past[s]}`, question:(s,v)=>`¿${s==="I"?"Yo":s} ${v.es.past[s]}?` }
+    translate:{ affirmative:(s,v)=>`${VT_SUBJ_ES[s]} ${v.es.past[s]}`, negative:(s,v)=>`${VT_SUBJ_ES[s]} no ${v.es.past[s]}`, question:(s,v)=>`¿${VT_SUBJ_ES[s]} ${v.es.past[s]}?` }
   },
   present_simple: {
     label:"Presente Simple", labelEn:"Present Simple", family:"simple", tense:"present", isPerfect:false,
     build:{ affirmative:(s,v)=>`${s} ${isSForm(s)?v.en.sForm:v.en.base}`, negative:(s,v)=>`${s} ${AUX.simplePresent.neg(s)} ${v.en.base}`, question:(s,v)=>`${AUX.simplePresent.q(s)} ${s} ${v.en.base}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} ${v.es.present[s]}`, negative:(s,v)=>`${s==="I"?"Yo":s} no ${v.es.present[s]}`, question:(s,v)=>`¿${s==="I"?"Yo":s} ${v.es.present[s]}?` }
+    translate:{ affirmative:(s,v)=>`${VT_SUBJ_ES[s]} ${v.es.present[s]}`, negative:(s,v)=>`${VT_SUBJ_ES[s]} no ${v.es.present[s]}`, question:(s,v)=>`¿${VT_SUBJ_ES[s]} ${v.es.present[s]}?` }
   },
   future_simple: {
     label:"Futuro Simple", labelEn:"Future Simple", family:"simple", tense:"future", isPerfect:false,
     build:{ affirmative:(s,v)=>`${s} will ${v.en.base}`, negative:(s,v)=>`${s} ${AUX.simpleFuture.neg()} ${v.en.base}`, question:(s,v)=>`${AUX.simpleFuture.q()} ${s} ${v.en.base}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} ${v.es.future[s]}`, negative:(s,v)=>`${s==="I"?"Yo":s} no ${v.es.future[s]}`, question:(s,v)=>`¿${s==="I"?"Yo":s} ${v.es.future[s]}?` }
+    translate:{ affirmative:(s,v)=>`${VT_SUBJ_ES[s]} ${v.es.future[s]}`, negative:(s,v)=>`${VT_SUBJ_ES[s]} no ${v.es.future[s]}`, question:(s,v)=>`¿${VT_SUBJ_ES[s]} ${v.es.future[s]}?` }
   },
   past_continuous: {
     label:"Pasado Continuo", labelEn:"Past Continuous", family:"continuous", tense:"past", isPerfect:false,
     build:{ affirmative:(s,v)=>`${s} ${bePast(s)} ${v.en.gerund}`, negative:(s,v)=>`${s} ${AUX.contPast.neg(s)} ${v.en.gerund}`, question:(s,v)=>`${AUX.contPast.q(s)} ${s} ${v.en.gerund}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} ${BE_ES.past[s]} ${v.es.gerund}`, negative:(s,v)=>`${s==="I"?"Yo":s} no ${BE_ES.past[s]} ${v.es.gerund}`, question:(s,v)=>`¿${s==="I"?"Yo":s} ${BE_ES.past[s]} ${v.es.gerund}?` }
+    translate:{ affirmative:(s,v)=>`${VT_SUBJ_ES[s]} ${BE_ES.past[s]} ${v.es.gerund}`, negative:(s,v)=>`${VT_SUBJ_ES[s]} no ${BE_ES.past[s]} ${v.es.gerund}`, question:(s,v)=>`¿${VT_SUBJ_ES[s]} ${BE_ES.past[s]} ${v.es.gerund}?` }
   },
   present_continuous: {
     label:"Presente Continuo", labelEn:"Present Continuous", family:"continuous", tense:"present", isPerfect:false,
     build:{ affirmative:(s,v)=>`${s} ${bePresent(s)} ${v.en.gerund}`, negative:(s,v)=>`${s} ${AUX.contPresent.neg(s)} ${v.en.gerund}`, question:(s,v)=>`${AUX.contPresent.q(s)} ${s} ${v.en.gerund}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} ${BE_ES.present[s]} ${v.es.gerund}`, negative:(s,v)=>`${s==="I"?"Yo":s} no ${BE_ES.present[s]} ${v.es.gerund}`, question:(s,v)=>`¿${s==="I"?"Yo":s} ${BE_ES.present[s]} ${v.es.gerund}?` }
+    translate:{ affirmative:(s,v)=>`${VT_SUBJ_ES[s]} ${BE_ES.present[s]} ${v.es.gerund}`, negative:(s,v)=>`${VT_SUBJ_ES[s]} no ${BE_ES.present[s]} ${v.es.gerund}`, question:(s,v)=>`¿${VT_SUBJ_ES[s]} ${BE_ES.present[s]} ${v.es.gerund}?` }
   },
   future_continuous: {
     label:"Futuro Continuo", labelEn:"Future Continuous", family:"continuous", tense:"future", isPerfect:false,
     build:{ affirmative:(s,v)=>`${s} will be ${v.en.gerund}`, negative:(s,v)=>`${s} ${AUX.contFuture.neg()} ${v.en.gerund}`, question:(s,v)=>`${AUX.contFuture.q()} ${s} be ${v.en.gerund}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} ${BE_ES.future[s]} ${v.es.gerund}`, negative:(s,v)=>`${s==="I"?"Yo":s} no ${BE_ES.future[s]} ${v.es.gerund}`, question:(s,v)=>`¿${s==="I"?"Yo":s} ${BE_ES.future[s]} ${v.es.gerund}?` }
+    translate:{ affirmative:(s,v)=>`${VT_SUBJ_ES[s]} ${BE_ES.future[s]} ${v.es.gerund}`, negative:(s,v)=>`${VT_SUBJ_ES[s]} no ${BE_ES.future[s]} ${v.es.gerund}`, question:(s,v)=>`¿${VT_SUBJ_ES[s]} ${BE_ES.future[s]} ${v.es.gerund}?` }
   },
   past_perfect: {
     label:"Pasado Perfecto", labelEn:"Past Perfect", family:"perfect", tense:"past", isPerfect:true,
     build:{ affirmative:(s,v)=>`${s} had ${v.en.participle}`, negative:(s,v)=>`${s} ${AUX.perfPast.neg()} ${v.en.participle}`, question:(s,v)=>`${AUX.perfPast.q()} ${s} ${v.en.participle}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} había ${v.es.participle}`, negative:(s,v)=>`${s==="I"?"Yo":s} no había ${v.es.participle}`, question:(s,v)=>`¿${s==="I"?"Yo":s} había ${v.es.participle}?` }
+    translate:{
+      affirmative:(s,v)=>{ const h={I:"había",You:"habías",He:"había",She:"había",It:"había",We:"habíamos",They:"habían"}; return `${VT_SUBJ_ES[s]} ${h[s]} ${v.es.participle}`; },
+      negative:(s,v)=>{ const h={I:"había",You:"habías",He:"había",She:"había",It:"había",We:"habíamos",They:"habían"}; return `${VT_SUBJ_ES[s]} no ${h[s]} ${v.es.participle}`; },
+      question:(s,v)=>{ const h={I:"había",You:"habías",He:"había",She:"había",It:"había",We:"habíamos",They:"habían"}; return `¿${VT_SUBJ_ES[s]} ${h[s]} ${v.es.participle}?`; }
+    }
   },
   present_perfect: {
     label:"Presente Perfecto", labelEn:"Present Perfect", family:"perfect", tense:"present", isPerfect:true,
     build:{ affirmative:(s,v)=>`${s} ${havePresent(s)} ${v.en.participle}`, negative:(s,v)=>`${s} ${AUX.perfPresent.neg(s)} ${v.en.participle}`, question:(s,v)=>`${AUX.perfPresent.q(s)} ${s} ${v.en.participle}?` },
     translate:{
-      affirmative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${s==="I"?"Yo":s} ${h[s]} ${v.es.participle}`; },
-      negative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${s==="I"?"Yo":s} no ${h[s]} ${v.es.participle}`; },
-      question:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `¿${s==="I"?"Yo":s} ${h[s]} ${v.es.participle}?`; }
+      affirmative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${VT_SUBJ_ES[s]} ${h[s]} ${v.es.participle}`; },
+      negative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${VT_SUBJ_ES[s]} no ${h[s]} ${v.es.participle}`; },
+      question:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `¿${VT_SUBJ_ES[s]} ${h[s]} ${v.es.participle}?`; }
     }
   },
   future_perfect: {
     label:"Futuro Perfecto", labelEn:"Future Perfect", family:"perfect", tense:"future", isPerfect:true,
     build:{ affirmative:(s,v)=>`${s} will have ${v.en.participle}`, negative:(s,v)=>`${s} ${AUX.perfFuture.neg()} ${v.en.participle}`, question:(s,v)=>`${AUX.perfFuture.q()} ${s} have ${v.en.participle}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} habré ${v.es.participle}`, negative:(s,v)=>`${s==="I"?"Yo":s} no habré ${v.es.participle}`, question:(s,v)=>`¿${s==="I"?"Yo":s} habré ${v.es.participle}?` }
+    translate:{
+      affirmative:(s,v)=>{ const h={I:"habré",You:"habrás",He:"habrá",She:"habrá",It:"habrá",We:"habremos",They:"habrán"}; return `${VT_SUBJ_ES[s]} ${h[s]} ${v.es.participle}`; },
+      negative:(s,v)=>{ const h={I:"habré",You:"habrás",He:"habrá",She:"habrá",It:"habrá",We:"habremos",They:"habrán"}; return `${VT_SUBJ_ES[s]} no ${h[s]} ${v.es.participle}`; },
+      question:(s,v)=>{ const h={I:"habré",You:"habrás",He:"habrá",She:"habrá",It:"habrá",We:"habremos",They:"habrán"}; return `¿${VT_SUBJ_ES[s]} ${h[s]} ${v.es.participle}?`; }
+    }
   },
   past_perfect_continuous: {
     label:"Pasado Perf. Continuo", labelEn:"Past Perfect Cont.", family:"perfectContinuous", tense:"past", isPerfect:true,
     build:{ affirmative:(s,v)=>`${s} had been ${v.en.gerund}`, negative:(s,v)=>`${s} ${AUX.perfContPast.neg()} ${v.en.gerund}`, question:(s,v)=>`${AUX.perfContPast.q()} ${s} been ${v.en.gerund}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} había estado ${v.es.gerund}`, negative:(s,v)=>`${s==="I"?"Yo":s} no había estado ${v.es.gerund}`, question:(s,v)=>`¿${s==="I"?"Yo":s} había estado ${v.es.gerund}?` }
+    translate:{
+      affirmative:(s,v)=>{ const h={I:"había",You:"habías",He:"había",She:"había",It:"había",We:"habíamos",They:"habían"}; return `${VT_SUBJ_ES[s]} ${h[s]} estado ${v.es.gerund}`; },
+      negative:(s,v)=>{ const h={I:"había",You:"habías",He:"había",She:"había",It:"había",We:"habíamos",They:"habían"}; return `${VT_SUBJ_ES[s]} no ${h[s]} estado ${v.es.gerund}`; },
+      question:(s,v)=>{ const h={I:"había",You:"habías",He:"había",She:"había",It:"había",We:"habíamos",They:"habían"}; return `¿${VT_SUBJ_ES[s]} ${h[s]} estado ${v.es.gerund}?`; }
+    }
   },
   present_perfect_continuous: {
     label:"Presente Perf. Continuo", labelEn:"Present Perfect Cont.", family:"perfectContinuous", tense:"present", isPerfect:true,
     build:{ affirmative:(s,v)=>`${s} ${havePresent(s)} been ${v.en.gerund}`, negative:(s,v)=>`${s} ${AUX.perfContPresent.neg(s)} ${v.en.gerund}`, question:(s,v)=>`${AUX.perfContPresent.q(s)} ${s} been ${v.en.gerund}?` },
     translate:{
-      affirmative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${s==="I"?"Yo":s} ${h[s]} estado ${v.es.gerund}`; },
-      negative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${s==="I"?"Yo":s} no ${h[s]} estado ${v.es.gerund}`; },
-      question:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `¿${s==="I"?"Yo":s} ${h[s]} estado ${v.es.gerund}?`; }
+      affirmative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${VT_SUBJ_ES[s]} ${h[s]} estado ${v.es.gerund}`; },
+      negative:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `${VT_SUBJ_ES[s]} no ${h[s]} estado ${v.es.gerund}`; },
+      question:(s,v)=>{ const h={I:"he",You:"has",He:"ha",She:"ha",It:"ha",We:"hemos",They:"han"}; return `¿${VT_SUBJ_ES[s]} ${h[s]} estado ${v.es.gerund}?`; }
     }
   },
   future_perfect_continuous: {
     label:"Futuro Perf. Continuo", labelEn:"Future Perfect Cont.", family:"perfectContinuous", tense:"future", isPerfect:true,
     build:{ affirmative:(s,v)=>`${s} will have been ${v.en.gerund}`, negative:(s,v)=>`${s} ${AUX.perfContFuture.neg()} ${v.en.gerund}`, question:(s,v)=>`${AUX.perfContFuture.q()} ${s} have been ${v.en.gerund}?` },
-    translate:{ affirmative:(s,v)=>`${s==="I"?"Yo":s} habré estado ${v.es.gerund}`, negative:(s,v)=>`${s==="I"?"Yo":s} no habré estado ${v.es.gerund}`, question:(s,v)=>`¿${s==="I"?"Yo":s} habré estado ${v.es.gerund}?` }
+    translate:{
+      affirmative:(s,v)=>{ const h={I:"habré",You:"habrás",He:"habrá",She:"habrá",It:"habrá",We:"habremos",They:"habrán"}; return `${VT_SUBJ_ES[s]} ${h[s]} estado ${v.es.gerund}`; },
+      negative:(s,v)=>{ const h={I:"habré",You:"habrás",He:"habrá",She:"habrá",It:"habrá",We:"habremos",They:"habrán"}; return `${VT_SUBJ_ES[s]} no ${h[s]} estado ${v.es.gerund}`; },
+      question:(s,v)=>{ const h={I:"habré",You:"habrás",He:"habrá",She:"habrá",It:"habrá",We:"habremos",They:"habrán"}; return `¿${VT_SUBJ_ES[s]} ${h[s]} estado ${v.es.gerund}?`; }
+    }
   }
 };
 
@@ -847,12 +917,19 @@ function showScreen(id) {
 
 function goBack() {
   const id = document.querySelector('.screen.active')?.id;
-  // Si estamos en el Menú de Módulos, al ir atrás volvemos a Seleccionar Modo
+  // Navegación principal
   if (id === 'screenMenu') showScreen('screenMode');
-  else if (id === 'screenExplain' || id === 'screenVerbTable') showScreen('screenMenu');
+  else if (id === 'screenExplain') {
+    // 🔥 CORRECCIÓN: Si estamos en Plurales, volvemos a su submenú
+    if (activeModule === 'pluralNouns') showScreen('screenPlurals');
+    else showScreen('screenMenu');
+  }
+  else if (id === 'screenVerbTable') showScreen('screenMenu');
   else if (id === 'screenQuiz' && activeModule==='_dynamic_verb') showScreen('screenVerbTable');
   else if (id === 'screenQuiz') showScreen('screenExplain');
   else if (id === 'screenPlayers' || id === 'screenOnline' || id === 'screenJoin') showScreen('screenMode');
+  // 🔥 CORRECCIÓN: Salir del submenú de Plurales hacia el menú principal
+  else if (id === 'screenPlurals') showScreen('screenMenu');
   else showScreen('screenMode');
 }
 
@@ -954,50 +1031,133 @@ function joinOnlineRoom() {
 }
 
 function buildDynamicQuestions(moduleId, phase) {
-  let pool = moduleId === 'generalNouns' ? NOUN_POOL : VERB_POOL;
-  // Tomamos 20 palabras al azar para llenar las 2 Rondas (10 por ronda)
-  let shuffled = shuffle([...pool]).slice(0, 20); 
-  let questions = [];
-  let matchPairs = [];
+  let pool = []; let questions = []; let matchPairs = [];
 
-  shuffled.forEach(item => {
-    let distractors = shuffle([...pool].filter(x => x.w !== item.w)).slice(0, 2);
-    let sentenceBlocks = [];
-
-    if (phase === 1) {
-      // MODO FÁCIL: Estructura pura de Emojis
-      sentenceBlocks = [
-        { en: item.e, es: "Emoji", isTarget: true },
-        { en: "[BLANK]", es: item.es }
+  // 1. Asignar el diccionario correcto
+  if (moduleId === 'generalNouns') pool = NOUN_POOL;
+  else if (moduleId === 'verbsVocab') pool = VERB_POOL;
+  else if (moduleId === 'pluralNouns') {
+    if (currentPluralLevel === 6) { // La licuadora del Nivel 6
+      pool = [
+        ...shuffle([...PLURAL_POOL_1]).slice(0,4), ...shuffle([...PLURAL_POOL_2]).slice(0,4),
+        ...shuffle([...PLURAL_POOL_3]).slice(0,4), ...shuffle([...PLURAL_POOL_4]).slice(0,4),
+        ...shuffle([...PLURAL_POOL_5]).slice(0,4)
       ];
-    } else {
-      // MODO DIFÍCIL: Estructura pura de Oraciones (con emoji al inicio)
-      let parts = item.s.split("___");
-      let firstPartText = parts[0] ? `${item.e} ${parts[0].trim()}` : item.e;
-      sentenceBlocks.push({ en: firstPartText, es: "" });
-      sentenceBlocks.push({ en: "[BLANK]", es: item.es });
-      if (parts[1]) sentenceBlocks.push({ en: parts[1].trim(), es: "" });
+    } else { // Niveles del 1 al 5
+      const pools = [PLURAL_POOL_1, PLURAL_POOL_2, PLURAL_POOL_3, PLURAL_POOL_4, PLURAL_POOL_5];
+      pool = pools[currentPluralLevel - 1];
     }
+  }
 
-    questions.push({
-      sentence: sentenceBlocks,
-      hint: phase === 1 ? `Pista: Significa "${item.es}"` : `Pista: Traduce al inglés "${item.es}"`,
-      explainRule: `¡Exacto! ${item.w} = ${item.e} (${item.es})`,
-      options: shuffle([item.w, distractors[0].w, distractors[1].w]),
-      correct: item.w,
-      nounType: moduleId === 'generalNouns' ? 'Noun' : 'Verb'
-    });
+  let shuffled = shuffle([...pool]).slice(0, 20);
 
-    // Guardamos la pareja para el reto final
-    matchPairs.push({ word: item.w, hint: `${item.e} ${item.es}` });
+  // 2. Construir preguntas según el Módulo
+  shuffled.forEach(item => {
+    if (moduleId === 'generalNouns' || moduleId === 'verbsVocab') {
+      let distractors = shuffle([...pool].filter(x => x.w !== item.w)).slice(0, 2);
+      let sentenceBlocks = [];
+      if (phase === 1) {
+        sentenceBlocks = [{ en: item.e, es: "Emoji", isTarget: true }, { en: "[BLANK]", es: item.es }];
+      } else {
+        let parts = item.s.split("___");
+        sentenceBlocks.push({ en: parts[0] ? `${item.e} ${parts[0].trim()}` : item.e, es: "" });
+        sentenceBlocks.push({ en: "[BLANK]", es: item.es });
+        if (parts[1]) sentenceBlocks.push({ en: parts[1].trim(), es: "" });
+      }
+      questions.push({
+        sentence: sentenceBlocks,
+        hint: phase === 1 ? `Pista: Significa "${item.es}"` : `Pista: Traduce al inglés "${item.es}"`,
+        explainRule: `¡Exacto! ${item.w} = ${item.e} (${item.es})`,
+        options: shuffle([item.w, distractors[0].w, distractors[1].w]),
+        correct: item.w, nounType: moduleId === 'generalNouns' ? 'Noun' : 'Verb'
+      });
+      matchPairs.push({ word: item.w, hint: `${item.e} ${item.es}` });
+
+    } else if (moduleId === 'pluralNouns') {
+      // Trampas automáticas para los plurales
+      let d1 = item.s + "s"; if(d1 === item.p) d1 = item.s + "es";
+      let d2 = item.s + "ies"; if(d2 === item.p) d2 = item.s + "ys";
+      if(currentPluralLevel === 5) { d1 = item.s + "s"; d2 = item.s; }
+
+      questions.push({
+        sentence: [
+          { en: item.s, es: "Singular", isTarget: true },
+          { en: "[BLANK]", es: `(${item.es})` }
+        ],
+        hint: phase === 1 ? `¿Cuál es el plural de ${item.s}?` : `Escribe el plural de ${item.s}`,
+        explainRule: `Singular: ${item.s} ➔ Plural: ${item.p}`,
+        options: shuffle([item.p, d1, d2]),
+        correct: item.p, nounType: 'Plural'
+      });
+      matchPairs.push({ word: item.p, hint: `${item.s} (Plural)` });
+    }
   });
 
   MODULE_CONFIG[moduleId].questions = questions;
-  if (typeof MODULE_MATCH !== 'undefined') {
-    MODULE_MATCH[moduleId] = matchPairs;
-  }
+  if (typeof MODULE_MATCH !== 'undefined') MODULE_MATCH[moduleId] = matchPairs;
 }
 
+let currentPluralLevel = 1;
+
+function openPluralsMenu() {
+  showScreen('screenPlurals');
+}
+
+function selectPluralLevel(level) {
+  currentPluralLevel = level;
+  activeModule = 'pluralNouns';
+  const ruleNames = ["Regulares (+s)", "Siseos (+es)", "Vocal + Y (+s)", "Consonante + Y (-ies)", "Invariables y Excepciones", "🏆 Prueba del Detective"];
+  
+  // Creamos la configuración del módulo "en vivo"
+  MODULE_CONFIG['pluralNouns'] = { 
+    label: `Nivel ${level}: ${ruleNames[level-1]}`, 
+    emoji: "🔠", questions: [], tag: "teal", hasRounds: true, 
+    nounOptions: [{val:"Plural",label:"🔠 Plural"}] 
+  };
+  
+  // 🔥 NUEVO: Teoría y ejemplos dinámicos por Nivel
+  let introData = ""; let conceptsData = []; let examplesData = [];
+
+  if (level === 1) {
+    introData = "Para la mayoría de los sustantivos en inglés, simplemente añadimos <strong>-s</strong> al final para convertirlos al plural.";
+    conceptsData = [{label: "📝 Regla general", text: "Solo añade una 's' al final de la palabra."}];
+    examplesData = [{en: "car ➔ cars", es: "auto ➔ autos"}, {en: "cup ➔ cups", es: "copa ➔ copas"}];
+  } else if (level === 2) {
+    introData = "Si la palabra termina con un sonido de 'siseo', necesitamos añadir <strong>-es</strong> para poder pronunciarlo cómodamente.";
+    conceptsData = [{label: "🐍 Terminaciones: -sh, -ch, -x, -s, -z", text: "Añade '-es' para formar el plural."}];
+    examplesData = [{en: "box ➔ boxes", es: "caja ➔ cajas"}, {en: "bus ➔ buses", es: "bus ➔ buses"}];
+  } else if (level === 3) {
+    introData = "Cuando una palabra termina en <strong>Y</strong>, mira la letra anterior. Si es una <strong>vocal</strong> (a, e, i, o, u), no pasa nada raro.";
+    conceptsData = [{label: "🅰️ Vocal + Y", text: "Simplemente añade '-s'. No quites la 'Y'."}];
+    examplesData = [{en: "boy ➔ boys", es: "niño ➔ niños"}, {en: "day ➔ days", es: "día ➔ días"}];
+  } else if (level === 4) {
+    introData = "Cuando una palabra termina en <strong>Y</strong> y antes hay una <strong>consonante</strong>, la regla cambia: la 'Y' sale volando.";
+    conceptsData = [{label: "🅱️ Consonante + Y", text: "Cambia la 'y' por 'i' y añade '-es'."}];
+    examplesData = [{en: "baby ➔ babies", es: "bebé ➔ bebés"}, {en: "city ➔ cities", es: "ciudad ➔ ciudades"}];
+  } else if (level === 5) {
+    introData = "¡Cuidado! Algunas palabras no siguen las reglas. Algunas cambian por completo y otras se quedan exactamente igual.";
+    conceptsData = [
+      {label: "👽 Mutantes", text: "Cambian sus vocales o toda la palabra (man ➔ men)."},
+      {label: "🗿 Invariables", text: "Se escriben exactamente igual en singular y plural (fish ➔ fish)."}
+    ];
+    examplesData = [{en: "man ➔ men", es: "hombre ➔ hombres"}, {en: "fish ➔ fish", es: "pez ➔ peces"}];
+  } else if (level === 6) {
+    introData = "¡Llegó la hora de la verdad! En este nivel enfrentaremos todas las reglas mezcladas.";
+    conceptsData = [{label: "🌪️ Licuadora de Reglas", text: "Tendrás 20 palabras al azar de todos los niveles anteriores. ¡Fíjate bien en la terminación de cada palabra antes de responder!"}];
+    examplesData = [{en: "boy ➔ boys", es: "Regla: Vocal + Y"}, {en: "city ➔ cities", es: "Regla: Consonante + Y"}];
+  }
+
+  // Empaquetamos la teoría en la pantalla
+  MODULE_EXPLAIN['pluralNouns'] = {
+    accentColor: "var(--teal)",
+    intro: introData,
+    concepts: conceptsData, 
+    examples: examplesData,
+    tip: "Fase Fácil: Elige la opción correcta. Fase Difícil: ¡Escribe el plural usando tu teclado!"
+  };
+
+  selectModule('pluralNouns');
+}
 function selectModule(moduleKey) {
   activeModule = moduleKey;
   const cfg = MODULE_CONFIG[moduleKey];
@@ -1053,13 +1213,11 @@ function shuffle(array) {
 function startQuiz(phase) {
   currentPhase = phase; currentQ = 0; score = 0; currentRound = 1;
   
-  // 🔥 AQUÍ ESTÁ LA MAGIA: Construimos el nivel dependiendo de si eligió Fácil(1) o Difícil(2)
-  if (activeModule === 'generalNouns' || activeModule === 'verbsVocab') {
+  if (activeModule === 'generalNouns' || activeModule === 'verbsVocab' || activeModule === 'pluralNouns') {
     buildDynamicQuestions(activeModule, phase);
   }
 
   const cfg = MODULE_CONFIG[activeModule];
-  // Mezclamos las preguntas generadas (garantizando el orden aleatorio que pediste)
   questions = shuffle([...cfg.questions]);
   
   document.getElementById('scorePill').innerText = '⭐ 0 pts';
@@ -1067,6 +1225,16 @@ function startQuiz(phase) {
   const tag = document.getElementById('moduleTag');
   tag.innerText = cfg.emoji + ' ' + cfg.label;
   tag.style.background = tc.bg; tag.style.color = tc.color;
+  
+  // 🔥 NUEVO: Reseteamos los estilos por si venimos del módulo de verbos
+  tag.style.fontSize = "";
+  tag.style.padding = "4px 12px";
+  tag.style.display = "inline-flex";
+  tag.style.justifyContent = "flex-start";
+  tag.style.width = "auto";
+  tag.style.boxShadow = "none";
+  tag.style.marginBottom = "14px";
+  
   showScreen('screenQuiz');
   loadQuestion();
 }
@@ -1206,7 +1374,7 @@ function loadQuestion() {
     }
   }
 
-  let isTypingMode = (activeModule === 'everydayPhrases' && currentPhase === 2);
+  let isTypingMode = ((activeModule === 'everydayPhrases' || activeModule === 'pluralNouns') && currentPhase === 2);
 
   // Construcción de botones de respuesta
   if(isTypingMode) {
@@ -1284,7 +1452,7 @@ function checkAnswer() {
   const q = questions[currentQ]; attempts++;
   document.getElementById('attemptLabel').innerText = `Intento ${attempts}`;
 
-  let isTypingMode = (activeModule === 'everydayPhrases' && currentPhase === 2);
+  let isTypingMode = ((activeModule === 'everydayPhrases' || activeModule === 'pluralNouns') && currentPhase === 2);
   let nounCorrect = true;
   let quantCorrect = false;
 
@@ -1652,7 +1820,7 @@ function _renderTenseCards() {
     const rows = VT_SUBJECTS.map(subj => {
       return `<tr><td class="vt-subj-cell">${subj}<br><span style="font-size:.65rem;color:var(--muted);font-weight:600">${VT_SUBJ_ES[subj]}</span></td><td class="vt-aff"><div class="en">${rule.build.affirmative(subj, verb)}</div><div class="es">${rule.translate.affirmative(subj, verb)}</div></td><td class="vt-neg"><div class="en">${rule.build.negative(subj, verb)}</div><div class="es">${rule.translate.negative(subj, verb)}</div></td><td class="vt-q"><div class="en">${rule.build.question(subj, verb)}</div><div class="es">${rule.translate.question(subj, verb)}</div></td></tr>`;
     }).join('');
-    return `<div class="vt-tense-card" data-tense="${tenseKey}"><div class="vt-tense-header" onclick="_vtToggleCard(this)"><div><div class="vt-tense-name">${rule.label} ${rule.isPerfect ? `<span class="vt-perfect-tag">⚠️ No "have got"</span>` : ''}</div><div class="vt-tense-name-en">${rule.labelEn}</div></div><span class="vt-tense-chevron">▼</span></div><div class="vt-tense-body"><table class="vt-subject-table"><thead><tr><th>Sujeto</th><th style="color:var(--ink)">+ Afirmativa</th><th style="color:var(--red)">− Negativa</th><th style="color:var(--sky)">? Pregunta</th></tr></thead><tbody>${rows}</tbody></table><div style="padding:10px 16px 14px;border-top:2px solid var(--border);margin-top:0;"><button class="vt-play-btn secondary" onclick="vtSelectTenseAndPlay('${tenseKey}')">🎯 Practicar este tiempo →</button></div></div></div>`;
+    return `<div class="vt-tense-card" data-tense="${tenseKey}"><div class="vt-tense-header" onclick="_vtToggleCard(this)"><div><div class="vt-tense-name">${rule.label} ${rule.isPerfect ? '<span class="vt-perfect-tag">⚠️ No "have got"</span>' : ''}</div><div class="vt-tense-name-en">${rule.labelEn}</div></div><span class="vt-tense-chevron">▼</span></div><div class="vt-tense-body"><table class="vt-subject-table"><thead><tr><th>Sujeto</th><th style="color:var(--ink)">+ Afirmativa</th><th style="color:var(--red)">− Negativa</th><th style="color:var(--sky)">? Pregunta</th></tr></thead><tbody>${rows}</tbody></table><div style="padding:10px 16px 14px;border-top:2px solid var(--border);margin-top:0;"><button class="vt-play-btn secondary" onclick="vtSelectTenseAndPlay('${tenseKey}')">🎯 Practicar este tiempo →</button></div></div></div>`;
   }).join('');
 
   // Restauramos la que estaba abierta o la primera si no había ninguna
@@ -1685,15 +1853,17 @@ function generateDynamicQuestions(tenseKey, verbKey) {
   }
   function buildHintAndRule(type, subject) {
     const sNote = (["He","She","It"].includes(subject)) ? `${subject}/He/She/It` : subject;
-    const HINTS = { past_simple: { affirmative: `${sNote} → pasado (${verb.en.past})`, negative: `${sNote} → didn't + base`, question: `Did + ${sNote} + base?` }, present_simple: { affirmative: ["He","She","It"].includes(subject) ? `${sNote} → + s/es` : `${sNote} → base`, negative: ["He","She","It"].includes(subject) ? `${sNote} → doesn't + base` : `${sNote} → don't + base`, question: ["He","She","It"].includes(subject) ? `Does + ${sNote} + base?` : `Do + ${sNote} + base?` }, future_simple: { affirmative: `${sNote} + will + base`, negative: `${sNote} + won't + base`, question: `Will + ${sNote} + base?` }, past_continuous: { affirmative: `${sNote} + was/were + -ing`, negative: `${sNote} + wasn't/weren't + -ing`, question: `Was/Were + ${sNote} + -ing?` }, present_continuous: { affirmative: `${sNote} + am/is/are + -ing`, negative: `${sNote} + am not/isn't/aren't + -ing`, question: `Am/Is/Are + ${sNote} + -ing?` }, future_continuous: { affirmative: `${sNote} + will be + -ing`, negative: `${sNote} + won't be + -ing`, question: `Will + ${sNote} + be + -ing?` }, past_perfect: { affirmative: `${sNote} + had + participio`, negative: `${sNote} + had not + participio`, question: `Had + ${sNote} + participio?` }, present_perfect: { affirmative: `${sNote} + have/has + participio`, negative: `${sNote} + haven't/hasn't + participio`, question: `Have/Has + ${sNote} + participio?` }, future_perfect: { affirmative: `${sNote} + will have + participio`, negative: `${sNote} + won't have + participio`, question: `Will + ${sNote} + have + participio?` }, past_perfect_continuous: { affirmative: `${sNote} + had been + -ing`, negative: `${sNote} + had not been + -ing`, question: `Had + ${sNote} + been + -ing?` }, present_perfect_continuous: { affirmative: `${sNote} + have/has been + -ing`, negative: `${sNote} + haven't/hasn't been + -ing`, question: `Have/Has + ${sNote} + been + -ing?` }, future_perfect_continuous: { affirmative: `${sNote} + will have been + -ing`, negative: `${sNote} + won't have been + -ing`, question: `Will + ${sNote} + have been + -ing?` } };
+    const HINTS = { past_simple: { affirmative: `${sNote} → pasado (${verb.en.past})`, negative: `${sNote} → didn't + base`, question: `Did + ${sNote} + base?` }, present_simple: { affirmative: ["He","She","It"].includes(subject) ? `${sNote} → + s/es` : `${sNote} → base`, negative: ["He","She","It"].includes(subject) ? `${sNote} → doesn't + base` : `${sNote} → don't + base`, question: ["He","She","It"].includes(subject) ? `Does + ${sNote} + base?` : `Do + ${sNote} + base?` }, future_simple: { affirmative: `${sNote} + will + base`, negative: `${sNote} + won't + base`, question: `Will + ${sNote} + base?` }, past_continuous: { affirmative: `${sNote} + was/were + -ing`, negative: `${sNote} + wasn't/weren't + -ing`, question: `Was/Were + ${sNote} + -ing?` }, present_continuous: { affirmative: `${sNote} + am/is/are + -ing`, negative: `${sNote} + am not/isn't/aren't + -ing`, question: `Am/Is/Are + ${sNote} + -ing?` }, future_continuous: { affirmative: `${sNote} + will be + -ing`, negative: `${sNote} + won't be + -ing`, question: `Will + ${sNote} + be + -ing?` }, past_perfect: { affirmative: `${sNote} + had + participio`, negative: `${sNote} + had not + participio`, question: `Had + ${sNote} + participio?` }, present_perfect: { affirmative: `${sNote} + have/has + participio. ⚠️ SIN "got".`, negative: `haven't / hasn't + participio.`, question: `Have/Has + ${sNote} + participio?` }, future_perfect: { affirmative: `will have + participio.`, negative: `won't have + participio.`, question: `Will + sujeto + have + participio?` }, past_perfect_continuous: { affirmative: `had been + -ing.`, negative: `had not been + -ing.`, question: `Had + sujeto + been + -ing?` }, present_perfect_continuous: { affirmative: `have/has been + -ing.`, negative: `haven't/hasn't been + -ing.`, question: `Have/Has + sujeto + been + -ing?` }, future_perfect_continuous: { affirmative: `will have been + -ing.`, negative: `won't have been + -ing.`, question: `Will + sujeto + have been + -ing?` } };
     const RULES = { past_simple: { affirmative: `Sujeto + verbo en pasado.`, negative: `Sujeto + didn't + base.`, question: `Did + sujeto + base.` }, present_simple: { affirmative: ["He","She","It"].includes(subject) ? `Con He/She/It el verbo lleva -s/es.` : `Con I/You/We/They el verbo va en forma base.`, negative: ["He","She","It"].includes(subject) ? `Sujeto + doesn't + base.` : `Sujeto + don't + base.`, question: ["He","She","It"].includes(subject) ? `Does + sujeto + base?` : `Do + sujeto + base?` }, future_simple: { affirmative: `Sujeto + will + base.`, negative: `Sujeto + won't + base.`, question: `Will + sujeto + base?` }, past_continuous: { affirmative: `was/were + -ing.`, negative: `was not / were not + -ing.`, question: `Was/Were + sujeto + -ing?` }, present_continuous: { affirmative: `am/is/are + -ing.`, negative: `am not / isn't / aren't + -ing.`, question: `Am/Is/Are + sujeto + -ing?` }, future_continuous: { affirmative: `will be + -ing.`, negative: `won't be + -ing.`, question: `Will + sujeto + be + -ing?` }, past_perfect: { affirmative: `had + participio.`, negative: `had not + participio.`, question: `Had + sujeto + participio?` }, present_perfect: { affirmative: `have/has + participio. ⚠️ SIN "got".`, negative: `haven't / hasn't + participio.`, question: `Have/Has + sujeto + participio?` }, future_perfect: { affirmative: `will have + participio.`, negative: `won't have + participio.`, question: `Will + sujeto + have + participio?` }, past_perfect_continuous: { affirmative: `had been + -ing.`, negative: `had not been + -ing.`, question: `Had + sujeto + been + -ing?` }, present_perfect_continuous: { affirmative: `have/has been + -ing.`, negative: `haven't/hasn't been + -ing.`, question: `Have/Has + sujeto + been + -ing?` }, future_perfect_continuous: { affirmative: `will have been + -ing.`, negative: `won't have been + -ing.`, question: `Will + sujeto + have been + -ing?` } };
     return { hint: (HINTS[tenseKey] && HINTS[tenseKey][type]) || `Regla de ${rule.label}`, explainRule: (RULES[tenseKey] && RULES[tenseKey][type]) || `Usa ${rule.labelEn}.` };
   }
-  function buildSentence(type, subject, correctAnswer) {
-    const esSubject = { I:"Yo", You:"Tú", He:"Él", She:"Ella", It:"Eso", We:"Nosotros", They:"Ellos" }[subject];
-    if (type === "affirmative") return [ { en: subject, es: esSubject }, { en: "[BLANK]", es: `(${rule.label})` }, { en: `in English.`, es: `en inglés.` } ];
-    if (type === "negative") return [ { en: subject, es: esSubject }, { en: "[BLANK]", es: `(negación)` }, { en: `in English.`, es: `en inglés.` } ];
-    return [ { en: "[BLANK]", es: `(pregunta)` }, { en: subject, es: esSubject }, { en: `${verb.en.base}?`, es: `${verb.es.meaning}?` } ];
+  
+  // 🔥 CORRECCIÓN 1: Limpiamos la oración. Ya no hay repeticiones ni "in English".
+  // Solo la línea en blanco y la traducción exacta con su emoji.
+  function buildSentence(esTranslation) {
+    const emojiMatch = verb.es.meaning.match(/[\p{Emoji}\u200d]+/gu);
+    const emoji = emojiMatch ? emojiMatch[0] : "🎯";
+    return [ { en: "[BLANK]", es: `${emoji} ${esTranslation}` } ];
   }
   
   const qList = []; const usedCombinations = new Set();
@@ -1708,8 +1878,10 @@ function generateDynamicQuestions(tenseKey, verbKey) {
     const distractors = getDistractors(type, subject, correctAnswer);
     const options = shuffle([correctAnswer, ...distractors]);
     const { hint, explainRule } = buildHintAndRule(type, subject);
+    
     const esTranslation = rule.translate[type](subject, verb);
-    qList.push({ sentence: buildSentence(type, subject, correctAnswer), options, correct: correctAnswer, hint, explainRule, _meta: { tense: tenseKey, verb: verbKey, type, esTranslation } });
+    // 🔥 CORRECCIÓN 2: Le pasamos la traducción correcta a la función buildSentence
+    qList.push({ sentence: buildSentence(esTranslation), options, correct: correctAnswer, hint, explainRule, _meta: { tense: tenseKey, verb: verbKey, type, esTranslation } });
   }
   return qList;
 }
@@ -1717,10 +1889,33 @@ function generateDynamicQuestions(tenseKey, verbKey) {
 function vtStartFromTable(phase) {
   const tenseKey = window._vtSelectedTense; const verbKey = _vtVerb;
   if (!tenseKey || !verbKey) { alert("Por favor selecciona un tiempo y un verbo primero."); return; }
-  questions = generateDynamicQuestions(tenseKey, verbKey); currentQ = 0; currentRound = 1; score = 0; currentPhase = phase; activeModule = "_dynamic_verb";
+  
   const rule = TENSE_RULES[tenseKey]; const verb = VERB_DICTIONARY[verbKey];
+  questions = generateDynamicQuestions(tenseKey, verbKey); 
+  currentQ = 0; currentRound = 1; score = 0; currentPhase = phase; activeModule = "_dynamic_verb";
+  
   MODULE_CONFIG["_dynamic_verb"] = { label: `${rule.label} — ${verb.en.base}`, emoji: "⏱️", questions: questions, tag: "teal", hasRounds: false, nounOptions: [{ val: "affirmative", label: "✅ Afirmativa" }, { val: "negative", label: "❌ Negativa" }, { val: "question", label: "❓ Pregunta" }] };
-  document.getElementById('scorePill').innerText = '⭐ 0 pts'; const tag = document.getElementById('moduleTag'); tag.innerText = `⏱️ ${rule.label} · ${verb.en.base}`; tag.style.background = "var(--teal-lt)"; tag.style.color = "var(--teal-dk)";
+  
+  document.getElementById('scorePill').innerText = '⭐ 0 pts'; 
+  const tag = document.getElementById('moduleTag'); 
+  
+  // 🔥 CORRECCIÓN 3 y 4: Extraemos el Emoji y hacemos el Título Gigante
+  const emojiMatch = verb.es.meaning.match(/[\p{Emoji}\u200d]+/gu);
+  const emoji = emojiMatch ? emojiMatch[0] : "⏱️";
+
+  tag.innerHTML = `${emoji} ${rule.label} <span style="opacity:0.6; margin-left:8px;">· ${verb.en.base}</span>`; 
+  tag.style.background = "var(--teal-lt)"; 
+  tag.style.color = "var(--teal-dk)";
+  
+  // Transformación Visual a Cartel Principal
+  tag.style.fontSize = "1.35rem";
+  tag.style.padding = "12px 20px";
+  tag.style.display = "flex";
+  tag.style.justifyContent = "center";
+  tag.style.width = "100%";
+  tag.style.boxShadow = "var(--shadow)";
+  tag.style.marginBottom = "24px";
+  
   showScreen('screenQuiz'); loadQuestion();
 }
 </script>
