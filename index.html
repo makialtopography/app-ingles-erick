@@ -395,15 +395,45 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
       </div>
     </div>
 
-    <div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">💬 5: VOCABULARIO PRÁCTICO</div>
+<div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">💬 5: VOCABULARIO PRÁCTICO</div>
     <div class="menu-grid">
       <div class="menu-card" style="--accent:var(--sky); grid-column:span 2;" onclick="selectModule('everydayPhrases')">
         <span class="mc-emoji">🗣️</span><div class="mc-title">Frases Cotidianas</div><div class="mc-desc">Saludos, necesidades y expresiones vitales. (Fase Difícil: ¡A escribir!)</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">20 frases</span>
       </div>
     </div>
+
+    <div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:24px; padding-left:2px;">📖 6: COMPRENSIÓN LECTORA</div>
+    <div class="menu-grid" style="margin-bottom: 24px;">
+      <div class="menu-card" style="--accent:var(--lime); grid-column:span 2;" onclick="openReadingMenu()">
+        <span class="mc-emoji">👁️‍🗨️</span><div class="mc-title">Traductor Detective</div>
+        <div class="mc-desc">Lee el texto generado en inglés y escribe su significado.</div>
+        <span class="mc-badge" style="--badge-bg:var(--lime-lt);--badge-color:var(--lime-dk);">Textos Dinámicos</span>
+      </div>
+    </div>
+
   </div>
 </div>
-
+<div class="screen" id="screenReading">
+  <div class="menu-wrap">
+    <div class="menu-hero">
+      <span class="menu-hero-emoji">👁️‍🗨️</span>
+      <h2>Traductor Detective</h2>
+      <p style="color:var(--muted);font-size:.9rem;">Traduce los textos. Empezaremos con 3 palabras y subiremos la dificultad.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card" style="--accent:var(--teal);" onclick="selectReadingLevel(1)">
+        <span class="mc-emoji">🌱</span><div class="mc-title">Nivel 1: Básico</div><div class="mc-desc">3 palabras (Sujeto + Verbo).</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--sky);" onclick="selectReadingLevel(2)">
+        <span class="mc-emoji">🌿</span><div class="mc-title">Nivel 2: Intermedio</div><div class="mc-desc">4 a 5 palabras (+ Objetos).</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--amber);" onclick="selectReadingLevel(3)">
+        <span class="mc-emoji">🌳</span><div class="mc-title">Nivel 3: Avanzado</div><div class="mc-desc">6 a 10 palabras (Frases completas).</div>
+      </div>
+    </div>
+    <button class="action-btn" style="background:var(--card);color:var(--muted);border:2px solid var(--border);" onclick="goBack()">Volver al Menú</button>
+  </div>
+</div>
 <div class="screen" id="screenPlurals">
   <div class="menu-wrap">
     <div class="menu-hero">
@@ -1096,6 +1126,102 @@ function buildDynamicQuestions(moduleId, phase) {
   MODULE_CONFIG[moduleId].questions = questions;
   if (typeof MODULE_MATCH !== 'undefined') MODULE_MATCH[moduleId] = matchPairs;
 }
+let currentReadingLevel = 1;
+
+function openReadingMenu() {
+  showScreen('screenReading');
+}
+
+function selectReadingLevel(level) {
+  currentReadingLevel = level;
+  activeModule = 'readingGen';
+  
+  MODULE_CONFIG['readingGen'] = { 
+    label: `Lectura Nivel ${level}`, emoji: "👁️‍🗨️", questions: [], tag: "lime", hasRounds: false, nounOptions: [{val:"Phrase",label:"📝 Traducción"}] 
+  };
+  
+  buildReadingQuestions(level);
+  
+  // Como es de escritura directa, configuramos la fase como 2 automáticamente
+  currentPhase = 2; 
+  questions = shuffle([...MODULE_CONFIG['readingGen'].questions]);
+  
+  document.getElementById('scorePill').innerText = '⭐ 0 pts';
+  const tag = document.getElementById('moduleTag');
+  tag.innerText = `👁️‍🗨️ Lectura Nivel ${level}`;
+  tag.style.background = "var(--lime-lt)"; tag.style.color = "#689F38";
+  
+  showScreen('screenQuiz');
+  loadQuestion();
+}
+
+function buildReadingQuestions(level) {
+  let qList = [];
+  let pool = [];
+
+  // GLOSARIO PREDEFINIDO POR NIVELES
+  if (level === 1) {
+    // Nivel Básico: 3 palabras (Sujeto + Verbo + Complemento simple)
+    pool = [
+      { en: "I run fast.", es: "Yo corro rápido.", kw: ["corro", "rápido"] },
+      { en: "You eat pizza.", es: "Tú comes pizza.", kw: ["comes", "pizza"] },
+      { en: "He sleeps now.", es: "Él duerme ahora.", kw: ["duerme", "ahora"] },
+      { en: "She reads books.", es: "Ella lee libros.", kw: ["lee", "libros"] },
+      { en: "We play soccer.", es: "Nosotros jugamos fútbol.", kw: ["jugamos", "fútbol"] },
+      { en: "They drink water.", es: "Ellos beben agua.", kw: ["beben", "agua"] },
+      { en: "I study English.", es: "Yo estudio inglés.", kw: ["estudio", "inglés"] },
+      { en: "You walk fast.", es: "Tú caminas rápido.", kw: ["caminas", "rápido"] },
+      { en: "He cooks pasta.", es: "Él cocina pasta.", kw: ["cocina", "pasta"] },
+      { en: "She watches TV.", es: "Ella ve televisión.", kw: ["ve", "televisión"] },
+      { en: "We jump high.", es: "Nosotros saltamos alto.", kw: ["saltamos", "alto"] },
+      { en: "They buy apples.", es: "Ellos compran manzanas.", kw: ["compran", "manzanas"] }
+    ];
+  } else if (level === 2) {
+    // Nivel Intermedio: 4-5 palabras (Con adjetivos y objetos)
+    pool = [
+      { en: "The big dog runs.", es: "El perro grande corre.", kw: ["perro", "grande", "corre"] },
+      { en: "My friend eats pizza.", es: "Mi amigo come pizza.", kw: ["amigo", "come", "pizza"] },
+      { en: "The small bird sings.", es: "El pájaro pequeño canta.", kw: ["pájaro", "pequeño", "canta"] },
+      { en: "She reads a book.", es: "Ella lee un libro.", kw: ["lee", "libro"] },
+      { en: "We play video games.", es: "Nosotros jugamos videojuegos.", kw: ["jugamos", "videojuegos"] },
+      { en: "The fast car drives.", es: "El coche rápido conduce.", kw: ["coche", "rápido", "conduce"] },
+      { en: "I wash my hands.", es: "Yo lavo mis manos.", kw: ["lavo", "manos"] },
+      { en: "He opens the door.", es: "Él abre la puerta.", kw: ["abre", "puerta"] },
+      { en: "You clean the room.", es: "Tú limpias la habitación.", kw: ["limpias", "habitación"] },
+      { en: "They buy fresh fruit.", es: "Ellos compran fruta fresca.", kw: ["compran", "fruta", "fresca"] }
+    ];
+  } else {
+    // Nivel Avanzado: 6-10 palabras (Frases completas con contexto)
+    pool = [
+      { en: "He plays with the dog in the park.", es: "Él juega con el perro en el parque.", kw: ["juega", "perro", "parque"] },
+      { en: "She reads a book in the house.", es: "Ella lee un libro en la casa.", kw: ["lee", "libro", "casa"] },
+      { en: "We eat pizza at the big table.", es: "Nosotros comemos pizza en la mesa grande.", kw: ["comemos", "pizza", "mesa"] },
+      { en: "I study English with my teacher at school.", es: "Yo estudio inglés con mi profesor en la escuela.", kw: ["estudio", "inglés", "profesor", "escuela"] },
+      { en: "The doctor works in the hospital every day.", es: "El doctor trabaja en el hospital todos los días.", kw: ["doctor", "trabaja", "hospital", "días"] },
+      { en: "You write a letter to your best friend.", es: "Tú escribes una carta a tu mejor amigo.", kw: ["escribes", "carta", "mejor", "amigo"] },
+      { en: "My dad drives a red car to work.", es: "Mi papá conduce un auto rojo al trabajo.", kw: ["papá", "conduce", "auto", "rojo", "trabajo"] },
+      { en: "The cat sleeps on the sofa at night.", es: "El gato duerme en el sofá en la noche.", kw: ["gato", "duerme", "sofá", "noche"] },
+      { en: "We watch TV in the house with Juan.", es: "Nosotros vemos televisión en la casa con Juan.", kw: ["vemos", "televisión", "casa", "Juan"] },
+      { en: "They drink water after running in the city.", es: "Ellos beben agua después de correr en la ciudad.", kw: ["beben", "agua", "después", "correr", "ciudad"] }
+    ];
+  }
+
+  // Mezclamos el pool y sacamos 10 preguntas para la ronda
+  let shuffled = shuffle([...pool]).slice(0, 10);
+
+  shuffled.forEach(item => {
+    qList.push({
+      sentence: [{ en: item.en, es: "Traduce al español:", isTarget: true }],
+      hint: `Pista: Fíjate bien en cómo conjugar el verbo.`,
+      explainRule: `Significa: "${item.es}"`,
+      correct: item.es,
+      keywords: item.kw,
+      nounType: 'Phrase'
+    });
+  });
+
+  MODULE_CONFIG['readingGen'].questions = qList;
+}
 
 let currentPluralLevel = 1;
 
@@ -1374,11 +1500,11 @@ function loadQuestion() {
     }
   }
 
-  let isTypingMode = ((activeModule === 'everydayPhrases' || activeModule === 'pluralNouns') && currentPhase === 2);
+let isTypingMode = ((activeModule === 'everydayPhrases' || activeModule === 'pluralNouns' || activeModule === 'readingGen') && currentPhase === 2);
 
   // Construcción de botones de respuesta
   if(isTypingMode) {
-    document.getElementById('qTitle').innerText = 'Escribe la frase en inglés:';
+    document.getElementById('qTitle').innerText = activeModule === 'readingGen' ? 'Escribe la traducción al español:' : 'Escribe la frase en inglés:';
     document.getElementById('quantifierGrid').innerHTML = `<input type="text" id="typeInput" class="type-input" placeholder="Escribe aquí..." autocomplete="off" oninput="checkEnableTyping()">`;
   } else {
     const shuffledOpts = shuffle(q.options);
@@ -1446,20 +1572,28 @@ function resumeTimer() {
 
 // 🌟 MODIFICADA: Ahora congela el tiempo al fallar, y lo reanuda tras leer la pista
 function checkAnswer() {
-  stopTimer(); // ⏱️ ¡CONGELADO DE INMEDIATO! No importa si acertó o falló.
+  stopTimer(); // ⏱️ ¡CONGELADO DE INMEDIATO!
   
   const cfg = MODULE_CONFIG[activeModule];
   const q = questions[currentQ]; attempts++;
   document.getElementById('attemptLabel').innerText = `Intento ${attempts}`;
 
-  let isTypingMode = ((activeModule === 'everydayPhrases' || activeModule === 'pluralNouns') && currentPhase === 2);
+  let isTypingMode = ((activeModule === 'everydayPhrases' || activeModule === 'pluralNouns' || activeModule === 'readingGen') && currentPhase === 2);
   let nounCorrect = true;
   let quantCorrect = false;
 
   if (isTypingMode) {
-    let userVal = document.getElementById('typeInput').value.trim().toLowerCase().replace(/[^a-z0-9\s]/g, "");
-    let corrVal = q.correct.toLowerCase().replace(/[^a-z0-9\s]/g, "");
-    quantCorrect = (userVal === corrVal);
+    // 🔥 NUEVO: Filtro mágico que ignora tildes y mayúsculas para ser justo con el jugador
+    const removeAccents = (str) => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    let userVal = removeAccents(document.getElementById('typeInput').value.trim().toLowerCase()).replace(/[^a-z0-9\s]/g, "");
+    
+    if (activeModule === 'readingGen') {
+      quantCorrect = q.keywords.every(kw => userVal.includes(removeAccents(kw.toLowerCase())));
+    } else {
+      let corrVal = removeAccents(q.correct.toLowerCase()).replace(/[^a-z0-9\s]/g, "");
+      quantCorrect = (userVal === corrVal);
+    }
+    
     selectedQuantifier = document.getElementById('typeInput').value.trim();
     let inp = document.getElementById('typeInput');
     inp.disabled = true;
@@ -1472,7 +1606,7 @@ function checkAnswer() {
   const fb = document.getElementById('feedback');
 
   if (nounCorrect && quantCorrect) {
-    isAnswered = true; // Ya no llamamos a stopTimer() aquí porque ya se congeló al inicio
+    isAnswered = true; 
     
     let speedBonus = Math.ceil((timeLeft / MAX_TIME) * 500);
     let points = 500 + speedBonus; 
@@ -1488,7 +1622,14 @@ function checkAnswer() {
 
     if(!isTypingMode) document.querySelectorAll('.selected').forEach(b => b.classList.add('correct'));
 
-    fb.className = 'feedback correct'; fb.innerHTML = `<strong>¡Perfecto! 🌟 +${points} pts</strong> ${q.explainRule}`;
+    // 🔥 NUEVO: Tip ortográfico amistoso si escribió bien pero omitió tildes
+    let tip = "";
+    if (isTypingMode && document.getElementById('typeInput').value.trim() !== q.correct && activeModule !== 'readingGen') {
+      tip = `<br><span style="color:var(--teal-dk);font-size:.85em">💡 Tip ortográfico: <b>${q.correct}</b></span>`;
+    }
+
+    fb.className = 'feedback correct'; 
+    fb.innerHTML = `<strong>¡Perfecto! 🌟 +${points} pts</strong> ${q.explainRule}${tip}`;
     
     const btn = document.getElementById('checkBtn');
     const isLastInRound = cfg.hasRounds && (currentQ === 9 || currentQ === 19);
@@ -1507,7 +1648,6 @@ function checkAnswer() {
       document.querySelectorAll('.type-btn.selected').forEach(b => b.classList.add('wrong'));
     }
 
-    // Penalización de 2.5 segundos para leer el error
     setTimeout(() => {
       document.querySelectorAll('.wrong').forEach(b => b.classList.remove('selected','wrong'));
       if (!quantCorrect) {
@@ -1523,7 +1663,6 @@ function checkAnswer() {
       if (!nounCorrect) selectedNoun = null;
       if(isTypingMode) checkEnableTyping(); else checkEnableButton();
       
-      // 🌟 REANUDAR: Si el juego sigue activo y no se ha acabado el tiempo total, reactivamos el reloj donde se quedó
       if (!isAnswered && timeLeft > 0) {
         resumeTimer();
       }
