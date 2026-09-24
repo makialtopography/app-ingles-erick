@@ -727,6 +727,7 @@ const Q_PHRASES=[
 
 /* DICCIONARIO DE VERBOS CON EMOJIS */
 const VERB_DICTIONARY = {
+  be: { en: { base:"be", sForm:"is", past:"was", participle:"been", gerund:"being" }, es: { meaning:"ser / estar 🌟", participle:"sido / estado", gerund:"siendo / estando", present: { I:"soy/estoy", You:"eres/estás", He:"es/está", She:"es/está", It:"es/está", We:"somos/estamos", They:"son/están" }, past: { I:"fui/estuve", You:"fuiste/estuviste", He:"fue/estuvo", She:"fue/estuvo", It:"fue/estuvo", We:"fuimos/estuvimos", They:"fueron/estuvieron" }, future: { I:"seré/estaré", You:"serás/estarás", He:"será/estará", She:"será/estará", It:"será/estará", We:"seremos/estaremos", They:"serán/estarán" } }, irregular: true, spellingNote: "¡El verbo más rebelde! No usa auxiliares (do/did) para preguntar o negar." },
   play: { en: { base:"play", sForm:"plays", past:"played", participle:"played", gerund:"playing" }, es: { meaning:"jugar ⚽", participle:"jugado", gerund:"jugando", present: { I:"juego", You:"juegas", He:"juega", She:"juega", It:"juega", We:"jugamos", They:"juegan" }, past: { I:"jugué", You:"jugaste", He:"jugó", She:"jugó", It:"jugó", We:"jugamos", They:"jugaron" }, future: { I:"jugaré", You:"jugarás", He:"jugará", She:"jugará", It:"jugará", We:"jugaremos", They:"jugarán" } }, irregular: false },
   watch: { en: { base:"watch", sForm:"watches", past:"watched", participle:"watched", gerund:"watching" }, es: { meaning:"ver / mirar 👀", participle:"visto", gerund:"viendo", present: { I:"veo", You:"ves", He:"ve", She:"ve", It:"ve", We:"vemos", They:"ven" }, past: { I:"vi", You:"viste", He:"vio", She:"vio", It:"vio", We:"vimos", They:"vieron" }, future: { I:"veré", You:"verás", He:"verá", She:"verá", It:"verá", We:"veremos", They:"verán" } }, irregular: false, spellingNote: "3ª persona añade -es: watch → watches" },
   study: { en: { base:"study", sForm:"studies", past:"studied", participle:"studied", gerund:"studying" }, es: { meaning:"estudiar 📖", participle:"estudiado", gerund:"estudiando", present: { I:"estudio", You:"estudias", He:"estudia", She:"estudia", It:"estudia", We:"estudiamos", They:"estudian" }, past: { I:"estudié", You:"estudiaste", He:"estudió", She:"estudió", It:"estudió", We:"estudiamos", They:"estudiaron" }, future: { I:"estudiaré", You:"estudiarás", He:"estudiará", She:"estudiará", It:"estudiará", We:"estudiaremos", They:"estudiarán" } }, irregular: false, spellingNote: "Termina en consonante + y: y → ies y y → ied" },
@@ -809,12 +810,20 @@ const BE_ES = {
 const TENSE_RULES = {
   past_simple: {
     label:"Pasado Simple", labelEn:"Past Simple", family:"simple", tense:"past", isPerfect:false,
-    build:{ affirmative:(s,v)=>`${s} ${v.en.past}`, negative:(s,v)=>`${s} ${AUX.simplePast.neg()} ${v.en.base}`, question:(s,v)=>`${AUX.simplePast.q()} ${s} ${v.en.base}?` },
+    build:{ 
+      affirmative:(s,v) => v.en.base==='be' ? `${s} ${bePast(s)}` : `${s} ${v.en.past}`, 
+      negative:(s,v) => v.en.base==='be' ? `${s} ${bePast(s)==='was'?"wasn't":"weren't"}` : `${s} ${AUX.simplePast.neg()} ${v.en.base}`, 
+      question:(s,v) => v.en.base==='be' ? `${bePast(s).charAt(0).toUpperCase() + bePast(s).slice(1)} ${s}?` : `${AUX.simplePast.q()} ${s} ${v.en.base}?` 
+    },
     translate:{ affirmative:(s,v)=>`${VT_SUBJ_ES[s]} ${v.es.past[s]}`, negative:(s,v)=>`${VT_SUBJ_ES[s]} no ${v.es.past[s]}`, question:(s,v)=>`¿${VT_SUBJ_ES[s]} ${v.es.past[s]}?` }
   },
   present_simple: {
     label:"Presente Simple", labelEn:"Present Simple", family:"simple", tense:"present", isPerfect:false,
-    build:{ affirmative:(s,v)=>`${s} ${isSForm(s)?v.en.sForm:v.en.base}`, negative:(s,v)=>`${s} ${AUX.simplePresent.neg(s)} ${v.en.base}`, question:(s,v)=>`${AUX.simplePresent.q(s)} ${s} ${v.en.base}?` },
+    build:{ 
+      affirmative:(s,v) => v.en.base==='be' ? `${s} ${bePresent(s)}` : `${s} ${isSForm(s)?v.en.sForm:v.en.base}`, 
+      negative:(s,v) => v.en.base==='be' ? `${s} ${bePresent(s)==='am'?'am not':bePresent(s)==='is'?"isn't":"aren't"}` : `${s} ${AUX.simplePresent.neg(s)} ${v.en.base}`, 
+      question:(s,v) => v.en.base==='be' ? `${bePresent(s).charAt(0).toUpperCase() + bePresent(s).slice(1)} ${s}?` : `${AUX.simplePresent.q(s)} ${s} ${v.en.base}?` 
+    },
     translate:{ affirmative:(s,v)=>`${VT_SUBJ_ES[s]} ${v.es.present[s]}`, negative:(s,v)=>`${VT_SUBJ_ES[s]} no ${v.es.present[s]}`, question:(s,v)=>`¿${VT_SUBJ_ES[s]} ${v.es.present[s]}?` }
   },
   future_simple: {
@@ -934,7 +943,7 @@ let isHost = false;
 let _vtVerb = "eat", _vtFamily = "simple";
 const TENSE_FAMILY_MAP = { past_simple:"simple", present_simple:"simple", future_simple:"simple", past_continuous:"continuous", present_continuous:"continuous", future_continuous:"continuous", past_perfect:"perfect", present_perfect:"perfect", future_perfect:"perfect", past_perfect_continuous:"perfectContinuous", present_perfect_continuous:"perfectContinuous", future_perfect_continuous:"perfectContinuous" };
 const VT_SUBJ_ES = { I:"Yo", You:"Tú", He:"Él", She:"Ella", It:"Eso", We:"Nosotros", They:"Ellos" };
-const VT_SUBJECTS = ["I","You","He","She","We","They"];
+const VT_SUBJECTS = ["I", "You", "He", "She", "It", "We", "They"];
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1956,10 +1965,21 @@ function _renderTenseCards() {
   
   container.innerHTML = tenseKeys.map(tenseKey => {
     const rule = TENSE_RULES[tenseKey];
+    
+    // 🔥 NUEVO: Detectar si es una conjugación rara del verbo To Be
+    const isRareBe = verb.en.base === 'be' && ["future_continuous", "present_perfect_continuous", "past_perfect_continuous", "future_perfect_continuous"].includes(tenseKey);
+    const rareBadge = isRareBe ? `<span style="background:var(--slate-lt);color:var(--slate);font-size:0.65rem;font-weight:900;padding:2px 8px;border-radius:100px;margin-left:8px;border:1px solid #CFD8DC;">⚠️ Poco común</span>` : '';
+    
+    // 🔥 NUEVO: Bloquear el botón de jugar si es una forma rara
+    const playBtnHtml = isRareBe 
+      ? `<div style="text-align:center;font-size:.85rem;color:var(--slate);font-weight:700;padding:10px 0;">No se recomienda practicar esta forma.</div>`
+      : `<button class="vt-play-btn secondary" onclick="vtSelectTenseAndPlay('${tenseKey}')">🎯 Practicar este tiempo →</button>`;
+
     const rows = VT_SUBJECTS.map(subj => {
       return `<tr><td class="vt-subj-cell">${subj}<br><span style="font-size:.65rem;color:var(--muted);font-weight:600">${VT_SUBJ_ES[subj]}</span></td><td class="vt-aff"><div class="en">${rule.build.affirmative(subj, verb)}</div><div class="es">${rule.translate.affirmative(subj, verb)}</div></td><td class="vt-neg"><div class="en">${rule.build.negative(subj, verb)}</div><div class="es">${rule.translate.negative(subj, verb)}</div></td><td class="vt-q"><div class="en">${rule.build.question(subj, verb)}</div><div class="es">${rule.translate.question(subj, verb)}</div></td></tr>`;
     }).join('');
-    return `<div class="vt-tense-card" data-tense="${tenseKey}"><div class="vt-tense-header" onclick="_vtToggleCard(this)"><div><div class="vt-tense-name">${rule.label} ${rule.isPerfect ? '<span class="vt-perfect-tag">⚠️ No "have got"</span>' : ''}</div><div class="vt-tense-name-en">${rule.labelEn}</div></div><span class="vt-tense-chevron">▼</span></div><div class="vt-tense-body"><table class="vt-subject-table"><thead><tr><th>Sujeto</th><th style="color:var(--ink)">+ Afirmativa</th><th style="color:var(--red)">− Negativa</th><th style="color:var(--sky)">? Pregunta</th></tr></thead><tbody>${rows}</tbody></table><div style="padding:10px 16px 14px;border-top:2px solid var(--border);margin-top:0;"><button class="vt-play-btn secondary" onclick="vtSelectTenseAndPlay('${tenseKey}')">🎯 Practicar este tiempo →</button></div></div></div>`;
+    
+    return `<div class="vt-tense-card" data-tense="${tenseKey}"><div class="vt-tense-header" onclick="_vtToggleCard(this)"><div><div class="vt-tense-name">${rule.label} ${rule.isPerfect ? '<span class="vt-perfect-tag">⚠️ No "have got"</span>' : ''} ${rareBadge}</div><div class="vt-tense-name-en">${rule.labelEn}</div></div><span class="vt-tense-chevron">▼</span></div><div class="vt-tense-body"><table class="vt-subject-table"><thead><tr><th>Sujeto</th><th style="color:var(--ink)">+ Afirmativa</th><th style="color:var(--red)">− Negativa</th><th style="color:var(--sky)">? Pregunta</th></tr></thead><tbody>${rows}</tbody></table><div style="padding:10px 16px 14px;border-top:2px solid var(--border);margin-top:0;">${playBtnHtml}</div></div></div>`;
   }).join('');
 
   // Restauramos la que estaba abierta o la primera si no había ninguna
