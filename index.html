@@ -383,8 +383,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
       <div class="menu-card" style="--accent:var(--amber);" onclick="selectModule('svo')">
         <span class="mc-emoji">📝</span><div class="mc-title">Estructura SVO</div><div class="mc-desc">Sujeto + Verbo + Objeto.</div><span class="mc-badge" style="--badge-bg:var(--amber-lt);--badge-color:var(--amber-dk);">10 pregs</span>
       </div>
-      <div class="menu-card" style="--accent:var(--violet);" onclick="selectModule('auxiliaries')">
-        <span class="mc-emoji">⚙️</span><div class="mc-title">Auxiliares</div><div class="mc-desc">Do, Does, Did, Will…</div><span class="mc-badge" style="--badge-bg:var(--violet-lt);--badge-color:var(--violet);">10 pregs</span>
+      <div class="menu-card" style="--accent:var(--violet);" onclick="openAuxMenu()">
+        <span class="mc-emoji">⚙️</span><div class="mc-title">Verbos Auxiliares</div><div class="mc-desc">Do, Does, Did, Will. Los ayudantes del verbo.</div><span class="mc-badge" style="--badge-bg:var(--violet-lt);--badge-color:var(--violet);">Centro de Entrenamiento</span>
       </div>
     </div>
 
@@ -411,6 +411,30 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
       </div>
     </div>
 
+  </div>
+</div>
+<div class="screen" id="screenAux">
+  <div class="menu-wrap">
+    <div class="menu-hero">
+      <span class="menu-hero-emoji">⚙️</span>
+      <h2>Los Ayudantes</h2>
+      <p style="color:var(--muted);font-size:.9rem;">Los verbos no pueden negar ni preguntar solos. ¡Necesitan ayudantes!</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card" style="--accent:var(--sky);" onclick="selectAuxLevel(1)">
+        <span class="mc-emoji">⏳</span><div class="mc-title">Nivel 1: Presente</div><div class="mc-desc">Do / Does (Equipos I/You/We/They vs He/She/It)</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--amber);" onclick="selectAuxLevel(2)">
+        <span class="mc-emoji">🕰️</span><div class="mc-title">Nivel 2: Pasado</div><div class="mc-desc">Did (¡Un solo ayudante para todos!)</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--pink);" onclick="selectAuxLevel(3)">
+        <span class="mc-emoji">🚀</span><div class="mc-title">Nivel 3: Futuro</div><div class="mc-desc">Will / Won't (El único que sale en afirmaciones)</div>
+      </div>
+      <div class="menu-card" style="--accent:var(--violet);" onclick="selectAuxLevel(4)">
+        <span class="mc-emoji">🏆</span><div class="mc-title">Nivel 4: Prueba Final</div><div class="mc-desc">Mezcla de tiempos y el "Efecto Vampiro".</div>
+      </div>
+    </div>
+    <button class="action-btn" style="background:var(--card);color:var(--muted);border:2px solid var(--border);" onclick="goBack()">Volver al Menú</button>
   </div>
 </div>
 <div class="screen" id="screenReading">
@@ -587,6 +611,224 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 </div>
 
 <script>
+let currentAuxLevel = 1;
+
+function openAuxMenu() {
+  showScreen('screenAux');
+}
+
+function selectAuxLevel(level) {
+  currentAuxLevel = level;
+  activeModule = 'auxDynamic';
+  
+  const levelNames = ["Presente (Do/Does)", "Pasado (Did)", "Futuro (Will)", "Prueba Final"];
+  
+  MODULE_CONFIG['auxDynamic'] = { 
+    label: `Auxiliares: ${levelNames[level-1]}`, emoji: "⚙️", questions: [], tag: "violet", hasRounds: false, nounOptions: [{val:"Auxiliary",label:"⚙️ Auxiliar"}] 
+  };
+  
+  let intro = ""; let formal = ""; let quick = ""; let examplesData = [];
+  
+  if (level === 1) {
+    intro = "En presente hay dos equipos:<br>🔵 <b>Do</b> (I, You, We, They)<br>🔴 <b>Does</b> (He, She, It)";
+    
+    formal = "<div style='text-align:left;font-size:.95rem;line-height:1.7;'>" +
+             "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--green); font-weight:bold; width:110px; flex-shrink:0;'>+ Afirmación:</div><div style='color:var(--ink, #333);'>I <b style='color:var(--green);opacity:0.6'>do</b> play / He <b style='color:var(--green);opacity:0.6'>does</b> play<br>➔ (el <b style='color:var(--green)'>do</b> / <b style='color:var(--green)'>does</b> se vuelve invisible)</div></div>" +
+             "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--red); font-weight:bold; width:110px; flex-shrink:0;'>- Negación:</div><div style='color:var(--ink, #333);'>I <b>do not</b> play / He <b>does not</b> play</div></div>" +
+             "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:110px; flex-shrink:0;'>? Pregunta:</div><div style='color:var(--ink, #333);'><b>Do</b> I play? / <b>Does</b> he play?</div></div>" +
+             "</div>";
+             
+    quick = "<div style='text-align:left;font-size:.95rem;line-height:1.7;'>" +
+            "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--green); font-weight:bold; width:110px; flex-shrink:0;'>+ Afirmación:</div><div style='color:var(--ink, #333);'>I <b style='color:var(--green);opacity:0.6'>do</b> play / He <b style='color:var(--green);opacity:0.6'>does</b> play<br>➔ (el <b style='color:var(--green)'>do</b> / <b style='color:var(--green)'>does</b> se vuelve invisible)</div></div>" +
+            "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--red); font-weight:bold; width:110px; flex-shrink:0;'>- Negación:</div><div style='color:var(--ink, #333);'>I <b>don't</b> play / He <b>doesn't</b> play</div></div>" +
+            "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:110px; flex-shrink:0;'>? Pregunta:</div><div style='color:var(--ink, #333);'><b>Do</b> I play? / <b>Does</b> he play?</div></div>" +
+            "</div>";
+            
+    examplesData = [{en: "Do you like pizza?", es: "¿Te gusta la pizza?"}, {en: "He doesn't run.", es: "Él no corre."}];
+  } else if (level === 2) {
+    intro = "En pasado es súper fácil:<br>🕰️ <b>Did</b> ayuda a TODOS los pronombres por igual.";
+    
+    formal = "<div style='text-align:left;font-size:.95rem;line-height:1.7;'>" +
+             "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--green); font-weight:bold; width:110px; flex-shrink:0;'>+ Afirmación:</div><div style='color:var(--ink, #333);'>I <b style='color:var(--green);opacity:0.6'>did</b> play<br>➔ (el <b style='color:var(--green)'>did</b> se vuelve invisible)</div></div>" +
+             "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--red); font-weight:bold; width:110px; flex-shrink:0;'>- Negación:</div><div style='color:var(--ink, #333);'>I <b>did not</b> play</div></div>" +
+             "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:110px; flex-shrink:0;'>? Pregunta:</div><div style='color:var(--ink, #333);'><b>Did</b> I play?</div></div>" +
+             "</div>";
+             
+    quick = "<div style='text-align:left;font-size:.95rem;line-height:1.7;'>" +
+            "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--green); font-weight:bold; width:110px; flex-shrink:0;'>+ Afirmación:</div><div style='color:var(--ink, #333);'>I <b style='color:var(--green);opacity:0.6'>did</b> play<br>➔ (el <b style='color:var(--green)'>did</b> se vuelve invisible)</div></div>" +
+            "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--red); font-weight:bold; width:110px; flex-shrink:0;'>- Negación:</div><div style='color:var(--ink, #333);'>I <b>didn't</b> play</div></div>" +
+            "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:110px; flex-shrink:0;'>? Pregunta:</div><div style='color:var(--ink, #333);'><b>Did</b> I play?</div></div>" +
+            "</div>";
+            
+    examplesData = [{en: "Did they win?", es: "¿Ellos ganaron?"}, {en: "She didn't sleep.", es: "Ella no durmió."}];
+  } else if (level === 3) {
+    intro = "En futuro, <b>Will</b> siempre está visible, incluso al afirmar.<br>🚀 ¡Ojo con su negación mutante!";
+    
+    formal = "<div style='text-align:left;font-size:.95rem;line-height:1.7;'>" +
+             "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--green); font-weight:bold; width:110px; flex-shrink:0;'>+ Afirmación:</div><div style='color:var(--ink, #333);'>I <b>will</b> play (¡Siempre visible!)</div></div>" +
+             "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--red); font-weight:bold; width:110px; flex-shrink:0;'>- Negación:</div><div style='color:var(--ink, #333);'>I <b>will not</b> play</div></div>" +
+             "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:110px; flex-shrink:0;'>? Pregunta:</div><div style='color:var(--ink, #333);'><b>Will</b> I play?</div></div>" +
+             "</div>";
+             
+    quick = "<div style='text-align:left;font-size:.95rem;line-height:1.7;'>" +
+            "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--green); font-weight:bold; width:110px; flex-shrink:0;'>+ Afirmación:</div><div style='color:var(--ink, #333);'>I<b>'ll</b> play (¡Siempre visible!)</div></div>" +
+            "<div style='display:flex; margin-bottom:8px;'><div style='color:var(--red); font-weight:bold; width:110px; flex-shrink:0;'>- Negación:</div><div style='color:var(--ink, #333);'>I <b>won't</b> play</div></div>" +
+            "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:110px; flex-shrink:0;'>? Pregunta:</div><div style='color:var(--ink, #333);'><b>Will</b> I play?</div></div>" +
+            "</div>";
+            
+    examplesData = [{en: "I will go tomorrow.", es: "Iré mañana."}, {en: "It won't rain.", es: "No lloverá."}];
+  } else {
+    // 🔥 NIVEL 4 - MODO REPASO FINAL
+    intro = "¡Gran repaso final! 🏆<br>Recuerda el <b>Efecto Vampiro 🧛‍♂️</b>: si el ayudante (Do/Does/Did) está presente, el verbo principal NO cambia.";
+    
+    formal = "<div style='text-align:left;font-size:.9rem;line-height:1.3;'>" +
+             
+             "<!-- Presente (eat) -->" +
+             "<div style='display:flex; align-items:center; margin-bottom:8px; border-bottom:1px solid #eee; padding-bottom:8px;'>" +
+             "<div style='width:90px; flex-shrink:0; text-align:center; padding-right:10px;'><b style='color:#333;font-size:1rem;'>⏳ Presente</b><br><span style='font-size:.75rem;color:var(--muted)'>Do/Does</span></div>" +
+             "<div style='flex-grow:1; border-left:2px solid #eee; padding-left:12px;'>" +
+             "<div style='display:flex;'><div style='color:var(--green); font-weight:bold; width:20px;'>+</div><div style='color:var(--ink, #333);'>He eats</div></div>" +
+             "<div style='display:flex;'><div style='color:var(--red); font-weight:bold; width:20px;'>-</div><div style='color:var(--ink, #333);'>He <b>does not</b> eat</div></div>" +
+             "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:20px;'>?</div><div style='color:var(--ink, #333);'><b>Does</b> he eat?</div></div>" +
+             "</div></div>" +
+             
+             "<!-- Pasado (go) -->" +
+             "<div style='display:flex; align-items:center; margin-bottom:8px; border-bottom:1px solid #eee; padding-bottom:8px;'>" +
+             "<div style='width:90px; flex-shrink:0; text-align:center; padding-right:10px;'><b style='color:#333;font-size:1rem;'>🕰️ Pasado</b><br><span style='font-size:.75rem;color:var(--muted)'>Did</span></div>" +
+             "<div style='flex-grow:1; border-left:2px solid #eee; padding-left:12px;'>" +
+             "<div style='display:flex;'><div style='color:var(--green); font-weight:bold; width:20px;'>+</div><div style='color:var(--ink, #333);'>I went</div></div>" +
+             "<div style='display:flex;'><div style='color:var(--red); font-weight:bold; width:20px;'>-</div><div style='color:var(--ink, #333);'>I <b>did not</b> go</div></div>" +
+             "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:20px;'>?</div><div style='color:var(--ink, #333);'><b>Did</b> I go?</div></div>" +
+             "</div></div>" +
+             
+             "<!-- Futuro (sleep) -->" +
+             "<div style='display:flex; align-items:center;'>" +
+             "<div style='width:90px; flex-shrink:0; text-align:center; padding-right:10px;'><b style='color:#333;font-size:1rem;'>🚀 Futuro</b><br><span style='font-size:.75rem;color:var(--muted)'>Will</span></div>" +
+             "<div style='flex-grow:1; border-left:2px solid #eee; padding-left:12px;'>" +
+             "<div style='display:flex;'><div style='color:var(--green); font-weight:bold; width:20px;'>+</div><div style='color:var(--ink, #333);'>They <b>will</b> sleep</div></div>" +
+             "<div style='display:flex;'><div style='color:var(--red); font-weight:bold; width:20px;'>-</div><div style='color:var(--ink, #333);'>They <b>will not</b> sleep</div></div>" +
+             "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:20px;'>?</div><div style='color:var(--ink, #333);'><b>Will</b> they sleep?</div></div>" +
+             "</div></div>" +
+             "</div>";
+             
+    quick = "<div style='text-align:left;font-size:.9rem;line-height:1.3;'>" +
+            
+            "<!-- Presente (eat) -->" +
+            "<div style='display:flex; align-items:center; margin-bottom:8px; border-bottom:1px solid #eee; padding-bottom:8px;'>" +
+            "<div style='width:90px; flex-shrink:0; text-align:center; padding-right:10px;'><b style='color:#333;font-size:1rem;'>⏳ Presente</b><br><span style='font-size:.75rem;color:var(--muted)'>Do/Does</span></div>" +
+            "<div style='flex-grow:1; border-left:2px solid #eee; padding-left:12px;'>" +
+            "<div style='display:flex;'><div style='color:var(--green); font-weight:bold; width:20px;'>+</div><div style='color:var(--ink, #333);'>He eats</div></div>" +
+            "<div style='display:flex;'><div style='color:var(--red); font-weight:bold; width:20px;'>-</div><div style='color:var(--ink, #333);'>He <b>doesn't</b> eat</div></div>" +
+            "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:20px;'>?</div><div style='color:var(--ink, #333);'><b>Does</b> he eat?</div></div>" +
+            "</div></div>" +
+            
+            "<!-- Pasado (go) -->" +
+            "<div style='display:flex; align-items:center; margin-bottom:8px; border-bottom:1px solid #eee; padding-bottom:8px;'>" +
+            "<div style='width:90px; flex-shrink:0; text-align:center; padding-right:10px;'><b style='color:#333;font-size:1rem;'>🕰️ Pasado</b><br><span style='font-size:.75rem;color:var(--muted)'>Did</span></div>" +
+            "<div style='flex-grow:1; border-left:2px solid #eee; padding-left:12px;'>" +
+            "<div style='display:flex;'><div style='color:var(--green); font-weight:bold; width:20px;'>+</div><div style='color:var(--ink, #333);'>I went</div></div>" +
+            "<div style='display:flex;'><div style='color:var(--red); font-weight:bold; width:20px;'>-</div><div style='color:var(--ink, #333);'>I <b>didn't</b> go</div></div>" +
+            "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:20px;'>?</div><div style='color:var(--ink, #333);'><b>Did</b> I go?</div></div>" +
+            "</div></div>" +
+            
+            "<!-- Futuro (sleep) -->" +
+            "<div style='display:flex; align-items:center;'>" +
+            "<div style='width:90px; flex-shrink:0; text-align:center; padding-right:10px;'><b style='color:#333;font-size:1rem;'>🚀 Futuro</b><br><span style='font-size:.75rem;color:var(--muted)'>Will</span></div>" +
+            "<div style='flex-grow:1; border-left:2px solid #eee; padding-left:12px;'>" +
+            "<div style='display:flex;'><div style='color:var(--green); font-weight:bold; width:20px;'>+</div><div style='color:var(--ink, #333);'>They<b>'ll</b> sleep</div></div>" +
+            "<div style='display:flex;'><div style='color:var(--red); font-weight:bold; width:20px;'>-</div><div style='color:var(--ink, #333);'>They <b>won't</b> sleep</div></div>" +
+            "<div style='display:flex;'><div style='color:var(--sky); font-weight:bold; width:20px;'>?</div><div style='color:var(--ink, #333);'><b>Will</b> they sleep?</div></div>" +
+            "</div></div>" +
+            "</div>";
+            
+    // EL FIX ESTÁ AQUÍ: La lista existe pero está vacía. El motor no se romperá.
+    examplesData = []; 
+  }
+
+  const titleText = level === 4 ? "Estructura (Resumen Final):" : "Estructuras:";
+
+  MODULE_EXPLAIN['auxDynamic'] = {
+    accentColor: "var(--violet)",
+    intro: intro,
+    concepts: [{
+      label: titleText,
+      text: `<div style="display:flex;gap:10px;margin-bottom:10px;">
+               <button class="match-btn selected" id="btnFormal" onclick="toggleAux('formal')" style="flex:1">👔 Formal</button>
+               <button class="match-btn" id="btnQuick" onclick="toggleAux('quick')" style="flex:1">⚡ Rápido</button>
+             </div>
+             <div id="auxFormalText" style="padding:16px; background:var(--card); border-radius:8px; border:2px dashed var(--border);">${formal}</div>
+             <div id="auxQuickText" style="padding:16px; background:var(--card); border-radius:8px; border:2px dashed var(--border); display:none;">${quick}</div>`
+    }],
+    examples: examplesData, // Siempre le pasamos el dato, incluso si está vacío.
+    tip: "Fase Fácil 🟢: Ejercicios SIN contracciones.<br>Fase Difícil 🔥: Ejercicios CON contracciones."
+  };
+
+  selectModule('auxDynamic');
+}
+
+function toggleAux(mode) {
+  if(mode === 'formal') {
+    document.getElementById('auxFormalText').style.display = 'block';
+    document.getElementById('auxQuickText').style.display = 'none';
+    document.getElementById('btnFormal').classList.add('selected');
+    document.getElementById('btnQuick').classList.remove('selected');
+  } else {
+    document.getElementById('auxFormalText').style.display = 'none';
+    document.getElementById('auxQuickText').style.display = 'block';
+    document.getElementById('btnFormal').classList.remove('selected');
+    document.getElementById('btnQuick').classList.add('selected');
+  }
+}
+function buildAuxQuestions(level, phase) {
+  let qList = [];
+  
+  // Fase 1 = Fácil (Sin contracciones), Fase 2 = Difícil (Con contracciones)
+  const isEasy = (phase === 1);
+  
+  const qP1 = [
+    { s: ["I", "[BLANK]", "like onions."], o: isEasy ? ["do not", "does not", "did not"] : ["don't", "doesn't", "didn't"], c: isEasy ? "do not" : "don't", h: "I/You/We/They usan do (not)", l: "Negación ❌", e: "Oración negativa en Presente" },
+    { s: ["[BLANK]", "she play tennis?"], o: ["Do", "Does", "Is"], c: "Does", h: "He/She/It usan Does", l: "Pregunta ❓", e: "Pregunta en Presente" },
+    { s: ["He", "[BLANK]", "eat meat."], o: isEasy ? ["does not", "do not", "is not"] : ["doesn't", "don't", "isn't"], c: isEasy ? "does not" : "doesn't", h: "He/She/It usan does (not)", l: "Negación ❌", e: "Oración negativa en Presente" },
+    { s: ["[BLANK]", "you know him?"], o: ["Do", "Does", "Are"], c: "Do", h: "I/You/We/They usan Do", l: "Pregunta ❓", e: "Pregunta en Presente" }
+  ];
+  
+  const qP2 = [
+    { s: ["We", "[BLANK]", "go to the park."], o: isEasy ? ["did not", "do not", "does not"] : ["didn't", "don't", "doesn't"], c: isEasy ? "did not" : "didn't", h: "En pasado todos usan did (not)", l: "Negación ❌", e: "Oración negativa en Pasado" },
+    { s: ["[BLANK]", "they win the game?"], o: ["Did", "Do", "Does"], c: "Did", h: "Pregunta en pasado usa Did", l: "Pregunta ❓", e: "Pregunta en Pasado" },
+    { s: [isEasy ? "She did not" : "She didn't", "[BLANK]", "pizza."], o: ["eat", "eats", "ate"], c: "eat", h: "Efecto Vampiro: el verbo va en forma base", l: "Negación ❌", e: "Ojo con el verbo principal" },
+    { s: ["I", "[BLANK]", "see that."], o: isEasy ? ["did not", "do not", "was not"] : ["didn't", "don't", "wasn't"], c: isEasy ? "did not" : "didn't", h: "Negación en pasado usa did (not)", l: "Negación ❌", e: "Oración negativa en Pasado" }
+  ];
+  
+  const qP3 = [
+    { s: ["I", "[BLANK]", "travel tomorrow."], o: ["will", "do", "did"], c: "will", h: "Para futuro usamos will", l: "Afirmación ✅", e: "Oración afirmativa en Futuro" },
+    { s: ["They", "[BLANK]", "come to the party."], o: isEasy ? ["will not", "do not", "are not"] : ["won't", "don't", "aren't"], c: isEasy ? "will not" : "won't", h: "La negación de will es will not o won't", l: "Negación ❌", e: "Oración negativa en Futuro" },
+    { s: ["[BLANK]", "it rain today?"], o: ["Will", "Does", "Did"], c: "Will", h: "Pregunta en futuro empieza con Will", l: "Pregunta ❓", e: "Pregunta en Futuro" },
+    { s: [isEasy ? "She will" : "She'll", "[BLANK]", "a doctor."], o: ["be", "is", "was"], c: "be", h: "Después de will o 'll el verbo va en base", l: "Afirmación ✅", e: "Ojo con el verbo to be" }
+  ];
+
+  let pool = [];
+  if (level === 1) pool = qP1;
+  else if (level === 2) pool = qP2;
+  else if (level === 3) pool = qP3;
+  else pool = [...qP1, ...qP2, ...qP3];
+
+  let shuffled = shuffle([...pool, ...pool, ...pool]).slice(0, 10);
+
+  shuffled.forEach(item => {
+    qList.push({
+      sentence: [{ en: item.s[0], es: "" }, { en: item.s[1], es: "" }, { en: item.s[2], es: "" }],
+      hint: `Pista: ${item.h}`,
+      explainRule: `¡Correcto! ${item.h}`,
+      options: item.o,
+      correct: item.c,
+      nounLabel: item.l,     // <--- Aquí inyectamos Negación, Pregunta o Afirmación
+      explainNoun: item.e,   // <--- Aquí el subtexto de ayuda extra
+      nounType: 'Auxiliary'
+    });
+  });
+
+  MODULE_CONFIG['auxDynamic'].questions = qList;
+}
 /* ============================================================
    MODULO 2: CONFIGURACIÓN, TEORÍA Y PREGUNTAS
    ============================================================ */
@@ -959,16 +1201,17 @@ function goBack() {
   // Navegación principal
   if (id === 'screenMenu') showScreen('screenMode');
   else if (id === 'screenExplain') {
-    // 🔥 CORRECCIÓN: Si estamos en Plurales, volvemos a su submenú
+    // Si estamos en Plurales o Auxiliares, volvemos a sus submenús
     if (activeModule === 'pluralNouns') showScreen('screenPlurals');
+    else if (activeModule === 'auxDynamic') showScreen('screenAux');
     else showScreen('screenMenu');
   }
   else if (id === 'screenVerbTable') showScreen('screenMenu');
   else if (id === 'screenQuiz' && activeModule==='_dynamic_verb') showScreen('screenVerbTable');
   else if (id === 'screenQuiz') showScreen('screenExplain');
   else if (id === 'screenPlayers' || id === 'screenOnline' || id === 'screenJoin') showScreen('screenMode');
-  // 🔥 CORRECCIÓN: Salir del submenú de Plurales hacia el menú principal
   else if (id === 'screenPlurals') showScreen('screenMenu');
+  else if (id === 'screenAux') showScreen('screenMenu');
   else showScreen('screenMode');
 }
 
@@ -1350,6 +1593,10 @@ function startQuiz(phase) {
   
   if (activeModule === 'generalNouns' || activeModule === 'verbsVocab' || activeModule === 'pluralNouns') {
     buildDynamicQuestions(activeModule, phase);
+  }
+  // 🔥 NUEVO: Llama al generador de auxiliares pasándole la fase elegida
+  if (activeModule === 'auxDynamic') {
+    buildAuxQuestions(currentAuxLevel, phase);
   }
 
   const cfg = MODULE_CONFIG[activeModule];
