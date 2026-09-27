@@ -1767,12 +1767,17 @@ let isTypingMode = ((activeModule === 'everydayPhrases' || activeModule === 'plu
     let optHtml = '';
     shuffledOpts.forEach(opt => {
       let hintText = OPTION_HINTS[opt] || "";
-      // 🔥 AQUÍ ESTÁ LA MAGIA: Solo dibuja el texto gris de pista si estamos en la Fase 1
       let hintSpan = (hintText && currentPhase === 1) ? `<span class="btn-hint">${hintText}</span>` : "";
       optHtml += `<button class="type-btn" data-val="${opt}" onclick="selectQuantifier(this)"><span class="btn-word">${opt}</span>${hintSpan}</button>`;
     });
+    
+    // 🔥 ESTA ES LA LÍNEA QUE SE HABÍA BORRADO (La que dibuja los botones)
     document.getElementById('quantifierGrid').innerHTML = optHtml;
   }
+  
+  // Agregamos el botón de voz al final de la frase (Fuera del if/else para que siempre funcione)
+  const speakerBtn = `<button onclick="playCurrentSentence()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; margin-left:10px; transition:transform 0.2s; align-self: center;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">🔊</button>`;
+  document.getElementById('sentenceText').innerHTML = html + speakerBtn;
   
   resetUI();
   renderHUD();
@@ -2323,6 +2328,36 @@ function vtStartFromTable(phase) {
   tag.style.marginBottom = "24px";
   
   showScreen('screenQuiz'); loadQuestion();
+}
+function speakEnglish(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel(); // Detiene cualquier audio anterior para que no se pisen
+    let msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'en-US'; // 🇺🇸 Fuerza al navegador a usar voz en inglés
+    msg.rate = 0.85;    // Velocidad un poco más lenta para que Erick escuche bien
+    window.speechSynthesis.speak(msg);
+  }
+}
+
+function playCurrentSentence() {
+  const q = questions[currentQ];
+  
+  let fullSentence = "";
+  q.sentence.forEach(part => {
+    // 🔥 REGLA 1: Si la traducción dice "Emoji", ignoramos este bloque por completo
+    if (part.es === "Emoji" || part.es === "emoji") return;
+
+    // Asignamos la palabra correcta o el texto normal
+    let word = (part.en === "[BLANK]") ? q.correct : part.en;
+    
+    // 🔥 REGLA 2: Filtro de limpieza profunda. Borra cualquier emoji que se haya colado en el texto.
+    word = word.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+    
+    fullSentence += word + " ";
+  });
+
+  // Enviamos el texto limpio y sin espacios extra al navegador
+  speakEnglish(fullSentence.trim());
 }
 </script>
 </body>
