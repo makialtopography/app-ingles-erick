@@ -22,6 +22,9 @@
   --lime:#689F38; --lime-lt:#F1F8E9;
   --brown:#6D4C41; --brown-lt:#EFEBE9;
   --slate:#455A64; --slate-lt:#ECEFF1;
+  --gold:#F9A825; --gold-lt:#FFF8E1;
+  --sage:#558B2F; --sage-lt:#F1F8E9;
+  --navy:#1565C0; --navy-lt:#E3F2FD;
   --r:14px; --r-sm:8px;
   --shadow:0 4px 24px rgba(0,0,0,.08);
 }
@@ -388,21 +391,31 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
       </div>
     </div>
 
-    <div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">🏆 4: LA PRUEBA FINAL</div>
+<div class="menu-section-title">🔢 4: NÚMEROS, FECHAS Y GRAMÁTICA AVANZADA</div>
+    <div class="menu-grid" style="margin-bottom: 24px;">
+      <div class="menu-card" style="--accent:var(--gold);" onclick="selectModule('numbers')">
+        <span class="mc-emoji">🔢</span><div class="mc-title">1. Números</div><div class="mc-desc">Cardinales y Ordinales.</div><span class="mc-badge" style="--badge-bg:var(--gold-lt);--badge-color:var(--gold);">20 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--sage);" onclick="selectModule('datetime')">
+        <span class="mc-emoji">📅</span><div class="mc-title">2. Días y Fechas</div><div class="mc-desc">El calendario en inglés.</div><span class="mc-badge" style="--badge-bg:var(--sage-lt);--badge-color:var(--sage);">10 pregs</span>
+      </div>
+    </div>
+
+    <div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">🏆 5: LA PRUEBA FINAL</div>
     <div class="menu-grid" style="margin-bottom: 24px;">
       <div class="menu-card" style="--accent:var(--rose); grid-column:span 2;" onclick="openVerbTable()">
         <span class="mc-emoji">⏱️</span><div class="mc-title">Tiempos Verbales</div><div class="mc-desc">Tabla de los 12 tiempos verbales por sujeto y ¡Juego Dinámico!</div><span class="mc-badge" style="--badge-bg:var(--rose-lt);--badge-color:var(--rose);">Verbos Dinámicos</span>
       </div>
     </div>
 
-<div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">💬 5: VOCABULARIO PRÁCTICO</div>
+<div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:8px; padding-left:2px;">💬 6: VOCABULARIO PRÁCTICO</div>
     <div class="menu-grid">
       <div class="menu-card" style="--accent:var(--sky); grid-column:span 2;" onclick="selectModule('everydayPhrases')">
         <span class="mc-emoji">🗣️</span><div class="mc-title">Frases Cotidianas</div><div class="mc-desc">Saludos, necesidades y expresiones vitales. (Fase Difícil: ¡A escribir!)</div><span class="mc-badge" style="--badge-bg:var(--sky-lt);--badge-color:var(--sky);">20 frases</span>
       </div>
     </div>
 
-    <div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:24px; padding-left:2px;">📖 6: COMPRENSIÓN LECTORA</div>
+    <div style="font-size:.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-top:24px; padding-left:2px;">📖 7: COMPRENSIÓN LECTORA</div>
     <div class="menu-grid" style="margin-bottom: 24px;">
       <div class="menu-card" style="--accent:var(--lime); grid-column:span 2;" onclick="openReadingMenu()">
         <span class="mc-emoji">👁️‍🗨️</span><div class="mc-title">Traductor Detective</div>
@@ -829,6 +842,64 @@ function buildAuxQuestions(level, phase) {
 
   MODULE_CONFIG['auxDynamic'].questions = qList;
 }
+
+function buildNumbersQuestions(phase) {
+  const isEasy = (phase === 1);
+  let qList = [];
+  const rawData = [
+    { sE: "3 🔢", sH: "How many cats? ___ cats (3)", c: "three", o: ["three", "tree", "thre"], l: "Cardinal", e: "1-10 básicos" },
+    { sE: "13 🔢", sH: "El número 13 en inglés es", c: "thirteen", o: ["thirteen", "threeten", "thirten"], l: "Cardinal", e: "Termina en -teen" },
+    { sE: "12 🔢", sH: "El número 12 es", c: "twelve", o: ["twelve", "twelf", "twelv"], l: "Cardinal", e: "Irregular" },
+    { sE: "20 🔢", sH: "El número 20 es", c: "twenty", o: ["twenty", "twoty", "twente"], l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "50 🔢", sH: "El número 50 es", c: "fifty", o: ["fifty", "fivety", "fivty"], l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "34 🔢", sH: "El número 34 es thirty-", c: "four", o: ["four", "fore", "for"], l: "Cardinal", e: "Decena + unidad" },
+    { sE: "45 🔢", sH: "El número 45 es forty-", c: "five", o: ["five", "fife", "fiev"], l: "Cardinal", e: "Decena + unidad" },
+    { sE: "300 🔢", sH: "El número 300 es three", c: "hundred", o: ["hundred", "hunderd", "hundret"], l: "Cardinal", e: "Cientos = hundred" },
+    { sE: "2000 🔢", sH: "El número 2000 es two", c: "thousand", o: ["thousand", "thousend", "thousant"], l: "Cardinal", e: "Miles = thousand" },
+    { sE: "250 🔢", sH: "El número 250 es two hundred", c: "and fifty", o: ["and fifty", "fifty and", "and fivety"], l: "Cardinal", e: "Combinación compleja" },
+    { sE: "1º 🏅", sH: "El primero en inglés es", c: "first", o: ["first", "oneth", "firts"], l: "Ordinal", e: "Irregular" },
+    { sE: "2º 🏅", sH: "El segundo es", c: "second", o: ["second", "twoth", "secon"], l: "Ordinal", e: "Irregular" },
+    { sE: "3º 🏅", sH: "El tercero es", c: "third", o: ["third", "threeth", "thrird"], l: "Ordinal", e: "Irregular" },
+    { sE: "5º 🏅", sH: "five →", c: "fifth", o: ["fifth", "fiveth", "fifht"], l: "Ordinal", e: "five cambia a fifth" },
+    { sE: "8º 🏅", sH: "eight →", c: "eighth", o: ["eighth", "eighthth", "eightth"], l: "Ordinal", e: "eight + h" },
+    { sE: "9º 🏅", sH: "nine →", c: "ninth", o: ["ninth", "nineth", "nionth"], l: "Ordinal", e: "Pierde la e + th" },
+    { sE: "12º 🏅", sH: "twelve →", c: "twelfth", o: ["twelfth", "twelveth", "twelth"], l: "Ordinal", e: "Cambia ve por f + th" },
+    { sE: "4º 🏅", sH: "El cuarto es four +", c: "th", o: ["th", "st", "rd"], l: "Ordinal", e: "Regla general" },
+    { sE: "20º 🏅", sH: "El vigésimo (20) es twen", c: "tieth", o: ["tieth", "tyth", "teth"], l: "Ordinal", e: "y cambia a ie + th" },
+    { sE: "21º 🏅", sH: "El día 21 es twenty-", c: "first", o: ["first", "oneth", "firts"], l: "Ordinal", e: "Solo el último número es ordinal" }
+  ];
+  rawData.forEach(item => {
+    qList.push({
+      sentence: isEasy ? [{ en: item.sE, es: "Traduce:" }, { en: "[BLANK]", es: "" }] : [{ en: item.sH, es: "" }, { en: "[BLANK]", es: "" }],
+      hint: `Pista: ${item.e}`, explainRule: `¡Correcto! ${item.e}`, options: shuffle(item.o), correct: item.c, nounLabel: item.l, explainNoun: item.e, nounType: item.l
+    });
+  });
+  MODULE_CONFIG['numbers'].questions = qList;
+}
+
+function buildDateTimeQuestions(phase) {
+  const isEasy = (phase === 1);
+  let qList = [];
+  const rawData = [
+    { sE: "Viernes 📅", sH: "El viernes en inglés es", c: "Friday", o: ["Friday", "Saturday", "Thursday"], e: "Día de la semana" },
+    { sE: "Lunes 📅", sH: "El día después del Sunday es", c: "Monday", o: ["Monday", "Tuesday", "Sunday"], e: "Día de la semana" },
+    { sE: "En lunes 📌", sH: "Classes are ___ Monday.", c: "on", o: ["on", "in", "at"], e: "Preposición para días" },
+    { sE: "Marzo 📆", sH: "El mes de marzo en inglés es", c: "March", o: ["March", "May", "April"], e: "Mes del año" },
+    { sE: "Agosto 📆", sH: "El mes después de July es", c: "August", o: ["August", "June", "September"], e: "Mes del año" },
+    { sE: "En Julio 📌", sH: "My birthday is ___ July.", c: "in", o: ["in", "on", "at"], e: "Preposición para meses" },
+    { sE: "Quinto mes 🏅", sH: "May is the ___ month of the year.", c: "fifth", o: ["fifth", "five", "fiveth"], e: "Ordinal" },
+    { sE: "Doceavo mes 🏅", sH: "December is the ___ month.", c: "twelfth", o: ["twelfth", "twelve", "twelveth"], e: "Ordinal" },
+    { sE: "Tercer día 🏅", sH: "Today is the ___ of March. (día 3)", c: "third", o: ["third", "three", "thrird"], e: "Fecha con ordinal" },
+    { sE: "Día 21 🏅", sH: "My birthday is on the ___ of June.", c: "twenty-first", o: ["twenty-first", "twenty-one", "twentyfirst"], e: "Fecha compuesta" }
+  ];
+  rawData.forEach(item => {
+    qList.push({
+      sentence: isEasy ? [{ en: item.sE, es: "Traduce:" }, { en: "[BLANK]", es: "" }] : [{ en: item.sH, es: "" }, { en: "[BLANK]", es: "" }],
+      hint: `Pista: ${item.e}`, explainRule: `¡Correcto!`, options: shuffle(item.o), correct: item.c, nounLabel: "Fecha/Día/Mes", explainNoun: item.e, nounType: "DateTime"
+    });
+  });
+  MODULE_CONFIG['datetime'].questions = qList;
+}
 /* ============================================================
    MODULO 2: CONFIGURACIÓN, TEORÍA Y PREGUNTAS
    ============================================================ */
@@ -841,7 +912,9 @@ const MODULE_MATCH = {
   possessives:[{word:"'s",hint:"Indica posesión"},{word:"Tom's",hint:"Pertenece a Tom"},{word:"dog's tail",hint:"Cola del perro"},{word:"my mom's",hint:"De mi mamá"},{word:"Ana's color",hint:"Color de Ana"},{word:"Erick's room",hint:"Cuarto de Erick"},{word:"cat's name",hint:"Nombre del gato"},{word:"Sam's bike",hint:"Bici de Sam"}],
   subjects:[{word:"I",hint:"Yo (mayúscula)"},{word:"You",hint:"Tú / Ustedes"},{word:"He",hint:"Él"},{word:"She",hint:"Ella"},{word:"It",hint:"Objeto / animal"},{word:"We",hint:"Nosotros"},{word:"They",hint:"Ellos / Ellas"},{word:"It is Monday",hint:"Días → sujeto It"}],
   adjectives:[{word:"tall",hint:"Alto (no cambia en plural)"},{word:"blue",hint:"Color: antes del sustantivo"},{word:"big",hint:"Grande (sin 's')"},{word:"hot",hint:"Caliente (adjetivo)"},{word:"good",hint:"Bueno (invariable)"},{word:"old",hint:"Viejo (sin 's')"},{word:"black shoes",hint:"Adj + sust plural"},{word:"tall trees",hint:"Solo el sustantivo lleva 's'"}],
-  everydayPhrases:[{word:"I don't know",hint:"No lo sé"},{word:"I am hungry",hint:"Tengo hambre"},{word:"Excuse me",hint:"Disculpa / Perdón"},{word:"You're welcome",hint:"De nada"},{word:"Please",hint:"Por favor"},{word:"Nice to meet you",hint:"Mucho gusto"},{word:"How do you say",hint:"¿Cómo se dice...?"},{word:"I don't understand",hint:"No entiendo"},{word:"See you later",hint:"Hasta luego"},{word:"Thank you",hint:"Gracias"}]
+  everydayPhrases:[{word:"I don't know",hint:"No lo sé"},{word:"I am hungry",hint:"Tengo hambre"},{word:"Excuse me",hint:"Disculpa / Perdón"},{word:"You're welcome",hint:"De nada"},{word:"Please",hint:"Por favor"},{word:"Nice to meet you",hint:"Mucho gusto"},{word:"How do you say",hint:"¿Cómo se dice...?"},{word:"I don't understand",hint:"No entiendo"},{word:"See you later",hint:"Hasta luego"},{word:"Thank you",hint:"Gracias"}],
+  numbers:[{word:"thirteen",hint:"El número 13"},{word:"twenty",hint:"El número 20"},{word:"fifty",hint:"El número 50"},{word:"hundred",hint:"Multiplica x 100"},{word:"first",hint:"1º (irregular)"},{word:"second",hint:"2º (irregular)"},{word:"third",hint:"3º (irregular)"},{word:"fifth",hint:"5º (five→fifth)"}],
+  datetime:[{word:"Monday",hint:"Lunes (1º semana)"},{word:"Friday",hint:"Viernes (¡fin!)"},{word:"March",hint:"Marzo (3er mes)"},{word:"on Monday",hint:"Preposición días"},{word:"in July",hint:"Preposición meses"},{word:"fifth",hint:"May es el ___ mes"},{word:"twelfth",hint:"December es el ___"}],
 };
 
 /* ===== DICCIONARIOS DINÁMICOS (30 Palabras c/u) ===== */
@@ -904,7 +977,9 @@ const MODULE_EXPLAIN = {
   possessives:{accentColor:"var(--orange)",intro:"Los <strong>posesivos</strong> también acompañan al sustantivo, indicando a quién le pertenece.",concepts:[{label:"✏️ Nombre + 's",text:"El poseedor va primero: <strong>Tom's book</strong> (El libro de Tom)."}],examples:[{en:"Erick's room is tidy.",es:"La habitación de Erick está ordenada."}],tip:"Fórmula: POSEEDOR + 's + COSA POSEÍDA."},
   subjects:{accentColor:"var(--green)",intro:"Los <strong>Pronombres</strong> reemplazan al sustantivo. Cuando hacen la acción, se llaman <strong>Sujetos</strong> y son obligatorios.",concepts:[{label:"👤 Pronombres Sujetos",text:"I, You, He, She, It, We, They."},{label:"👤 It",text:"Se usa para clima, hora, días, un objeto o un animal."}],examples:[{en:"I study English.",es:"Yo estudio inglés. (No se puede decir solo 'Study English')"}],tip:"'I' (Yo) se escribe siempre en mayúscula, no importa dónde esté."},
   adjectives:{accentColor:"var(--indigo)",intro:"Los <strong>adjetivos</strong> decoran al sustantivo diciéndonos cómo es.",concepts:[{label:"🎨 Invariables",text:"No tienen plural. Se dice <strong>tall boy</strong> y <strong>tall boys</strong> (nunca talls)."},{label:"🎨 Posición",text:"Siempre van <strong>antes</strong> del sustantivo: <strong>blue sky</strong>."}],examples:[{en:"They are tall.",es:"Son altos. (No 'talls')"}],tip:"El sustantivo lleva 's' en plural, el adjetivo NUNCA."},
-  everydayPhrases:{accentColor:"var(--sky)",intro:"Aprender <strong>frases cotidianas</strong> te ayuda a comunicarte sin pensar regla por regla.",concepts:[{label:"💬 Saludos y Cortesía",text:"Hello, Good morning, Thank you, Please."},{label:"💬 Necesidades",text:"I am hungry (Tengo hambre), I don't understand (No entiendo)."}],examples:[{en:"Nice to meet you.",es:"Mucho gusto."},{en:"How do you say...?",es:"¿Cómo se dice...?"}],tip:"Modo Fácil: Selecciona la traducción. Modo Difícil: ¡Te toca teclear la frase en inglés!"}
+  everydayPhrases:{accentColor:"var(--sky)",intro:"Aprender <strong>frases cotidianas</strong> te ayuda a comunicarte sin pensar regla por regla.",concepts:[{label:"💬 Saludos y Cortesía",text:"Hello, Good morning, Thank you, Please."},{label:"💬 Necesidades",text:"I am hungry (Tengo hambre), I don't understand (No entiendo)."}],examples:[{en:"Nice to meet you.",es:"Mucho gusto."},{en:"How do you say...?",es:"¿Cómo se dice...?"}],tip:"Modo Fácil: Selecciona la traducción. Modo Difícil: ¡Te toca teclear la frase en inglés!"},
+  numbers: { accentColor: "var(--gold)", intro: "Los números en inglés se dividen en <strong>Cardinales</strong> (para contar) y <strong>Ordinales</strong> (para posiciones y fechas).", concepts: [{ label: "🔢 Cardinales (1, 2, 3)", text: "Del 13 al 19 terminan en <strong>-teen</strong>. Las decenas (20, 30, 40) terminan en <strong>-ty</strong>." }, { label: "🏅 Ordinales (1st, 2nd, 3rd)", text: "Los tres primeros son irregulares (first, second, third). Del 4 en adelante, se añade <strong>-th</strong> al final (fourth, sixth, tenth)." }], examples: [], tip: "Fase Fácil: Conecta el número. Fase Difícil: Completa la oración y adivina el tipo." },
+  datetime: { accentColor: "var(--sage)", intro: "Para hablar del tiempo, necesitamos saber los <strong>Días</strong>, los <strong>Meses</strong> y cómo decir las fechas.", concepts: [{ label: "📅 Días y Meses", text: "Siempre se escriben con <strong>Mayúscula inicial</strong> (Monday, August)." }, { label: "📌 Preposiciones", text: "Usa <strong>on</strong> para días (on Friday). Usa <strong>in</strong> para meses (in July)." }, { label: "🎂 Fechas", text: "Las fechas en inglés usan números ordinales (the 5th of May)." }], examples: [], tip: "Fase Fácil: Traducción directa. Fase Difícil: Completa la oración." },
 };
 
 const OPTION_HINTS = {
@@ -970,6 +1045,8 @@ const Q_PHRASES=[
 /* DICCIONARIO DE VERBOS CON EMOJIS */
 const VERB_DICTIONARY = {
   be: { en: { base:"be", sForm:"is", past:"was", participle:"been", gerund:"being" }, es: { meaning:"ser / estar 🌟", participle:"sido / estado", gerund:"siendo / estando", present: { I:"soy/estoy", You:"eres/estás", He:"es/está", She:"es/está", It:"es/está", We:"somos/estamos", They:"son/están" }, past: { I:"fui/estuve", You:"fuiste/estuviste", He:"fue/estuvo", She:"fue/estuvo", It:"fue/estuvo", We:"fuimos/estuvimos", They:"fueron/estuvieron" }, future: { I:"seré/estaré", You:"serás/estarás", He:"será/estará", She:"será/estará", It:"será/estará", We:"seremos/estaremos", They:"serán/estarán" } }, irregular: true, spellingNote: "¡El verbo más rebelde! No usa auxiliares (do/did) para preguntar o negar." },
+  have: { en: { base:"have", sForm:"has", past:"had", participle:"had", gerund:"having" }, es: { meaning:"tomar / hacer 🥞", participle:"tomado", gerund:"tomando", present: { I:"tomo", You:"tomas", He:"toma", She:"toma", It:"toma", We:"tomamos", They:"toman" }, past: { I:"tomé", You:"tomaste", He:"tomó", She:"tomó", It:"tomó", We:"tomamos", They:"tomaron" }, future: { I:"tomaré", You:"tomarás", He:"tomará", She:"tomará", It:"tomará", We:"tomaremos", They:"tomarán" } }, irregular: true, spellingNote: "Acciones o rutinas (ej: have breakfast = desayunar). Funciona en todos los tiempos." },
+  have_got: { en: { base:"have got", sForm:"has got", past:"had", participle:"had", gerund:"having" }, es: { meaning:"tener (posesión) 🇬🇧", participle:"tenido", gerund:"teniendo", present: { I:"tengo", You:"tienes", He:"tiene", She:"tiene", It:"tiene", We:"tenemos", They:"tienen" }, past: { I:"tenía", You:"tenías", He:"tenía", She:"tenía", It:"tenía", We:"teníamos", They:"tenían" }, future: { I:"tendré", You:"tendrás", He:"tendrá", She:"tendrá", It:"tendrá", We:"tendremos", They:"tendrán" } }, irregular: true, spellingNote: "Inglés Británico. Se comporta como auxiliar. ⚠️ ¡SOLO existe en Presente Simple!" },
   play: { en: { base:"play", sForm:"plays", past:"played", participle:"played", gerund:"playing" }, es: { meaning:"jugar ⚽", participle:"jugado", gerund:"jugando", present: { I:"juego", You:"juegas", He:"juega", She:"juega", It:"juega", We:"jugamos", They:"juegan" }, past: { I:"jugué", You:"jugaste", He:"jugó", She:"jugó", It:"jugó", We:"jugamos", They:"jugaron" }, future: { I:"jugaré", You:"jugarás", He:"jugará", She:"jugará", It:"jugará", We:"jugaremos", They:"jugarán" } }, irregular: false },
   watch: { en: { base:"watch", sForm:"watches", past:"watched", participle:"watched", gerund:"watching" }, es: { meaning:"ver / mirar 👀", participle:"visto", gerund:"viendo", present: { I:"veo", You:"ves", He:"ve", She:"ve", It:"ve", We:"vemos", They:"ven" }, past: { I:"vi", You:"viste", He:"vio", She:"vio", It:"vio", We:"vimos", They:"vieron" }, future: { I:"veré", You:"verás", He:"verá", She:"verá", It:"verá", We:"veremos", They:"verán" } }, irregular: false, spellingNote: "3ª persona añade -es: watch → watches" },
   study: { en: { base:"study", sForm:"studies", past:"studied", participle:"studied", gerund:"studying" }, es: { meaning:"estudiar 📖", participle:"estudiado", gerund:"estudiando", present: { I:"estudio", You:"estudias", He:"estudia", She:"estudia", It:"estudia", We:"estudiamos", They:"estudian" }, past: { I:"estudié", You:"estudiaste", He:"estudió", She:"estudió", It:"estudió", We:"estudiamos", They:"estudiaron" }, future: { I:"estudiaré", You:"estudiarás", He:"estudiará", She:"estudiará", It:"estudiará", We:"estudiaremos", They:"estudiarán" } }, irregular: false, spellingNote: "Termina en consonante + y: y → ies y y → ied" },
@@ -1062,9 +1139,21 @@ const TENSE_RULES = {
   present_simple: {
     label:"Presente Simple", labelEn:"Present Simple", family:"simple", tense:"present", isPerfect:false,
     build:{ 
-      affirmative:(s,v) => v.en.base==='be' ? `${s} ${bePresent(s)}` : `${s} ${isSForm(s)?v.en.sForm:v.en.base}`, 
-      negative:(s,v) => v.en.base==='be' ? `${s} ${bePresent(s)==='am'?'am not':bePresent(s)==='is'?"isn't":"aren't"}` : `${s} ${AUX.simplePresent.neg(s)} ${v.en.base}`, 
-      question:(s,v) => v.en.base==='be' ? `${bePresent(s).charAt(0).toUpperCase() + bePresent(s).slice(1)} ${s}?` : `${AUX.simplePresent.q(s)} ${s} ${v.en.base}?` 
+      affirmative: (s,v) => {
+        if(v.en.base === 'be') return `${s} ${bePresent(s)}`;
+        if(v.en.base === 'have got') return `${s} ${havePresent(s)} got`;
+        return `${s} ${isSForm(s) ? v.en.sForm : v.en.base}`;
+      },
+      negative: (s,v) => {
+        if(v.en.base === 'be') return `${s} ${bePresent(s)==='am'?'am not':bePresent(s)==='is'?"isn't":"aren't"}`;
+        if(v.en.base === 'have got') return `${s} ${havePresent(s)}n't got`;
+        return `${s} ${AUX.simplePresent.neg(s)} ${v.en.base}`;
+      },
+      question: (s,v) => {
+        if(v.en.base === 'be') return `${bePresent(s).charAt(0).toUpperCase() + bePresent(s).slice(1)} ${s}?`;
+        if(v.en.base === 'have got') return `${havePresent(s).charAt(0).toUpperCase() + havePresent(s).slice(1)} ${s} got?`;
+        return `${AUX.simplePresent.q(s)} ${s} ${v.en.base}?`;
+      }
     },
     translate:{ affirmative:(s,v)=>`${VT_SUBJ_ES[s]} ${v.es.present[s]}`, negative:(s,v)=>`${VT_SUBJ_ES[s]} no ${v.es.present[s]}`, question:(s,v)=>`¿${VT_SUBJ_ES[s]} ${v.es.present[s]}?` }
   },
@@ -1156,10 +1245,12 @@ const MODULE_CONFIG = {
   possessives:   { label:"Posesivos",               emoji:"✏️", questions:Q_POSS,      tag:"orange", hasRounds:false, nounOptions:[{val:"Possessive",label:"✏️ Posesivo"}] },
   svo:           { label:"Estructura SVO",          emoji:"📝", questions:Q_SVO,       tag:"amber",  hasRounds:false, nounOptions:[{val:"Subject",label:"👤 Sujeto"},{val:"Verb",label:"⚡ Verbo"}] },
   auxiliaries:   { label:"Auxiliares",              emoji:"⚙️", questions:Q_AUX,       tag:"violet", hasRounds:false, nounOptions:[{val:"Auxiliary",label:"⚙️ Auxiliar"}] },
-  everydayPhrases: { label:"Frases Cotidianas",     emoji:"🗣️", questions:Q_PHRASES,   tag:"sky",    hasRounds:true,  nounOptions:[{val:"Phrase",label:"💬 Frase"}] }
+  everydayPhrases: { label:"Frases Cotidianas",     emoji:"🗣️", questions:Q_PHRASES,   tag:"sky",    hasRounds:true,  nounOptions:[{val:"Phrase",label:"💬 Frase"}] },
+  numbers:  { label:"Números", emoji:"🔢", questions:[], tag:"gold", hasRounds:true, nounOptions:[{val:"Cardinal",label:"🔢 Cardinal"},{val:"Ordinal",label:"🏅 Ordinal"}] },
+  datetime: { label:"Días y Fechas", emoji:"📅", questions:[], tag:"sage", hasRounds:false, nounOptions:[{val:"DateTime",label:"📅 Fecha/Día/Mes"}] },
 };
 
-const TAG_COLORS = { teal:{bg:"var(--teal-lt)",color:"var(--teal-dk)"}, sky:{bg:"var(--sky-lt)",color:"var(--sky)"}, amber:{bg:"var(--amber-lt)",color:"var(--amber-dk)"}, violet:{bg:"var(--violet-lt)",color:"var(--violet)"}, pink:{bg:"var(--pink-lt)",color:"var(--pink)"}, orange:{bg:"var(--orange-lt)",color:"var(--orange)"}, green:{bg:"var(--green-lt)",color:"var(--green-dk)"}, indigo:{bg:"var(--indigo-lt)",color:"var(--indigo)"}, rose:{bg:"var(--rose-lt)",color:"var(--rose)"}, cyan:{bg:"var(--cyan-lt)",color:"var(--cyan)"}, brown:{bg:"var(--brown-lt)",color:"var(--brown)"}, lime:{bg:"var(--lime-lt)",color:"var(--lime)"}, slate:{bg:"var(--slate-lt)",color:"var(--slate)"} };
+const TAG_COLORS = { teal:{bg:"var(--teal-lt)",color:"var(--teal-dk)"}, sky:{bg:"var(--sky-lt)",color:"var(--sky)"}, amber:{bg:"var(--amber-lt)",color:"var(--amber-dk)"}, violet:{bg:"var(--violet-lt)",color:"var(--violet)"}, pink:{bg:"var(--pink-lt)",color:"var(--pink)"}, orange:{bg:"var(--orange-lt)",color:"var(--orange)"}, green:{bg:"var(--green-lt)",color:"var(--green-dk)"}, indigo:{bg:"var(--indigo-lt)",color:"var(--indigo)"}, rose:{bg:"var(--rose-lt)",color:"var(--rose)"}, cyan:{bg:"var(--cyan-lt)",color:"var(--cyan)"}, brown:{bg:"var(--brown-lt)",color:"var(--brown)"}, lime:{bg:"var(--lime-lt)",color:"var(--lime)"}, slate:{bg:"var(--slate-lt)",color:"var(--slate)"}, gold:{bg:"var(--gold-lt)",color:"var(--gold)"}, sage:{bg:"var(--sage-lt)",color:"var(--sage)"}, navy:{bg:"var(--navy-lt)",color:"var(--navy)"} };
 const PLAYER_COLORS = ['#2BB5A0','#4A90E2','#F5A623','#E74C3C','#9B59B6','#27AE60'];
 
 /* ============================================================
@@ -1598,6 +1689,10 @@ function startQuiz(phase) {
   if (activeModule === 'auxDynamic') {
     buildAuxQuestions(currentAuxLevel, phase);
   }
+
+// 🔥 LOS 2 NUEVOS MÓDULOS SE CONECTAN AQUÍ:
+  if (activeModule === 'numbers') { buildNumbersQuestions(phase); }
+  if (activeModule === 'datetime') { buildDateTimeQuestions(phase); }
 
   const cfg = MODULE_CONFIG[activeModule];
   questions = shuffle([...cfg.questions]);
@@ -2226,6 +2321,22 @@ function _renderTenseCards() {
     const playBtnHtml = isRareBe 
       ? `<div style="text-align:center;font-size:.85rem;color:var(--slate);font-weight:700;padding:10px 0;">No se recomienda practicar esta forma.</div>`
       : `<button class="vt-play-btn secondary" onclick="vtSelectTenseAndPlay('${tenseKey}')">🎯 Practicar este tiempo →</button>`;
+    
+    // 🔥 NUEVO: Bloqueo total para "have got" fuera del presente simple
+    if (verb.en.base === 'have got' && tenseKey !== 'present_simple') {
+      return `<div class="vt-tense-card" data-tense="${tenseKey}">
+                <div class="vt-tense-header" onclick="_vtToggleCard(this)">
+                  <div><div class="vt-tense-name" style="color:var(--muted)">${rule.label} 🚫</div></div>
+                  <span class="vt-tense-chevron">▼</span>
+                </div>
+                <div class="vt-tense-body">
+                  <div style="padding:20px;text-align:center;color:var(--slate);font-size:.9rem;">
+                    <strong>⚠️ No disponible</strong><br><br>
+                    "Have got" solo se usa en Presente Simple para indicar posesión.<br>En los demás tiempos, se utiliza el verbo "have" normal.
+                  </div>
+                </div>
+              </div>`;
+    }
 
     const rows = VT_SUBJECTS.map(subj => {
       return `<tr><td class="vt-subj-cell">${subj}<br><span style="font-size:.65rem;color:var(--muted);font-weight:600">${VT_SUBJ_ES[subj]}</span></td><td class="vt-aff"><div class="en">${rule.build.affirmative(subj, verb)}</div><div class="es">${rule.translate.affirmative(subj, verb)}</div></td><td class="vt-neg"><div class="en">${rule.build.negative(subj, verb)}</div><div class="es">${rule.translate.negative(subj, verb)}</div></td><td class="vt-q"><div class="en">${rule.build.question(subj, verb)}</div><div class="es">${rule.translate.question(subj, verb)}</div></td></tr>`;
