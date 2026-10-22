@@ -393,8 +393,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 
 <div class="menu-section-title">🔢 4: NÚMEROS, FECHAS Y GRAMÁTICA AVANZADA</div>
     <div class="menu-grid" style="margin-bottom: 24px;">
-      <div class="menu-card" style="--accent:var(--gold);" onclick="selectModule('numbers')">
-        <span class="mc-emoji">🔢</span><div class="mc-title">1. Números</div><div class="mc-desc">Cardinales y Ordinales.</div><span class="mc-badge" style="--badge-bg:var(--gold-lt);--badge-color:var(--gold);">20 pregs</span>
+      <div class="menu-card" style="--accent:var(--gold);" onclick="openNumbersMenu()">
+        <span class="mc-emoji">🔢</span><div class="mc-title">1. Números</div><div class="mc-desc">Cardinales, Ordinales y Prueba final.</div><span class="mc-badge" style="--badge-bg:var(--gold-lt);--badge-color:var(--gold);">Centro de Entrenamiento</span>
       </div>
       <div class="menu-card" style="--accent:var(--sage);" onclick="selectModule('datetime')">
         <span class="mc-emoji">📅</span><div class="mc-title">2. Días y Fechas</div><div class="mc-desc">El calendario en inglés.</div><span class="mc-badge" style="--badge-bg:var(--sage-lt);--badge-color:var(--sage);">10 pregs</span>
@@ -498,6 +498,62 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
         <span class="mc-emoji">🏆</span><div class="mc-title">Nivel 6: Prueba Final</div><div class="mc-desc">20 preguntas mezcladas.</div>
       </div>
     </div>
+    <button class="action-btn" style="background:var(--card);color:var(--muted);border:2px solid var(--border);" onclick="goBack()">Volver al Menú</button>
+  </div>
+</div>
+
+<div class="screen" id="screenNumbers">
+  <div class="menu-wrap">
+    <div class="menu-hero">
+      <span class="menu-hero-emoji">🔢</span>
+      <h2>Los Números</h2>
+      <p style="color:var(--muted);font-size:.9rem;">Elige qué quieres practicar. Completa los niveles en orden para dominar los números.</p>
+    </div>
+
+    <div style="background:var(--bg);border:2px dashed var(--gold);border-radius:var(--r-sm);padding:12px;margin-bottom:16px;">
+      <div style="font-size:.8rem;font-weight:800;color:var(--amber-dk);margin-bottom:6px;">📐 Las tres reglas de oro</div>
+      <div style="font-size:.82rem;color:var(--ink);line-height:1.6;">
+        • <b>-teen</b> (13→19): trece, catorce… son "algo + teen"<br>
+        • <b>-ty</b> (20,30,40…): las decenas terminan en -ty<br>
+        • <b>+th</b> (ordinales): cuarto, sexto… son "número + th"
+      </div>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-card" style="--accent:var(--gold);" onclick="selectNumbersLevel(1)">
+        <span class="mc-emoji">🔢</span>
+        <div class="mc-title">Nivel 1: Cardinales</div>
+        <div class="mc-desc">Para contar: 1, 2, 3… Básicos, -teen, -ty, hundreds y thousands.</div>
+        <span class="mc-badge" style="--badge-bg:var(--gold-lt);--badge-color:var(--gold);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--amber);" onclick="selectNumbersLevel(2)">
+        <span class="mc-emoji">🏅</span>
+        <div class="mc-title">Nivel 2: Ordinales</div>
+        <div class="mc-desc">Para posición y fechas: 1st, 2nd, 3rd… Los rebeldes y la regla -th.</div>
+        <span class="mc-badge" style="--badge-bg:var(--amber-lt);--badge-color:var(--amber-dk);">10 pregs</span>
+      </div>
+      <div class="menu-card" style="--accent:var(--rose);grid-column:span 2;" onclick="selectNumbersLevel(3)">
+        <span class="mc-emoji">🏆</span>
+        <div class="mc-title">Nivel 3: Prueba del Detective</div>
+        <div class="mc-desc">Mezcla aleatoria de Cardinales y Ordinales. ¿Sabes cuándo usar "three" y cuándo "third"?</div>
+        <span class="mc-badge" style="--badge-bg:var(--rose-lt);--badge-color:var(--rose);">20 pregs mezcladas</span>
+      </div>
+    </div>
+
+    <div style="background:var(--violet-lt);border:2px solid var(--violet);border-radius:var(--r-sm);padding:12px;margin-bottom:16px;">
+      <div style="font-size:.8rem;font-weight:800;color:var(--violet);margin-bottom:6px;">🏅 Los 7 ordinales rebeldes (memorizar)</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:.82rem;">
+        <span style="background:var(--violet);color:#fff;padding:2px 8px;border-radius:100px;font-weight:700;">1st → first</span>
+        <span style="background:var(--violet);color:#fff;padding:2px 8px;border-radius:100px;font-weight:700;">2nd → second</span>
+        <span style="background:var(--violet);color:#fff;padding:2px 8px;border-radius:100px;font-weight:700;">3rd → third</span>
+        <span style="background:var(--amber);color:#fff;padding:2px 8px;border-radius:100px;font-weight:700;">5th → fifth</span>
+        <span style="background:var(--amber);color:#fff;padding:2px 8px;border-radius:100px;font-weight:700;">8th → eighth</span>
+        <span style="background:var(--amber);color:#fff;padding:2px 8px;border-radius:100px;font-weight:700;">9th → ninth</span>
+        <span style="background:var(--amber);color:#fff;padding:2px 8px;border-radius:100px;font-weight:700;">12th → twelfth</span>
+      </div>
+      <div style="font-size:.78rem;color:var(--muted);margin-top:8px;">El resto: número + <b>th</b> (4th, 6th, 7th, 10th…). Las decenas cambian la -y por -ieth (20th = twentieth).</div>
+    </div>
+
     <button class="action-btn" style="background:var(--card);color:var(--muted);border:2px solid var(--border);" onclick="goBack()">Volver al Menú</button>
   </div>
 </div>
@@ -843,35 +899,99 @@ function buildAuxQuestions(level, phase) {
   MODULE_CONFIG['auxDynamic'].questions = qList;
 }
 
+function openNumbersMenu() {
+  showScreen('screenNumbers');
+}
+
+let currentNumbersLevel = 1; // Guarda en memoria el nivel elegido
+
+function selectNumbersLevel(level) {
+  currentNumbersLevel = level;
+  activeModule = 'numbers';
+
+  showScreen('screenExplain');
+  const cfg = MODULE_CONFIG['numbers'];
+  const exp = MODULE_EXPLAIN['numbers'];
+  document.getElementById('explainEmoji').innerText = cfg.emoji || '🔢';
+  document.getElementById('explainTitle').innerText =
+    level === 1 ? 'Nivel 1: Números Cardinales' :
+    level === 2 ? 'Nivel 2: Números Ordinales' :
+                  'Nivel 3: Prueba del Detective 🏆';
+
+  let html = `<p class="explain-definition">${exp.intro}</p>`;
+  if (level === 1 || level === 3) {
+    html += `<div style="background:var(--bg);border-radius:var(--r-sm);padding:10px 12px;border-left:4px solid var(--gold);margin-bottom:10px;">
+      <div style="font-size:.76rem;font-weight:800;color:var(--muted);margin-bottom:4px;">🔢 Cardinales (para contar)</div>
+      <div style="font-size:.86rem;line-height:1.55;">Los básicos (1–12): pura memoria.<br>
+      13–19: base + <strong>-teen</strong> (thirteen, fourteen…).<br>
+      Decenas: base + <strong>-ty</strong> (twenty, thirty, forty…).<br>
+      Compuestos con guion: twenty-<strong>three</strong>.<br>
+      Centenas: número + <strong>hundred</strong> (three hundred).<br>
+      Miles: número + <strong>thousand</strong> (two thousand).
+      </div>
+    </div>`;
+  }
+  if (level === 2 || level === 3) {
+    html += `<div style="background:var(--bg);border-radius:var(--r-sm);padding:10px 12px;border-left:4px solid var(--amber);margin-bottom:10px;">
+      <div style="font-size:.76rem;font-weight:800;color:var(--muted);margin-bottom:4px;">🏅 Ordinales (posición y fechas)</div>
+      <div style="font-size:.86rem;line-height:1.55;">Los 3 rebeldes: <strong>first, second, third</strong>.<br>
+      Regla de oro: número + <strong>-th</strong> (fourth, sixth, tenth…).<br>
+      Mutación de la Y: twenty → <strong>twentieth</strong> (-y → -ieth).<br>
+      Compuestos: solo el último es ordinal (twenty-<strong>first</strong>).
+      </div>
+    </div>`;
+  }
+  html += `<div class="explain-tip"><span class="explain-tip-icon">💡</span><span>Fase Fácil: el número aparece en cifra. Fase Difícil: completa la oración entera.</span></div>`;
+  document.getElementById('explainContent').innerHTML = html;
+}
+
 function buildNumbersQuestions(phase) {
   const isEasy = (phase === 1);
   let qList = [];
+
+  // Respuestas correctas ahora son palabras/frases COMPLETAS — sin frases partidas
   const rawData = [
-    { sE: "3 🔢", sH: "How many cats? ___ cats (3)", c: "three", o: ["three", "tree", "thre"], l: "Cardinal", e: "1-10 básicos" },
-    { sE: "13 🔢", sH: "El número 13 en inglés es", c: "thirteen", o: ["thirteen", "threeten", "thirten"], l: "Cardinal", e: "Termina en -teen" },
-    { sE: "12 🔢", sH: "El número 12 es", c: "twelve", o: ["twelve", "twelf", "twelv"], l: "Cardinal", e: "Irregular" },
-    { sE: "20 🔢", sH: "El número 20 es", c: "twenty", o: ["twenty", "twoty", "twente"], l: "Cardinal", e: "Decenas terminan en -ty" },
-    { sE: "50 🔢", sH: "El número 50 es", c: "fifty", o: ["fifty", "fivety", "fivty"], l: "Cardinal", e: "Decenas terminan en -ty" },
-    { sE: "34 🔢", sH: "El número 34 es thirty-", c: "four", o: ["four", "fore", "for"], l: "Cardinal", e: "Decena + unidad" },
-    { sE: "45 🔢", sH: "El número 45 es forty-", c: "five", o: ["five", "fife", "fiev"], l: "Cardinal", e: "Decena + unidad" },
-    { sE: "300 🔢", sH: "El número 300 es three", c: "hundred", o: ["hundred", "hunderd", "hundret"], l: "Cardinal", e: "Cientos = hundred" },
-    { sE: "2000 🔢", sH: "El número 2000 es two", c: "thousand", o: ["thousand", "thousend", "thousant"], l: "Cardinal", e: "Miles = thousand" },
-    { sE: "250 🔢", sH: "El número 250 es two hundred", c: "and fifty", o: ["and fifty", "fifty and", "and fivety"], l: "Cardinal", e: "Combinación compleja" },
-    { sE: "1º 🏅", sH: "El primero en inglés es", c: "first", o: ["first", "oneth", "firts"], l: "Ordinal", e: "Irregular" },
-    { sE: "2º 🏅", sH: "El segundo es", c: "second", o: ["second", "twoth", "secon"], l: "Ordinal", e: "Irregular" },
-    { sE: "3º 🏅", sH: "El tercero es", c: "third", o: ["third", "threeth", "thrird"], l: "Ordinal", e: "Irregular" },
-    { sE: "5º 🏅", sH: "five →", c: "fifth", o: ["fifth", "fiveth", "fifht"], l: "Ordinal", e: "five cambia a fifth" },
-    { sE: "8º 🏅", sH: "eight →", c: "eighth", o: ["eighth", "eighthth", "eightth"], l: "Ordinal", e: "eight + h" },
-    { sE: "9º 🏅", sH: "nine →", c: "ninth", o: ["ninth", "nineth", "nionth"], l: "Ordinal", e: "Pierde la e + th" },
-    { sE: "12º 🏅", sH: "twelve →", c: "twelfth", o: ["twelfth", "twelveth", "twelth"], l: "Ordinal", e: "Cambia ve por f + th" },
-    { sE: "4º 🏅", sH: "El cuarto es four +", c: "th", o: ["th", "st", "rd"], l: "Ordinal", e: "Regla general" },
-    { sE: "20º 🏅", sH: "El vigésimo (20) es twen", c: "tieth", o: ["tieth", "tyth", "teth"], l: "Ordinal", e: "y cambia a ie + th" },
-    { sE: "21º 🏅", sH: "El día 21 es twenty-", c: "first", o: ["first", "oneth", "firts"], l: "Ordinal", e: "Solo el último número es ordinal" }
+    { sE: "3 🔢",    sH: "El número 3 es",              c: "three",               o: ["three",               "tree",                "thre"],                l: "Cardinal", e: "1-10 básicos" },
+    { sE: "13 🔢",   sH: "El número 13 es",             c: "thirteen",            o: ["thirteen",            "threeten",            "thirten"],             l: "Cardinal", e: "Termina en -teen" },
+    { sE: "12 🔢",   sH: "El número 12 es",             c: "twelve",              o: ["twelve",              "twelf",               "twelv"],               l: "Cardinal", e: "Irregular (memorizar)" },
+    { sE: "20 🔢",   sH: "El número 20 es",             c: "twenty",              o: ["twenty",              "twoty",               "twente"],              l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "50 🔢",   sH: "El número 50 es",             c: "fifty",               o: ["fifty",               "fivety",              "fivty"],               l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "34 🔢",   sH: "El número 34 es",             c: "thirty-four",         o: ["thirty-four",         "thirty-fore",         "threety-four"],        l: "Cardinal", e: "Decena + guion + unidad" },
+    { sE: "45 🔢",   sH: "El número 45 es",             c: "forty-five",          o: ["forty-five",          "fourty-five",         "forty-fife"],          l: "Cardinal", e: "Decena + guion + unidad" },
+    { sE: "300 🔢",  sH: "El número 300 es",            c: "three hundred",       o: ["three hundred",       "three hunderd",       "tree hundred"],        l: "Cardinal", e: "Centenas: número + hundred" },
+    { sE: "2000 🔢", sH: "El número 2000 es",           c: "two thousand",        o: ["two thousand",        "two thousend",        "to thousand"],         l: "Cardinal", e: "Miles: número + thousand" },
+    { sE: "250 🔢",  sH: "El número 250 es",            c: "two hundred and fifty",o: ["two hundred and fifty","two hundred fivety",  "two hundred fifty"],  l: "Cardinal", e: "Combinación: hundred + and + decena" },
+
+    { sE: "1º 🏅",   sH: "El primero (1st) en inglés es",  c: "first",           o: ["first",               "oneth",               "firts"],               l: "Ordinal",  e: "Irregular — memorizar" },
+    { sE: "2º 🏅",   sH: "El segundo (2nd) en inglés es",  c: "second",          o: ["second",              "twoth",               "secon"],               l: "Ordinal",  e: "Irregular — memorizar" },
+    { sE: "3º 🏅",   sH: "El tercero (3rd) en inglés es",  c: "third",           o: ["third",               "threeth",             "thrird"],              l: "Ordinal",  e: "Irregular — memorizar" },
+    { sE: "5º 🏅",   sH: "El quinto (5th): five →",        c: "fifth",           o: ["fifth",               "fiveth",              "fifht"],               l: "Ordinal",  e: "five cambia a fifth" },
+    { sE: "8º 🏅",   sH: "El octavo (8th): eight →",       c: "eighth",          o: ["eighth",              "eighthth",            "eightth"],             l: "Ordinal",  e: "eight + h (sin cambio)" },
+    { sE: "9º 🏅",   sH: "El noveno (9th): nine →",        c: "ninth",           o: ["ninth",               "nineth",              "nionth"],              l: "Ordinal",  e: "nine pierde la 'e' + th" },
+    { sE: "12º 🏅",  sH: "El doceavo (12th): twelve →",    c: "twelfth",         o: ["twelfth",             "twelveth",            "twelth"],              l: "Ordinal",  e: "twelve → twelfth (ve→f+th)" },
+    { sE: "4º 🏅",   sH: "El cuarto (4th): four + th =",   c: "fourth",          o: ["fourth",              "forth",               "fourd"],               l: "Ordinal",  e: "Regla general: número + th" },
+    { sE: "20º 🏅",  sH: "El vigésimo (20th) es",          c: "twentieth",       o: ["twentieth",           "twentyth",            "twentith"],            l: "Ordinal",  e: "Decena: -y cambia a -ieth" },
+    { sE: "21º 🏅",  sH: "El día 21º (21st) es",           c: "twenty-first",    o: ["twenty-first",        "twenty-oneth",        "twenty-firts"],        l: "Ordinal",  e: "Compuesto: solo el último es ordinal" }
   ];
-  rawData.forEach(item => {
+
+  // Filtramos usando currentNumbersLevel — respeta el submenú elegido
+  let pool = [];
+  if (currentNumbersLevel === 1)      pool = rawData.slice(0, 10);   // Solo Cardinales
+  else if (currentNumbersLevel === 2) pool = rawData.slice(10, 20);  // Solo Ordinales
+  else                                 pool = shuffle([...rawData]);  // Nivel 3: mezcla aleatoria
+
+  pool.forEach(item => {
     qList.push({
-      sentence: isEasy ? [{ en: item.sE, es: "Traduce:" }, { en: "[BLANK]", es: "" }] : [{ en: item.sH, es: "" }, { en: "[BLANK]", es: "" }],
-      hint: `Pista: ${item.e}`, explainRule: `¡Correcto! ${item.e}`, options: shuffle(item.o), correct: item.c, nounLabel: item.l, explainNoun: item.e, nounType: item.l
+      sentence: isEasy
+        ? [{ en: item.sE, es: "¿Cómo se dice?" }, { en: "[BLANK]", es: "" }]
+        : [{ en: item.sH, es: "" }, { en: "[BLANK]", es: "" }],
+      hint: `💡 ${item.e}`,
+      explainRule: `¡Correcto! ${item.e}`,
+      options: shuffle([...item.o]),
+      correct: item.c,
+      nounLabel: item.l,
+      explainNoun: item.e,
+      nounType: item.l
     });
   });
   MODULE_CONFIG['numbers'].questions = qList;
@@ -1045,8 +1165,8 @@ const Q_PHRASES=[
 /* DICCIONARIO DE VERBOS CON EMOJIS */
 const VERB_DICTIONARY = {
   be: { en: { base:"be", sForm:"is", past:"was", participle:"been", gerund:"being" }, es: { meaning:"ser / estar 🌟", participle:"sido / estado", gerund:"siendo / estando", present: { I:"soy/estoy", You:"eres/estás", He:"es/está", She:"es/está", It:"es/está", We:"somos/estamos", They:"son/están" }, past: { I:"fui/estuve", You:"fuiste/estuviste", He:"fue/estuvo", She:"fue/estuvo", It:"fue/estuvo", We:"fuimos/estuvimos", They:"fueron/estuvieron" }, future: { I:"seré/estaré", You:"serás/estarás", He:"será/estará", She:"será/estará", It:"será/estará", We:"seremos/estaremos", They:"serán/estarán" } }, irregular: true, spellingNote: "¡El verbo más rebelde! No usa auxiliares (do/did) para preguntar o negar." },
-  have: { en: { base:"have", sForm:"has", past:"had", participle:"had", gerund:"having" }, es: { meaning:"tomar / hacer 🥞", participle:"tomado", gerund:"tomando", present: { I:"tomo", You:"tomas", He:"toma", She:"toma", It:"toma", We:"tomamos", They:"toman" }, past: { I:"tomé", You:"tomaste", He:"tomó", She:"tomó", It:"tomó", We:"tomamos", They:"tomaron" }, future: { I:"tomaré", You:"tomarás", He:"tomará", She:"tomará", It:"tomará", We:"tomaremos", They:"tomarán" } }, irregular: true, spellingNote: "Acciones o rutinas (ej: have breakfast = desayunar). Funciona en todos los tiempos." },
-  have_got: { en: { base:"have got", sForm:"has got", past:"had", participle:"had", gerund:"having" }, es: { meaning:"tener (posesión) 🇬🇧", participle:"tenido", gerund:"teniendo", present: { I:"tengo", You:"tienes", He:"tiene", She:"tiene", It:"tiene", We:"tenemos", They:"tienen" }, past: { I:"tenía", You:"tenías", He:"tenía", She:"tenía", It:"tenía", We:"teníamos", They:"tenían" }, future: { I:"tendré", You:"tendrás", He:"tendrá", She:"tendrá", It:"tendrá", We:"tendremos", They:"tendrán" } }, irregular: true, spellingNote: "Inglés Británico. Se comporta como auxiliar. ⚠️ ¡SOLO existe en Presente Simple!" },
+  have: { en: { base:"have", sForm:"has", past:"had", participle:"had", gerund:"having" }, es: { meaning:"tener / tomar (comidas y experiencias) 🥞", participle:"tenido / tomado", gerund:"teniendo / tomando", present: { I:"tengo / tomo", You:"tienes / tomas", He:"tiene / toma", She:"tiene / toma", It:"tiene / toma", We:"tenemos / tomamos", They:"tienen / toman" }, past: { I:"tuve / tomé", You:"tuviste / tomaste", He:"tuvo / tomó", She:"tuvo / tomó", It:"tuvo / tomó", We:"tuvimos / tomamos", They:"tuvieron / tomaron" }, future: { I:"tendré / tomaré", You:"tendrás / tomarás", He:"tendrá / tomará", She:"tendrá / tomará", It:"tendrá / tomará", We:"tendremos / tomaremos", They:"tendrán / tomarán" } }, irregular: true, spellingNote: "⚠️ En inglés 'tomar' se divide en 3 verbos: DRINK (acción de beber líquido: 'I drink water'), TAKE (agarrar o transportar: 'take the bus', 'take a photo') y HAVE (experimentar o consumir: 'have breakfast', 'have a coffee', 'have a shower'). Un café no es solo hidratación, es una experiencia, por eso 'Let's have a coffee' y no 'drink a coffee'." },
+  have_got: { en: { base:"have got", sForm:"has got", past:"had", participle:"had", gerund:"having" }, es: { meaning:"tener (posesión) 🇬🇧", participle:"tenido", gerund:"teniendo", present: { I:"tengo", You:"tienes", He:"tiene", She:"tiene", It:"tiene", We:"tenemos", They:"tienen" }, past: { I:"tenía", You:"tenías", He:"tenía", She:"tenía", It:"tenía", We:"teníamos", They:"tenían" }, future: { I:"tendré", You:"tendrás", He:"tendrá", She:"tendrá", It:"tendrá", We:"tendremos", They:"tendrán" } }, irregular: true, spellingNote: "🇬🇧 INGLÉS BRITÁNICO. Úsalo SOLO para posesión y características: 'I've got a car', 'She's got blue eyes'. ⚠️ NUNCA con acciones o rutinas ('have breakfast', 'have a shower' — estas NO usan 'got'). SOLO existe en Presente Simple. Negación: haven't got / hasn't got (sin do/does). Pregunta: Have you got? / Has she got? (sin Do/Does)." },
   play: { en: { base:"play", sForm:"plays", past:"played", participle:"played", gerund:"playing" }, es: { meaning:"jugar ⚽", participle:"jugado", gerund:"jugando", present: { I:"juego", You:"juegas", He:"juega", She:"juega", It:"juega", We:"jugamos", They:"juegan" }, past: { I:"jugué", You:"jugaste", He:"jugó", She:"jugó", It:"jugó", We:"jugamos", They:"jugaron" }, future: { I:"jugaré", You:"jugarás", He:"jugará", She:"jugará", It:"jugará", We:"jugaremos", They:"jugarán" } }, irregular: false },
   watch: { en: { base:"watch", sForm:"watches", past:"watched", participle:"watched", gerund:"watching" }, es: { meaning:"ver / mirar 👀", participle:"visto", gerund:"viendo", present: { I:"veo", You:"ves", He:"ve", She:"ve", It:"ve", We:"vemos", They:"ven" }, past: { I:"vi", You:"viste", He:"vio", She:"vio", It:"vio", We:"vimos", They:"vieron" }, future: { I:"veré", You:"verás", He:"verá", She:"verá", It:"verá", We:"veremos", They:"verán" } }, irregular: false, spellingNote: "3ª persona añade -es: watch → watches" },
   study: { en: { base:"study", sForm:"studies", past:"studied", participle:"studied", gerund:"studying" }, es: { meaning:"estudiar 📖", participle:"estudiado", gerund:"estudiando", present: { I:"estudio", You:"estudias", He:"estudia", She:"estudia", It:"estudia", We:"estudiamos", They:"estudian" }, past: { I:"estudié", You:"estudiaste", He:"estudió", She:"estudió", It:"estudió", We:"estudiamos", They:"estudiaron" }, future: { I:"estudiaré", You:"estudiarás", He:"estudiará", She:"estudiará", It:"estudiará", We:"estudiaremos", They:"estudiarán" } }, irregular: false, spellingNote: "Termina en consonante + y: y → ies y y → ied" },
@@ -1292,13 +1412,16 @@ function goBack() {
   // Navegación principal
   if (id === 'screenMenu') showScreen('screenMode');
   else if (id === 'screenExplain') {
-    // Si estamos en Plurales o Auxiliares, volvemos a sus submenús
+    // Si estamos en Plurales, Auxiliares o Números, volvemos a sus submenús
     if (activeModule === 'pluralNouns') showScreen('screenPlurals');
     else if (activeModule === 'auxDynamic') showScreen('screenAux');
+    else if (activeModule === 'numbers') showScreen('screenNumbers');
     else showScreen('screenMenu');
   }
+  else if (id === 'screenNumbers') showScreen('screenMenu');
   else if (id === 'screenVerbTable') showScreen('screenMenu');
   else if (id === 'screenQuiz' && activeModule==='_dynamic_verb') showScreen('screenVerbTable');
+  else if (id === 'screenQuiz' && activeModule === 'numbers') showScreen('screenNumbers');
   else if (id === 'screenQuiz') showScreen('screenExplain');
   else if (id === 'screenPlayers' || id === 'screenOnline' || id === 'screenJoin') showScreen('screenMode');
   else if (id === 'screenPlurals') showScreen('screenMenu');
@@ -2452,23 +2575,32 @@ function speakEnglish(text) {
 
 function playCurrentSentence() {
   const q = questions[currentQ];
-  
-  let fullSentence = "";
-  q.sentence.forEach(part => {
-    // 🔥 REGLA 1: Si la traducción dice "Emoji", ignoramos este bloque por completo
-    if (part.es === "Emoji" || part.es === "emoji") return;
 
-    // Asignamos la palabra correcta o el texto normal
-    let word = (part.en === "[BLANK]") ? q.correct : part.en;
-    
-    // 🔥 REGLA 2: Filtro de limpieza profunda. Borra cualquier emoji que se haya colado en el texto.
-    word = word.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
-    
-    fullSentence += word + " ";
-  });
+  // Módulos donde el altavoz lee SOLO la respuesta correcta en inglés.
+  // Evita que lea el enunciado en español mezclado con la palabra en inglés.
+  const onlyReadAnswerModules = [
+    'numbers', 'datetime', 'pluralNouns', 'generalNouns', 'verbsVocab'
+  ];
 
-  // Enviamos el texto limpio y sin espacios extra al navegador
-  speakEnglish(fullSentence.trim());
+  let textToRead = "";
+
+  if (onlyReadAnswerModules.includes(activeModule)) {
+    // Lee únicamente la respuesta correcta, limpia de emojis
+    textToRead = q.correct.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+  } else {
+    // Para oraciones completas (SVO, frases cotidianas, etc.) lee toda la estructura
+    q.sentence.forEach(part => {
+      // REGLA 1: Si el bloque es decorativo (emoji puro), lo ignoramos
+      if (part.es === "Emoji" || part.es === "emoji") return;
+      // REGLA 2: El hueco [BLANK] se reemplaza por la respuesta correcta
+      let word = (part.en === "[BLANK]") ? q.correct : part.en;
+      // REGLA 3: Limpieza de emojis que se hayan colado en el texto
+      word = word.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '');
+      textToRead += word + " ";
+    });
+  }
+
+  speakEnglish(textToRead.trim());
 }
 </script>
 </body>
