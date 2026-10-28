@@ -949,19 +949,46 @@ function buildNumbersQuestions(phase) {
   const isEasy = (phase === 1);
   let qList = [];
 
-  // Respuestas correctas ahora son palabras/frases COMPLETAS — sin frases partidas
-  const rawData = [
-    { sE: "3 🔢",    sH: "El número 3 es",              c: "three",               o: ["three",               "tree",                "thre"],                l: "Cardinal", e: "1-10 básicos" },
-    { sE: "13 🔢",   sH: "El número 13 es",             c: "thirteen",            o: ["thirteen",            "threeten",            "thirten"],             l: "Cardinal", e: "Termina en -teen" },
+  // Cardinales: cubre 1-19 completos + decenas + centenas + miles (20 items)
+  const cardinalsData = [
+    { sE: "1 🔢",    sH: "El número 1 es",              c: "one",                 o: ["one",                 "won",                 "oun"],                 l: "Cardinal", e: "Básico 1-10" },
+    { sE: "2 🔢",    sH: "El número 2 es",              c: "two",                 o: ["two",                 "too",                 "tow"],                 l: "Cardinal", e: "Básico 1-10" },
+    { sE: "3 🔢",    sH: "El número 3 es",              c: "three",               o: ["three",               "tree",                "thre"],                l: "Cardinal", e: "Básico 1-10" },
+    { sE: "4 🔢",    sH: "El número 4 es",              c: "four",                o: ["four",                "for",                 "fore"],                l: "Cardinal", e: "Básico 1-10" },
+    { sE: "5 🔢",    sH: "El número 5 es",              c: "five",                o: ["five",                "fife",                "fiev"],                l: "Cardinal", e: "Básico 1-10" },
+    { sE: "6 🔢",    sH: "El número 6 es",              c: "six",                 o: ["six",                 "siks",                "sex"],                 l: "Cardinal", e: "Básico 1-10" },
+    { sE: "7 🔢",    sH: "El número 7 es",              c: "seven",               o: ["seven",               "sefen",               "sevn"],                l: "Cardinal", e: "Básico 1-10" },
+    { sE: "8 🔢",    sH: "El número 8 es",              c: "eight",               o: ["eight",               "eit",                 "eigh"],                l: "Cardinal", e: "Básico 1-10" },
+    { sE: "9 🔢",    sH: "El número 9 es",              c: "nine",                o: ["nine",                "nein",                "nyne"],                l: "Cardinal", e: "Básico 1-10" },
+    { sE: "10 🔢",   sH: "El número 10 es",             c: "ten",                 o: ["ten",                 "tin",                 "tenn"],                l: "Cardinal", e: "Básico 1-10" },
+    { sE: "11 🔢",   sH: "El número 11 es",             c: "eleven",              o: ["eleven",              "elevn",               "elevin"],              l: "Cardinal", e: "Irregular (memorizar)" },
     { sE: "12 🔢",   sH: "El número 12 es",             c: "twelve",              o: ["twelve",              "twelf",               "twelv"],               l: "Cardinal", e: "Irregular (memorizar)" },
+    { sE: "13 🔢",   sH: "El número 13 es",             c: "thirteen",            o: ["thirteen",            "threeten",            "thirten"],             l: "Cardinal", e: "13-19: base + -teen" },
+    { sE: "14 🔢",   sH: "El número 14 es",             c: "fourteen",            o: ["fourteen",            "forteen",             "fourten"],             l: "Cardinal", e: "13-19: four + teen" },
+    { sE: "15 🔢",   sH: "El número 15 es",             c: "fifteen",             o: ["fifteen",             "fiveteen",            "fiften"],              l: "Cardinal", e: "13-19: fif + teen" },
+    { sE: "16 🔢",   sH: "El número 16 es",             c: "sixteen",             o: ["sixteen",             "sixten",              "sixtteen"],            l: "Cardinal", e: "13-19: six + teen" },
+    { sE: "17 🔢",   sH: "El número 17 es",             c: "seventeen",           o: ["seventeen",           "seventeenth",         "seventen"],            l: "Cardinal", e: "13-19: seven + teen" },
+    { sE: "18 🔢",   sH: "El número 18 es",             c: "eighteen",            o: ["eighteen",            "eightteen",           "eighten"],             l: "Cardinal", e: "13-19: eigh + teen" },
+    { sE: "19 🔢",   sH: "El número 19 es",             c: "nineteen",            o: ["nineteen",            "ninteen",             "nineten"],             l: "Cardinal", e: "13-19: nine + teen" },
     { sE: "20 🔢",   sH: "El número 20 es",             c: "twenty",              o: ["twenty",              "twoty",               "twente"],              l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "30 🔢",   sH: "El número 30 es",             c: "thirty",              o: ["thirty",              "threety",             "thirthy"],             l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "40 🔢",   sH: "El número 40 es",             c: "forty",               o: ["forty",               "fourty",              "forthy"],              l: "Cardinal", e: "Decenas terminan en -ty" },
     { sE: "50 🔢",   sH: "El número 50 es",             c: "fifty",               o: ["fifty",               "fivety",              "fivty"],               l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "60 🔢",   sH: "El número 60 es",             c: "sixty",               o: ["sixty",               "sixtty",              "sixthy"],              l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "70 🔢",   sH: "El número 70 es",             c: "seventy",             o: ["seventy",             "seventhy",            "sevnty"],              l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "80 🔢",   sH: "El número 80 es",             c: "eighty",              o: ["eighty",              "eighthy",             "eigthy"],              l: "Cardinal", e: "Decenas terminan en -ty" },
+    { sE: "90 🔢",   sH: "El número 90 es",             c: "ninety",              o: ["ninety",              "ninty",               "ninethy"],             l: "Cardinal", e: "Decenas terminan en -ty" },
     { sE: "34 🔢",   sH: "El número 34 es",             c: "thirty-four",         o: ["thirty-four",         "thirty-fore",         "threety-four"],        l: "Cardinal", e: "Decena + guion + unidad" },
     { sE: "45 🔢",   sH: "El número 45 es",             c: "forty-five",          o: ["forty-five",          "fourty-five",         "forty-fife"],          l: "Cardinal", e: "Decena + guion + unidad" },
+    { sE: "100 🔢",  sH: "El número 100 es",            c: "one hundred",         o: ["one hundred",         "one hunderd",         "a hundred"],           l: "Cardinal", e: "Centenas: número + hundred" },
     { sE: "300 🔢",  sH: "El número 300 es",            c: "three hundred",       o: ["three hundred",       "three hunderd",       "tree hundred"],        l: "Cardinal", e: "Centenas: número + hundred" },
+    { sE: "1000 🔢", sH: "El número 1000 es",           c: "one thousand",        o: ["one thousand",        "one thousend",        "a thousand"],          l: "Cardinal", e: "Miles: número + thousand" },
     { sE: "2000 🔢", sH: "El número 2000 es",           c: "two thousand",        o: ["two thousand",        "two thousend",        "to thousand"],         l: "Cardinal", e: "Miles: número + thousand" },
-    { sE: "250 🔢",  sH: "El número 250 es",            c: "two hundred and fifty",o: ["two hundred and fifty","two hundred fivety",  "two hundred fifty"],  l: "Cardinal", e: "Combinación: hundred + and + decena" },
+    { sE: "250 🔢",  sH: "El número 250 es",            c: "two hundred and fifty",o: ["two hundred and fifty","two hundred fivety",  "two hundred fifty"],  l: "Cardinal", e: "Combinación: hundred + and + decena" }
+  ];
 
+  // Ordinales: los 7 irregulares + regla +th + decenas + compuestos (10 items)
+  const ordinalsData = [
     { sE: "1º 🏅",   sH: "El primero (1st) en inglés es",  c: "first",           o: ["first",               "oneth",               "firts"],               l: "Ordinal",  e: "Irregular — memorizar" },
     { sE: "2º 🏅",   sH: "El segundo (2nd) en inglés es",  c: "second",          o: ["second",              "twoth",               "secon"],               l: "Ordinal",  e: "Irregular — memorizar" },
     { sE: "3º 🏅",   sH: "El tercero (3rd) en inglés es",  c: "third",           o: ["third",               "threeth",             "thrird"],              l: "Ordinal",  e: "Irregular — memorizar" },
@@ -970,17 +997,30 @@ function buildNumbersQuestions(phase) {
     { sE: "9º 🏅",   sH: "El noveno (9th): nine →",        c: "ninth",           o: ["ninth",               "nineth",              "nionth"],              l: "Ordinal",  e: "nine pierde la 'e' + th" },
     { sE: "12º 🏅",  sH: "El doceavo (12th): twelve →",    c: "twelfth",         o: ["twelfth",             "twelveth",            "twelth"],              l: "Ordinal",  e: "twelve → twelfth (ve→f+th)" },
     { sE: "4º 🏅",   sH: "El cuarto (4th): four + th =",   c: "fourth",          o: ["fourth",              "forth",               "fourd"],               l: "Ordinal",  e: "Regla general: número + th" },
+    { sE: "6º 🏅",   sH: "El sexto (6th) es",              c: "sixth",           o: ["sixth",               "sixeth",              "sixtth"],              l: "Ordinal",  e: "Regla general: six + th" },
+    { sE: "7º 🏅",   sH: "El séptimo (7th) es",            c: "seventh",         o: ["seventh",             "seveth",              "seventhh"],            l: "Ordinal",  e: "Regla general: seven + th" },
+    { sE: "10º 🏅",  sH: "El décimo (10th) es",            c: "tenth",           o: ["tenth",               "tenth",               "teneth"],              l: "Ordinal",  e: "Regla general: ten + th" },
+    { sE: "11º 🏅",  sH: "El onceavo (11th) es",           c: "eleventh",        o: ["eleventh",            "eleveneth",           "elevenths"],           l: "Ordinal",  e: "Regla general: eleven + th" },
+    { sE: "13º 🏅",  sH: "El treceavo (13th) es",          c: "thirteenth",      o: ["thirteenth",          "thirteeneth",         "thirteneth"],          l: "Ordinal",  e: "Regla general: thirteen + th" },
     { sE: "20º 🏅",  sH: "El vigésimo (20th) es",          c: "twentieth",       o: ["twentieth",           "twentyth",            "twentith"],            l: "Ordinal",  e: "Decena: -y cambia a -ieth" },
-    { sE: "21º 🏅",  sH: "El día 21º (21st) es",           c: "twenty-first",    o: ["twenty-first",        "twenty-oneth",        "twenty-firts"],        l: "Ordinal",  e: "Compuesto: solo el último es ordinal" }
+    { sE: "30º 🏅",  sH: "El trigésimo (30th) es",         c: "thirtieth",       o: ["thirtieth",           "thirtyth",            "thirtyieth"],          l: "Ordinal",  e: "Decena: -y cambia a -ieth" },
+    { sE: "21º 🏅",  sH: "El día 21º (21st) es",           c: "twenty-first",    o: ["twenty-first",        "twenty-oneth",        "twenty-firts"],        l: "Ordinal",  e: "Compuesto: solo el último es ordinal" },
+    { sE: "22º 🏅",  sH: "El día 22º (22nd) es",           c: "twenty-second",   o: ["twenty-second",       "twenty-twoth",        "twentysecond"],        l: "Ordinal",  e: "Compuesto: solo el último es ordinal" },
+    { sE: "23º 🏅",  sH: "El día 23º (23rd) es",           c: "twenty-third",    o: ["twenty-third",        "twenty-threeth",      "twenty-thrird"],       l: "Ordinal",  e: "Compuesto: solo el último es ordinal" },
+    { sE: "25º 🏅",  sH: "El día 25º (25th) es",           c: "twenty-fifth",    o: ["twenty-fifth",        "twenty-fiveth",       "twentyfifth"],         l: "Ordinal",  e: "Compuesto: solo el último es ordinal" },
+    { sE: "31º 🏅",  sH: "El día 31º (31st) es",           c: "thirty-first",    o: ["thirty-first",        "thirty-oneth",        "thirtyfirst"],         l: "Ordinal",  e: "Compuesto: solo el último es ordinal" }
   ];
 
-  // Filtramos usando currentNumbersLevel — respeta el submenú elegido
+  // Seleccionar el pool según el nivel guardado en currentNumbersLevel
   let pool = [];
-  if (currentNumbersLevel === 1)      pool = rawData.slice(0, 10);   // Solo Cardinales
-  else if (currentNumbersLevel === 2) pool = rawData.slice(10, 20);  // Solo Ordinales
-  else                                 pool = shuffle([...rawData]);  // Nivel 3: mezcla aleatoria
+  if (currentNumbersLevel === 1)      pool = shuffle([...cardinalsData]).slice(0, 10);
+  else if (currentNumbersLevel === 2) pool = shuffle([...ordinalsData]).slice(0, 10);
+  else                                 pool = shuffle([...cardinalsData, ...ordinalsData]).slice(0, 20);
 
-  pool.forEach(item => {
+  // rawData = pool ya filtrado según currentNumbersLevel
+  const rawData = pool;
+
+  rawData.forEach(item => {
     qList.push({
       sentence: isEasy
         ? [{ en: item.sE, es: "¿Cómo se dice?" }, { en: "[BLANK]", es: "" }]
@@ -1034,7 +1074,50 @@ const MODULE_MATCH = {
   adjectives:[{word:"tall",hint:"Alto (no cambia en plural)"},{word:"blue",hint:"Color: antes del sustantivo"},{word:"big",hint:"Grande (sin 's')"},{word:"hot",hint:"Caliente (adjetivo)"},{word:"good",hint:"Bueno (invariable)"},{word:"old",hint:"Viejo (sin 's')"},{word:"black shoes",hint:"Adj + sust plural"},{word:"tall trees",hint:"Solo el sustantivo lleva 's'"}],
   everydayPhrases:[{word:"I don't know",hint:"No lo sé"},{word:"I am hungry",hint:"Tengo hambre"},{word:"Excuse me",hint:"Disculpa / Perdón"},{word:"You're welcome",hint:"De nada"},{word:"Please",hint:"Por favor"},{word:"Nice to meet you",hint:"Mucho gusto"},{word:"How do you say",hint:"¿Cómo se dice...?"},{word:"I don't understand",hint:"No entiendo"},{word:"See you later",hint:"Hasta luego"},{word:"Thank you",hint:"Gracias"}],
   numbers:[{word:"thirteen",hint:"El número 13"},{word:"twenty",hint:"El número 20"},{word:"fifty",hint:"El número 50"},{word:"hundred",hint:"Multiplica x 100"},{word:"first",hint:"1º (irregular)"},{word:"second",hint:"2º (irregular)"},{word:"third",hint:"3º (irregular)"},{word:"fifth",hint:"5º (five→fifth)"}],
+  numbers_cardinals:[
+    {word:"one",hint:"El número 1"},{word:"two",hint:"El número 2"},{word:"three",hint:"El número 3"},
+    {word:"eleven",hint:"El número 11"},{word:"twelve",hint:"El número 12"},{word:"thirteen",hint:"El número 13"},
+    {word:"twenty",hint:"El número 20 (decena -ty)"},{word:"fifty",hint:"El número 50 (decena -ty)"},
+    {word:"three hundred",hint:"300: número + hundred"},{word:"two thousand",hint:"2000: número + thousand"}
+  ],
+  numbers_ordinals:[
+    {word:"first",hint:"1º — irregular"},{word:"second",hint:"2º — irregular"},
+    {word:"third",hint:"3º — irregular"},{word:"fifth",hint:"5th — five→fifth"},
+    {word:"eighth",hint:"8th — eight+h"},{word:"ninth",hint:"9th — nine pierde la e"},
+    {word:"twelfth",hint:"12th — twelve→twelfth"},{word:"fourth",hint:"4º — regla +th"},
+    {word:"twentieth",hint:"20º — -y cambia a -ieth"},{word:"twenty-first",hint:"21º — solo el último es ordinal"}
+  ],
   datetime:[{word:"Monday",hint:"Lunes (1º semana)"},{word:"Friday",hint:"Viernes (¡fin!)"},{word:"March",hint:"Marzo (3er mes)"},{word:"on Monday",hint:"Preposición días"},{word:"in July",hint:"Preposición meses"},{word:"fifth",hint:"May es el ___ mes"},{word:"twelfth",hint:"December es el ___"}],
+  havegot:[
+    {word:"I've got",hint:"Contracción: I have got"},{word:"She's got",hint:"Contracción: She has got"},
+    {word:"Have you got?",hint:"Pregunta I/You/We/They"},{word:"Has she got?",hint:"Pregunta He/She/It"},
+    {word:"haven't got",hint:"Negación I/You/We/They"},{word:"hasn't got",hint:"Negación He/She/It"},
+    {word:"have breakfast",hint:"Rutina → NO usa got"},{word:"have got",hint:"Solo para posesión 🇬🇧"}
+  ],
+  auxDynamic:[
+    {word:"Do",hint:"Pregunta I/You/We/They"},{word:"Does",hint:"Pregunta He/She/It"},
+    {word:"Did",hint:"Pregunta en pasado"},{word:"Will",hint:"Auxiliar de futuro"},
+    {word:"don't",hint:"Negación presente I/You"},{word:"doesn't",hint:"Negación presente He/She"},
+    {word:"didn't",hint:"Negación en pasado"},{word:"won't",hint:"Futuro negativo"}
+  ],
+  generalNouns:[
+    {word:"dog",hint:"Sustantivo: animal 🐶"},{word:"teacher",hint:"Sustantivo: profesión 👩‍🏫"},
+    {word:"park",hint:"Sustantivo: lugar 🌳"},{word:"book",hint:"Sustantivo: cosa 📖"},
+    {word:"apple",hint:"Sustantivo: fruta 🍎"},{word:"car",hint:"Sustantivo: transporte 🚗"},
+    {word:"friend",hint:"Sustantivo: persona 🤝"},{word:"house",hint:"Sustantivo: lugar 🏠"}
+  ],
+  verbsVocab:[
+    {word:"run",hint:"Correr 🏃"},{word:"eat",hint:"Comer 🍔"},
+    {word:"sleep",hint:"Dormir 😴"},{word:"read",hint:"Leer 📖"},
+    {word:"play",hint:"Jugar 🎮"},{word:"write",hint:"Escribir ✍️"},
+    {word:"walk",hint:"Caminar 🚶"},{word:"study",hint:"Estudiar 📚"}
+  ],
+  pluralNouns:[
+    {word:"cats",hint:"cat → cats (regular +s)"},{word:"buses",hint:"bus → buses (-s+es)"},
+    {word:"babies",hint:"baby → babies (-y→ies)"},{word:"children",hint:"child → children (irregular)"},
+    {word:"men",hint:"man → men (irregular)"},{word:"teeth",hint:"tooth → teeth (irregular)"},
+    {word:"boxes",hint:"box → boxes (-x+es)"},{word:"keys",hint:"key → keys (vocal+y → +s)"}
+  ],
 };
 
 /* ===== DICCIONARIOS DINÁMICOS (30 Palabras c/u) ===== */
@@ -1843,7 +1926,8 @@ function startQuiz(phase) {
    ============================================================ */
 
 function startTimer() {
-  stopTimer();
+  // Bug 5 fix: always clear any existing interval before creating a new one
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
   timeLeft = MAX_TIME;
   updateTimerUI();
   timerInterval = setInterval(() => {
@@ -2036,7 +2120,7 @@ function handleMainAction() {
 
 // 🌟 NUEVA FUNCIÓN: Reanuda el reloj exactamente donde se quedó
 function resumeTimer() {
-  if (timerInterval) clearInterval(timerInterval);
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
   updateTimerUI();
   timerInterval = setInterval(() => {
     timeLeft -= 0.1;
@@ -2192,8 +2276,18 @@ function startMatchGame() {
     document.getElementById('matchTurnArea').innerHTML = '';
   }
 
-  // Generar tablero nuevo
-  const allPairs = MODULE_MATCH[activeModule] || [];
+  // Generar tablero nuevo — para 'numbers' usar pool según nivel elegido
+  let matchKey = activeModule;
+  if (activeModule === 'numbers') {
+    matchKey = currentNumbersLevel === 1 ? 'numbers_cardinals' :
+               currentNumbersLevel === 2 ? 'numbers_ordinals' : 'numbers';
+  }
+  const allPairs = MODULE_MATCH[matchKey] || MODULE_MATCH[activeModule] || [];
+  // Guard: si no hay pares para este módulo, ir directo a finalizar
+  if (allPairs.length === 0) {
+    finishMatchGame();
+    return;
+  }
   const picked = shuffle([...allPairs]).slice(0, totalMatches);
 
   const words = shuffle(picked.map(p => p.word));
@@ -2212,14 +2306,15 @@ function startMatchGame() {
 }
 
 function startMatchTimer() {
-  stopTimer();
-  timeLeft = MAX_TIME; // Reloj táctico por cada intento/pareja
+  // Bug 5 fix: always clear any existing interval before creating a new one
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  timeLeft = MAX_TIME;
   updateMatchTimerUI();
   timerInterval = setInterval(() => {
     timeLeft -= 0.1;
     if (timeLeft <= 0) {
       timeLeft = 0;
-      handleMatchMistake(); // Si se acaba el tiempo, se toma como error
+      handleMatchMistake();
     }
     updateMatchTimerUI();
   }, 100);
@@ -2334,8 +2429,21 @@ function checkMatchPair() {
 function finishMatchGame() {
   matchPlayerTurn = 0; // Reiniciamos el turno para la próxima vez que se juegue
   const cfg = MODULE_CONFIG[activeModule];
-  if (cfg.hasRounds && currentRound === 1) { currentRound = 2; showScreen('screenQuiz'); loadQuestion(); } 
-  else { showScreen('screenFinish'); renderFinish(); }
+  if (cfg.hasRounds && currentRound === 1) {
+    currentRound = 2;
+    currentQ = 0; // Bug 3 fix: reset index so Ronda 2 starts at questions[0]
+    // For numbers module, rebuild questions for the correct level before loading
+    if (activeModule === 'numbers') {
+      buildNumbersQuestions(currentPhase);
+      const newQs = MODULE_CONFIG['numbers'].questions;
+      questions = shuffle([...newQs]);
+    }
+    showScreen('screenQuiz');
+    loadQuestion();
+  } else {
+    showScreen('screenFinish');
+    renderFinish();
+  }
 }
 
 function renderFinish() {
